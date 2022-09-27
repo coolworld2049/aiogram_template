@@ -21,8 +21,6 @@ async def task_scheduler():
 
 
 async def notify_users(custom_time: int):
-    """orders = await fetchmany('''SELECT * FROM bot."order" WHERE contractor_id is null AND state = $1''',
-                             [OrderStates.order_accepted.state])"""
     orders = ...
     if len(orders) > 0 and custom_time > 0:
         for order in orders:

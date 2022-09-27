@@ -79,6 +79,7 @@ async def fetchone_order(order_id: int):
     else:
         return result
 
+
 async def fetchone_last_order_id():
     query = '''SELECT id FROM bot."order" ORDER BY id DESC LIMIT 1'''
     res = await fetchone(query)
@@ -86,13 +87,6 @@ async def fetchone_last_order_id():
 
 
 async def check_user_active_orders(user_id: int):
-    """
-    check by:\n
-    'state_one': OrderStates.order_accepted.state,\n
-    'state_two': OrderStates.order_in_work.state,\n
-    :param user_id:
-    :return: {'customer_has_orders': bool, 'contractor_has_orders': bool}
-    """
     values = [
         user_id,
         OrderStates.order_accepted.state,
