@@ -9,7 +9,7 @@ from data.database.database import executeone, fetchone
 
 
 async def save_message(user_id: int, message_id: int):
-    await executeone('''SELECT upsert_table_temp($1, $2)''', [user_id, str(message_id)])
+    await executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
     if DEBUG_MODE:
         logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 

@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS bot.temp (
    last_message_id TEXT
 );
 
-CREATE OR REPLACE FUNCTION upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION bot.upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
 BEGIN
     UPDATE bot.temp SET last_message_id = $2 WHERE user_id = $1;
     IF NOT FOUND THEN
