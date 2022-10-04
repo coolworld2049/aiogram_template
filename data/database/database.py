@@ -2,11 +2,10 @@ import asyncio
 import logging
 
 import asyncpg
-from asyncpg import Pool
 
 from config import PG_DSN
 
-pool: Pool = asyncio.get_event_loop().run_until_complete(asyncpg.create_pool(PG_DSN))
+pool: asyncpg.Pool = asyncio.get_event_loop().run_until_complete(asyncpg.create_pool(PG_DSN))
 
 
 async def executeone(query: str, values: list):
@@ -45,7 +44,7 @@ async def executemany(command: str, list_of_values: list):
 
 async def fetchone(query: str, values: list = None):
     res = await fetchmany(query, values)
-    return res[0] if len(res) > 0 else res
+    return res[0] if res and len(res) > 0 else res
 
 
 async def fetchmany(query: str, values: list = None):

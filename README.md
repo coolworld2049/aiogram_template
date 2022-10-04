@@ -1,4 +1,4 @@
-# Deploy to VDS[Ubuntu 22.04]
+# Deploy to VDS [Ubuntu 22.04]
 
 ### `root` user
 

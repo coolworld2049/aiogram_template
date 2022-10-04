@@ -1,7 +1,8 @@
 from aiogram import types
 
 from config import PATH_TO_LOG_FILE
-from core import dp, is_admin
+from core import dp
+from data.database.db_api import is_admin
 from utils.chat_mgmt import save_message
 
 

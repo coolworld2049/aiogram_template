@@ -1,18 +1,16 @@
 import json
 import os
 
-ADMINS = ['']
+ADMINS = ['I13rsnwhy']  # nick without @
 
-DEMO_MODE = False
-
-DEBUG_MODE = False
-USE_REDIS = True
-USE_SCHEDULER = True
+DEBUG_MODE = True
+USE_REDIS = False
+USE_LOCAL_SERVER = False
+USE_SCHEDULER = False
 
 NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для всех пользователей
-NOTIFY_USER = 60  # параметр для проверки времени прошедшего с момента создания заказа
+NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
 
-PATH_TO_SQL_SCRIPT = 'data/database/bot.sql'
 PATH_TO_LOG_FILE = 'log.log'
 
 REDIS_CONFIG = {
@@ -26,7 +24,7 @@ REDIS_CONFIG = {
 PG_CONFIG = {
     'host': '127.0.0.1',
     'port': 5432,
-    'database': 'airbot',
+    'database': 'test',
     'user': os.environ['PGADMIN'],
     'password': os.environ['PGADMINPASS'],
 }
@@ -41,14 +39,8 @@ PG_CODEC = {
 PG_DSN = f"postgresql://{PG_CONFIG['user']}:{PG_CONFIG['password']}" \
          f"@{PG_CONFIG['host']}:{PG_CONFIG['port']}/{PG_CONFIG['database']}"
 
-privacy_policy_LINK = 'https//:example.com'
-
-MESSAGE_DELAY = 0.25
-
+MESSAGE_DELAY = 0.1  # greater than zero
 ITEMS_PER_PAGE = 3
-
-MIN_BIO_CHARS = 10
-MAX_BIO_CHARS = 200
 
 base_commands = \
     [
@@ -62,8 +54,6 @@ admin_commands = \
         {'command': 'get_logs', 'description': 'журнал событий'}
     ]
 
-private_commands = \
-    [
-        {'command': 'set_sender_bio', 'description': 'обновить инф отправителя'},
-        {'command': 'ser_traveler_bio', 'description': 'обновить инф путешественника'},
-    ]
+registration_menu_TEXT = 'Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию.'
+main_menu_TEXT = """Вы находитесь в главном меню."""
+
