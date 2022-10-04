@@ -6,6 +6,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import ITEMS_PER_PAGE, MESSAGE_DELAY
 from core import dp, bot
+from filters.callback_filters import pagination_cb, back_cb
 from keyboards.user.common.common_inline_kb import main_menu_message_IK
 from states.PagionationStates import PaginationStates
 from utils.chat_mgmt import del_message, save_message, get_last_message
@@ -13,11 +14,11 @@ from utils.chat_mgmt import del_message, save_message, get_last_message
 
 def reg_pagination_handlers():
     dp.register_message_handler(step_state_message_controller, state=PaginationStates.step)
-    dp.register_callback_query_handler(next_step, lambda c: str(c.data).split('_')[1] == 'next-step',
+    dp.register_callback_query_handler(next_step, pagination_cb.filter(way='next'),
                                        state=PaginationStates.step)
-    dp.register_callback_query_handler(back_step, lambda c: str(c.data).split('_')[1] == 'back-step',
+    dp.register_callback_query_handler(back_step, pagination_cb.filter(way='back'),
                                        state=PaginationStates.step)
-    dp.register_callback_query_handler(stop_step, lambda c: str(c.data).split('_')[1] == 'stop-step',
+    dp.register_callback_query_handler(stop_step, pagination_cb.filter(way='stop'),
                                        state=PaginationStates.step)
 
 
@@ -73,14 +74,14 @@ async def answer_with_pagination(user_id: int, menu_page_shift: int, state: FSMC
     await dp.current_state(chat=real_user_id, user=real_user_id).update_data({'msgs_ids': msg_ids})
 
     IK_nav = InlineKeyboardMarkup(row_width=2)
-    next_ = InlineKeyboardButton(text=">>", callback_data=f'_next-step_{msg_ids}')
+    next_ = InlineKeyboardButton(text=">>", callback_data=pagination_cb.new(way='next'))
     curr = InlineKeyboardButton(text=f'страница {new_page_index + 1}/{len(res) // ITEMS_PER_PAGE + 1}',
-                                callback_data=f'" "_" "')
+                                callback_data="...")
     _back = InlineKeyboardButton(text="<<", callback_data=f'_back-step_{msg_ids}')
     IK_nav.row(_back, curr, next_)
     if back_callback:
-        stop = InlineKeyboardButton(text='👈 Назад', callback_data=f'{back_callback}_stop-step_{msg_ids}')
-        menu = InlineKeyboardButton(text='👈️ В меню', callback_data=f'back-to-menu_stop-step_{msg_ids}')
+        stop = InlineKeyboardButton(text='👈 Назад', callback_data=pagination_cb.new(way='stop'))
+        menu = InlineKeyboardButton(text='👈️ В меню', callback_data=back_cb.new(to='menu', msg_ids='None'))
         IK_nav.row(stop, menu)
     text = f"*Объявлений*: {len(res)}. *Страниц*: {len(res) // ITEMS_PER_PAGE + 1}"
     text += contact_text if contact_text else ''
@@ -115,7 +116,7 @@ async def step_state_callback_controller(callback_query: types.CallbackQuery, st
         await main_menu_message_IK(callback_query.from_user.id)
 
 
-@dp.callback_query_handler(lambda c: str(c.data).split('_')[1] == 'next-step', state=PaginationStates.step)
+@dp.callback_query_handler(pagination_cb.filter(way='next'), state=PaginationStates.step)
 async def next_step(callback_query: types.CallbackQuery, state: FSMContext):
     await asyncio.sleep(0.3)
     state_data = await state.get_data()
@@ -132,7 +133,7 @@ async def next_step(callback_query: types.CallbackQuery, state: FSMContext):
         await answer_with_pagination(callback_query.from_user.id, +1, state)
 
 
-@dp.callback_query_handler(lambda c: str(c.data).split('_')[1] == 'back-step', state=PaginationStates.step)
+@dp.callback_query_handler(pagination_cb.filter(way='back'), state=PaginationStates.step)
 async def back_step(callback_query: types.CallbackQuery, state: FSMContext):
     await asyncio.sleep(0.3)
     state_data = await state.get_data()
@@ -148,7 +149,7 @@ async def back_step(callback_query: types.CallbackQuery, state: FSMContext):
         await answer_with_pagination(callback_query.from_user.id, -1, state)
 
 
-@dp.callback_query_handler(lambda c: str(c.data).split('_')[1] == 'stop-step', state=PaginationStates.step)
+@dp.callback_query_handler(pagination_cb.filter(way='stop'), state=PaginationStates.step)
 async def stop_step(callback_query: types.CallbackQuery, state: FSMContext):
     await asyncio.sleep(0.3)
     await step_state_callback_controller(callback_query, state)

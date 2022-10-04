@@ -4,7 +4,7 @@ from aiogram.types import User
 
 from config import ADMINS
 from core import logger
-from data.database.database import executeone, fetchone
+from data.database.database import executeone, fetchone, fetchmany
 from states.UserStates import UserStates
 
 
@@ -47,6 +47,24 @@ async def fetchone_user(user_id: int):
         return result
 
 
+async def fetchall_user():
+    result = await fetchmany('''SELECT * FROM bot."user"''')
+    if not result:
+        logger.info(f"fetcall_user: CONFLICT")
+        return result
+    else:
+        return result
+
+
+async def fetchall_user_ids():
+    result = await fetchmany('''SELECT user_id FROM bot."user"''')
+    if not result:
+        logger.info(f"fetcall_user: CONFLICT")
+        return result
+    else:
+        return [x['user_id'] for x in result]
+
+
 async def fetchone_order(order_id: int):
     query = '''SELECT * FROM bot."order" WHERE id = $1'''
     result = await fetchone(query, [order_id])
@@ -61,6 +79,16 @@ async def fetchone_last_order_id():
     query = '''SELECT id FROM bot."order" ORDER BY id DESC LIMIT 1'''
     res = await fetchone(query)
     return res['id'] + 1 if res and len(res) > 0 else 0
+
+
+async def fetchone_temp(user_id: int):
+    query = '''SELECT last_message_id FROM bot.temp WHERE user_id = $1'''
+    result = await fetchone(query, [user_id])
+    if not result:
+        logger.info(f"fetchone_user: CONFLICT")
+        return result
+    else:
+        return result
 
 
 async def check_user_active_orders(user_id: int):

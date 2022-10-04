@@ -10,6 +10,7 @@ from utils.bot_mgmt import set_my_commands
 from utils.scheduler import task_scheduler
 
 
+# noinspection PyUnusedLocal
 async def on_startup_app(dispatcher: aiogram.Dispatcher):
     setup_handlers()
     asyncio.create_task(set_my_commands(command_list=base_commands))

@@ -6,7 +6,8 @@ from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFou
 
 from config import DEBUG_MODE, MESSAGE_DELAY
 from core import bot, logger
-from data.database.database import executeone, fetchone
+from data.database.database import executeone
+from data.database.db_api import fetchone_temp
 
 
 async def save_message(user_id: int, message_id: int):
@@ -48,23 +49,25 @@ async def del_message(chat_id: int, message_id: str, sleep_time: float = 0):
         logger.error(f'delete_last_message: chat_id: {chat_id}: FAILED: message_id is None')
 
 
-async def delete_previous_messages(msg_ids: str = None, tgtype: types.CallbackQuery | types.Message = None):
+async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None, tgtype: types.CallbackQuery | types.Message = None):
     with suppress(MessageToDeleteNotFound):
-        if isinstance(tgtype, types.CallbackQuery):
-            await asyncio.sleep(MESSAGE_DELAY)
-            await tgtype.message.delete()
-            if msg_ids:
+        if tgtype:
+            if isinstance(tgtype, types.CallbackQuery):
+                await asyncio.sleep(MESSAGE_DELAY)
+                await tgtype.message.delete()
+                if msg_ids:
+                    await del_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+            elif isinstance(tgtype, types.Message) and msg_ids:
+                await asyncio.sleep(MESSAGE_DELAY)
                 await del_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
-        elif isinstance(tgtype, types.Message) and msg_ids:
+        elif by_user_id:
             await asyncio.sleep(MESSAGE_DELAY)
-            await del_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+            await del_message(by_user_id, await get_last_message(by_user_id), MESSAGE_DELAY)
 
 
 async def get_last_message(user_id: int):
-    res = await fetchone('''SELECT last_message_id FROM bot.temp WHERE user_id = $1''', [user_id])
-    msg_id = None
-    if res:
-        msg_id = res['last_message_id'] if len(res) > 0 else None
-        if DEBUG_MODE:
-            logger.info(f"get_last_message: user_id: {user_id}: message_id: {msg_id}")
+    res = await fetchone_temp(user_id)
+    msg_id = res['last_message_id'] if res and len(res) > 0 else None
+    if DEBUG_MODE:
+        logger.info(f"get_last_message: user_id: {user_id}: message_id: {msg_id}")
     return msg_id
