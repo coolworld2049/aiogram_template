@@ -1,3 +1,5 @@
+CREATE DATABASE test OWNER admin;
+CREATE SCHEMA bot;
 SET SCHEMA 'bot';
 
 DELETE FROM pg_type WHERE typname = 'base_role';

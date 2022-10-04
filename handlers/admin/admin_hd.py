@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 
 from config import admin_commands
 from core import dp, bot
-from data.database.db_api import is_admin
+from data.database.db_api import user_is_admin
 from filters.callback_filters import admin_cb
 from keyboards.admin.admin_kb import admin_items_management_message_IK, admin_panel_message_IK, \
     admin_add_item_controller, admin_delete_item_controller, admin_update_item_controller
@@ -22,7 +22,7 @@ def reg_admin_handlers():
 
 @dp.message_handler(commands=['admin'])
 async def admin(message: types.Message):
-    if await is_admin(message.from_user.id):
+    if await user_is_admin(message.from_user.id):
         await set_my_commands(users_id=message.from_user.id, command_list=admin_commands)
         await admin_panel_message_IK(message.from_user.id)
 

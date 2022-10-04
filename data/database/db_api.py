@@ -3,7 +3,7 @@ from datetime import datetime
 from aiogram.types import User
 
 from config import ADMINS
-from core import logger
+from core import logger, bot
 from data.database.database import executeone, fetchone, fetchmany
 from states.UserStates import UserStates
 
@@ -35,6 +35,21 @@ async def update_user(user: User, f_name: str, l_name: str):
     if not result:
         logger.info(f"update_user: CONFLICT")
     return result
+
+
+async def user_is_admin(user_id: int):
+    users = [await fetchone_user(user_id)]
+    if len(users) != 0:
+        for us in users:
+            query = '''SELECT bot.upsert_table_user($1, $2)'''
+            if us and us['username'] in ADMINS:
+                if us['is_admin'] is False or us['is_admin'] is None:
+                    await bot.send_message(user_id, f"""Вы назначены администратором""")
+                await executeone(query, [user_id, True])
+                return True
+            else:
+                await executeone(query, [user_id, False])
+                return False
 
 
 async def fetchone_user(user_id: int):
@@ -105,16 +120,3 @@ async def check_user_active_orders(user_id: int):
 
     return {'customer_has_orders': True if customer_has_orders['count'] else False,
             'contractor_has_orders': True if contractor_has_orders['count'] else False}
-
-
-async def is_admin(user_id: int):
-    users = [await fetchone_user(user_id)]
-    if len(users) != 0:
-        for us in users:
-            query = '''SELECT bot.upsert_table_user($1, $2)'''
-            if us['username'] in ADMINS:
-                await executeone(query, [user_id, True])
-                return True
-            else:
-                await executeone(query, [user_id, False])
-                return False

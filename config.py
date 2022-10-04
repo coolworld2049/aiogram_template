@@ -57,3 +57,4 @@ admin_commands = \
 registration_menu_TEXT = 'Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию.'
 main_menu_TEXT = """Вы находитесь в главном меню."""
 
+help_TEXT = 'support text'

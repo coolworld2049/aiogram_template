@@ -4,29 +4,25 @@ from aiogram.utils.exceptions import ChatNotFound
 
 from config import base_commands, admin_commands
 from core import logger, bot
-from data.database.db_api import is_admin, fetchall_user
+from data.database.db_api import user_is_admin, fetchall_user_ids
 
 
-async def set_my_commands(users_id: int = None, command: str = None, description: str = None,
-                          command_list: list[dict[str, str]] = None):
+async def set_my_commands(users_id: int = None, command_list: list[dict[str, str]] = None):
     if not users_id:
-        users = await fetchall_user()
+        users = await fetchall_user_ids()
     else:
         users = [users_id]
     if users:
-        for us in users:
+        for us_id in users:
             list_of_base_commands = [types.BotCommand(x['command'], x['description']) for x in base_commands]
-            scope = bot_command_scope.BotCommandScopeChat(chat_id=str(us))
+            scope = bot_command_scope.BotCommandScopeChat(chat_id=str(us_id))
             try:
                 _current_commands = await bot.get_my_commands(scope=scope)
                 current_commands = [x['command'] for x in _current_commands]
             except ChatNotFound:
                 current_commands = None
-            if command and description:
-                list_of_base_commands.append(types.BotCommand(command, description))
-                await bot.set_my_commands(list_of_base_commands, scope=scope)
-            if command_list and current_commands:
-                is_adm = await is_admin(us)
+            if command_list:
+                is_adm = await user_is_admin(us_id)
                 if not is_adm:
                     new = command_list
                 else:
