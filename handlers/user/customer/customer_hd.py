@@ -12,8 +12,7 @@ def reg_contractor_handlers():
 
 @dp.callback_query_handler(customer_cb.filter(section='account'), state='*')
 async def customer_account(callback_query: types.CallbackQuery):
-    msg_ids = callback_query.data.split('_')[-1]
-    await delete_previous_messages(msg_ids=msg_ids, tgtype=callback_query)
+    await delete_previous_messages(tgtype=callback_query)
     await customer_account_message_IK(callback_query.from_user.id)
 
 

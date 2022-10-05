@@ -68,13 +68,19 @@ sudo nano /etc/systemd/system/bot.service;
   CREATE schema bot;
   SET schema 'bot';
   ALTER USER postgres PASSWORD 'YOUR_PASSWORD';
-  \i /tmp/bot.sql;
+  ```
+  ```
+  \i /tmp/bot.sql
+  ```
+  ```
   COPY bot.country FROM '/tmp/country.csv' DELIMITER ',' CSV HEADER;
   COPY bot.airport FROM '/tmp/airport.csv' DELIMITER ',' CSV HEADER;
+  ```
+  ```
   \q
-  
-  exit;
-  clear;
+  ```
+  ```
+  exit && clear;
   ```
 
 - **systemctl commands**

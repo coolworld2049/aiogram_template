@@ -1,4 +1,4 @@
-from handlers.admin.admin_hd import reg_admin_handlers
+from models.admin.model import adminModel
 from handlers.commands.get_logs import reg_get_logs_handler
 from handlers.commands.help import reg_help_handler
 from handlers.commands.start import reg_start_handlers
@@ -11,7 +11,7 @@ from utils.pagination import reg_pagination_handlers
 def setup_handlers():
     reg_start_handlers()
     reg_help_handler()
-    reg_admin_handlers()
+    adminModel.get_admin_handlers()
     reg_get_logs_handler()
     reg_common_handlers()
     reg_contractor_handlers()

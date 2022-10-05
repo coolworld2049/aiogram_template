@@ -4,8 +4,8 @@ from aiogram import types
 
 from config import MESSAGE_DELAY, registration_menu_TEXT, main_menu_TEXT
 from core import bot
-from data.database.db_api import fetchone_user
-from filters.callback_filters import back_cb, reg_cb, common_cb
+from models.database.db_api import fetchone_user
+from filters.callback_filters import back_cb, reg_user_cb, common_cb
 from utils.chat_mgmt import save_message, del_message, get_last_message
 
 
@@ -58,7 +58,7 @@ async def navigation_menu(user_id: int, custom_cb: str = None, direction: str = 
 async def registration_menu_message_IK(user_id: int):
     await del_message(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     IK = types.InlineKeyboardMarkup(row_width=2).add(
-        types.InlineKeyboardButton('Регистрация', callback_data=reg_cb.new()))
+        types.InlineKeyboardButton('Регистрация', callback_data=reg_user_cb.new()))
     message = await bot.send_message(user_id, registration_menu_TEXT, reply_markup=IK)
     await save_message(user_id, message.message_id)
 

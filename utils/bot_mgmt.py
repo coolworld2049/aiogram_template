@@ -4,7 +4,7 @@ from aiogram.utils.exceptions import ChatNotFound
 
 from config import base_commands, admin_commands
 from core import logger, bot
-from data.database.db_api import user_is_admin, fetchall_user_ids
+from models.database.db_api import user_is_admin, fetchall_user_ids
 
 
 async def set_my_commands(users_id: int = None, command_list: list[dict[str, str]] = None):
@@ -22,8 +22,7 @@ async def set_my_commands(users_id: int = None, command_list: list[dict[str, str
             except ChatNotFound:
                 current_commands = None
             if command_list:
-                is_adm = await user_is_admin(us_id)
-                if not is_adm:
+                if not await user_is_admin(us_id):
                     new = command_list
                 else:
                     new = admin_commands

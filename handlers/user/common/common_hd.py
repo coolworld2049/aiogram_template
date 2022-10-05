@@ -15,18 +15,17 @@ def reg_common_handlers():
 
 @dp.callback_query_handler(common_cb.filter(), state='*')
 async def my_account(callback_query: types.CallbackQuery):
+    await delete_previous_messages(tgtype=callback_query)
     await account_menu_message_IK(callback_query.from_user.id)
 
 
 @dp.callback_query_handler(back_cb.filter(to='account'), state='*')
 async def back_to_account(callback_query: types.CallbackQuery):
-    msg_ids = callback_query.data.split('_')[-1]
-    await delete_previous_messages(msg_ids=msg_ids, tgtype=callback_query)
+    await delete_previous_messages(tgtype=callback_query)
     await account_menu_message_IK(callback_query.from_user.id)
 
 
 @dp.callback_query_handler(back_cb.filter(to='menu'), state='*')
 async def back_to_menu(callback_query: types.CallbackQuery):
-    msg_ids = callback_query.data.split('_')[-1]
-    await delete_previous_messages(msg_ids=msg_ids, tgtype=callback_query)
+    await delete_previous_messages(tgtype=callback_query)
     await main_menu_message_IK(callback_query.from_user.id)

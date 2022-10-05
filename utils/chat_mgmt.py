@@ -5,13 +5,12 @@ from aiogram import types
 from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFound, MessageIdentifierNotSpecified
 
 from config import DEBUG_MODE, MESSAGE_DELAY
-from core import bot, logger
-from data.database.database import executeone
-from data.database.db_api import fetchone_temp
+from core import bot, logger, asyncPostgresModel
+from models.database.db_api import fetchone_temp
 
 
 async def save_message(user_id: int, message_id: int):
-    await executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
+    await asyncPostgresModel.executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
     if DEBUG_MODE:
         logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
@@ -49,7 +48,8 @@ async def del_message(chat_id: int, message_id: str, sleep_time: float = 0):
         logger.error(f'delete_last_message: chat_id: {chat_id}: FAILED: message_id is None')
 
 
-async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None, tgtype: types.CallbackQuery | types.Message = None):
+async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None,
+                                   tgtype: types.CallbackQuery | types.Message = None):
     with suppress(MessageToDeleteNotFound):
         if tgtype:
             if isinstance(tgtype, types.CallbackQuery):
@@ -60,9 +60,12 @@ async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None, 
             elif isinstance(tgtype, types.Message) and msg_ids:
                 await asyncio.sleep(MESSAGE_DELAY)
                 await del_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
-        elif by_user_id:
+        if by_user_id:
             await asyncio.sleep(MESSAGE_DELAY)
-            await del_message(by_user_id, await get_last_message(by_user_id), MESSAGE_DELAY)
+            if not msg_ids:
+                await del_message(by_user_id, await get_last_message(by_user_id), MESSAGE_DELAY)
+            else:
+                await del_message(by_user_id, msg_ids, MESSAGE_DELAY)
 
 
 async def get_last_message(user_id: int):

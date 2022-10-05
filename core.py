@@ -7,7 +7,8 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aioschedule import Scheduler
 
-from config import REDIS_CONFIG, USE_REDIS
+from config import REDIS_CONFIG, USE_REDIS, PG_DSN
+from models.database.model import AsyncPostgresModel
 from utils.logger_settings import custom_logger
 from utils.throttling import ThrottlingMiddleware
 
@@ -26,8 +27,8 @@ dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(ThrottlingMiddleware())
 dp.middleware.setup(LoggingMiddleware(logger))
 
+# ---Database
+asyncPostgresModel = AsyncPostgresModel(PG_DSN)
+
 # ---Scheduler
 scheduler = Scheduler()
-
-
-
