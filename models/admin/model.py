@@ -3,19 +3,18 @@ import typing
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import admin_commands, admin_items_mgmt_actionADD_TEXT_pre, admin_items_mgmt_actionUPDATE_TEXT_pre, \
+from config import admin_items_mgmt_actionADD_TEXT_pre, admin_items_mgmt_actionUPDATE_TEXT_pre, \
     admin_items_mgmt_actionDELETE_TEXT_pre
 from config import admin_panel_TEXT, admin_panel_BTN_TEXT, admin_items_mgmt_message_IK_TEXT, \
     admin_items_mgmt_message_IK_TEXT_error
 from config import user_state_incorrect_input_TEXT, admin_items_mgmt_actionADD_TEXT_past, \
     admin_items_mgmt_actionUPDATE_TEXT_past, admin_items_mgmt_actionDELETE_TEXT_past
 from core import dp, bot
-from models.database.db_api import user_is_admin
 from filters.callback_filters import admin_cb
 from filters.command_filters import command_admin
 from filters.command_filters import command_cancel
 from states.AdminStates import AdminStates
-from utils.bot_mgmt import set_my_commands
+from utils.bot_mgmt import appoint_admin
 from utils.chat_mgmt import delete_previous_messages, save_message
 
 
@@ -25,8 +24,7 @@ class AdminPanel:
     @dp.message_handler(command_admin)
     async def admin_reg(message: types.Message):
         await delete_previous_messages(tgtype=message)
-        if await user_is_admin(message.from_user.id):
-            await set_my_commands(users_id=message.from_user.id, command_list=admin_commands)
+        if await appoint_admin(message.from_user.id, message):
             await AdminModel.admin_panel_message_IK(message.from_user.id)
 
     @staticmethod

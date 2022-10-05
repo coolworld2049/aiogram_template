@@ -1,26 +1,31 @@
-import json
 import os
 
 from filters.command_filters import command_cancel
 
-ADMINS = ["I13rsnwhy"]  # nick without @
+timezone = "Europe/Moscow"
 
-DEBUG_MODE = True
-USE_REDIS = False
+ADMINS = {"alex3000": "qwerty"}  # <username>: <passphrase>
+
+DEBUG_MODE = False
 USE_LOCAL_SERVER = False
-USE_SCHEDULER = False
+USE_REDIS = True
+USE_SCHEDULER = True
+
+MESSAGE_DELAY = 0.2  # greater than zero
+ITEMS_PER_PAGE = 3
 
 NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для всех пользователей
 NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
 
-PATH_TO_LOG_FILE = "log.log"
+DEFAULT_RATE_LIMIT = .50
 
 REDIS_CONFIG = {
     "host": "localhost",
     "port": 6379,
     "db": 15,
     "pool_size": 100000,
-    "prefix": "my_fsm_key"
+    "state_ttl": 5,  # 5 min
+    "data_ttl": 1800,  # 30 min
 }
 
 PG_CONFIG = {
@@ -31,18 +36,10 @@ PG_CONFIG = {
     "password": os.environ["PGADMINPASS"],
 }
 
-PG_CODEC = {
-    "typename": "json",
-    "encoder": json.dumps,
-    "decoder": json.loads,
-    "schema": "pg_catalog"
-}
-
 PG_DSN = f"postgresql://{PG_CONFIG['user']}:{PG_CONFIG['password']}" \
          f"@{PG_CONFIG['host']}:{PG_CONFIG['port']}/{PG_CONFIG['database']}"
 
-MESSAGE_DELAY = 0.1  # greater than zero
-ITEMS_PER_PAGE = 3
+PATH_TO_LOG_FILE = "log.log"
 
 base_commands = \
     [
@@ -56,6 +53,7 @@ admin_commands = \
         {"command": "get_logs", "description": "журнал событий"}
     ]
 
+
 registration_menu_TEXT = "Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию."
 main_menu_TEXT = """Вы находитесь в главном меню."""
 
@@ -65,7 +63,6 @@ user_registration_TEXT = "Введите ваше Имя Фамилия (При�
 
 user_state_finish_TEXT = "Данные сохранены"
 user_state_incorrect_input_TEXT = "Неправильный формат ввода"
-
 
 admin_panel_TEXT = 'Админ панель'
 admin_panel_BTN_TEXT = 'Управление элементами'
@@ -81,3 +78,18 @@ admin_items_mgmt_actionDELETE_TEXT_pre = "DELETE ITEM." + admin_items_mgmt_ACTIO
 admin_items_mgmt_actionADD_TEXT_past = "ITEM ADDED."
 admin_items_mgmt_actionUPDATE_TEXT_past = "ITEM UPDATED."
 admin_items_mgmt_actionDELETE_TEXT_past = "ITEM DELETED."
+
+
+def account_menu_message_IK_TEXT(user):
+    return f"""Ваш аккаунт.
+
+*Имя*: {user['first_name']} {user['last_name']}
+*ID*: {user['user_id']}"""
+
+
+navigation_menu_TEXT = 'Навигация'
+navigation_BTN_back = "👈 Назад"
+navigation_BTN_back_to_menu = "👈 В меню"
+
+registration_menu_message_IK_TEXT = 'Регистрация'
+main_menu_message_IK_BTN_account_TEXT = '👤 Мой аккаунт'

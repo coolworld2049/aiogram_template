@@ -2,8 +2,7 @@ from datetime import datetime
 
 from aiogram.types import User
 
-from config import ADMINS
-from core import logger, bot, asyncPostgresModel
+from core import logger, asyncPostgresModel
 from states.UserStates import UserStates
 
 
@@ -17,9 +16,11 @@ async def save_user(user: User):
         datetime.timestamp(datetime.now())
     ]
     result = await asyncPostgresModel.executeone(query, values)
-    if not result:
-        logger.info(f"save_user: INSERT CONFLICT")
-    return result
+    if not result or len(result) == 0:
+        logger.info(f"save_user: CONFLICT")
+        return None
+    else:
+        return result
 
 
 async def update_user(user: User, f_name: str, l_name: str):
@@ -31,60 +32,47 @@ async def update_user(user: User, f_name: str, l_name: str):
         datetime.timestamp(datetime.now())
     ]
     result = await asyncPostgresModel.executeone(query, values)
-    if not result:
+    if not result or len(result) == 0:
         logger.info(f"update_user: CONFLICT")
-    return result
-
-
-async def user_is_admin(user_id: int):
-    users = [await fetchone_user(user_id)]
-    if len(users) != 0:
-        for us in users:
-            query = '''SELECT bot.upsert_table_user($1, $2)'''
-            if us and us['username'] in ADMINS:
-                if us['is_admin'] is False or us['is_admin'] is None:
-                    await bot.send_message(user_id, f"""Вы назначены администратором""")
-                await asyncPostgresModel.executeone(query, [user_id, True])
-                return True
-            else:
-                await asyncPostgresModel.executeone(query, [user_id, False])
-                return False
+        return None
+    else:
+        return result
 
 
 async def fetchone_user(user_id: int):
     query = '''SELECT * FROM bot."user" WHERE user_id = $1'''
     result = await asyncPostgresModel.fetchone(query, [user_id])
-    if not result:
+    if not result or len(result) == 0:
         logger.info(f"fetchone_user: CONFLICT")
-        return result
+        return None
     else:
         return result
 
 
 async def fetchall_user():
     result = await asyncPostgresModel.fetchmany('''SELECT * FROM bot."user"''')
-    if not result:
-        logger.info(f"fetcall_user: CONFLICT")
-        return result
+    if not result or len(result) == 0:
+        logger.info(f"fetchall_user: CONFLICT")
+        return None
     else:
         return result
 
 
 async def fetchall_user_ids():
     result = await asyncPostgresModel.fetchmany('''SELECT user_id FROM bot."user"''')
-    if not result:
-        logger.info(f"fetcall_user: CONFLICT")
-        return result
+    if not result or len(result) == 0:
+        logger.info(f"fetchall_user_ids: CONFLICT")
+        return None
     else:
-        return [x['user_id'] for x in result]
+        return result
 
 
 async def fetchone_order(order_id: int):
     query = '''SELECT * FROM bot."order" WHERE id = $1'''
     result = await asyncPostgresModel.fetchone(query, [order_id])
-    if not result:
+    if not result or len(result) == 0:
         logger.info(f"fetchone_order: CONFLICT")
-        return result
+        return None
     else:
         return result
 
@@ -98,9 +86,9 @@ async def fetchone_last_order_id():
 async def fetchone_temp(user_id: int):
     query = '''SELECT last_message_id FROM bot.temp WHERE user_id = $1'''
     result = await asyncPostgresModel.fetchone(query, [user_id])
-    if not result:
-        logger.info(f"fetchone_user: CONFLICT")
-        return result
+    if not result or len(result) == 0:
+        logger.info(f"fetchone_temp: CONFLICT")
+        return None
     else:
         return result
 
@@ -119,3 +107,4 @@ async def check_user_active_orders(user_id: int):
 
     return {'customer_has_orders': True if customer_has_orders['count'] else False,
             'contractor_has_orders': True if contractor_has_orders['count'] else False}
+

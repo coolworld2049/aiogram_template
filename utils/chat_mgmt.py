@@ -15,15 +15,14 @@ async def save_message(user_id: int, message_id: int):
         logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
 
-async def del_message(chat_id: int, message_id: str, sleep_time: float = 0):
+async def del_message(chat_id: int, message_id: str, delay: float = 0):
     """
     :param chat_id:
     :param message_id: "123,124,125" or "123-125" or "123"
-    :param sleep_time:
-    :return: message_action_delay from config.py
+    :param delay:
     """
     if message_id:
-        await asyncio.sleep(sleep_time)
+        await asyncio.sleep(delay)
         with suppress(MessageCantBeDeleted, MessageToDeleteNotFound, MessageIdentifierNotSpecified, ValueError,
                       KeyError):
             if '-' in message_id:

@@ -1,12 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import user_registration_TEXT, user_state_finish_TEXT
+from config import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT
 from core import dp, bot
-from models.database.db_api import save_user, update_user
 from filters.callback_filters import reg_user_cb
 from filters.command_filters import command_start
 from keyboards.user.common.common_inline_kb import base_navigation, main_menu_message_IK
+from models.database.db_api import save_user, update_user
 from states.UserStates import UserStates
 from utils.chat_mgmt import delete_previous_messages
 
@@ -43,7 +43,7 @@ async def set_name(message: types.Message, state: FSMContext):
             await state.finish()
             await main_menu_message_IK(message.from_user.id)
         else:
-            await message.answer('Неправильный формат ввода')
-        if message.get_command() == '/start':
+            await message.answer(user_state_incorrect_input_TEXT)
+        if await command_start.check(message):
             await state.finish()
             await base_navigation(message.from_user.id)
