@@ -30,13 +30,12 @@ CREATE TABLE IF NOT EXISTS bot.order (
    id BIGINT PRIMARY KEY,
    contractor_id  BIGINT REFERENCES bot.user(user_id) NULL,
    customer_id  BIGINT REFERENCES bot.user(user_id) NULL,
-   "role" base_role,
    state user_state,
    create_time FLOAT
 );
 
 CREATE TABLE IF NOT EXISTS bot.temp (
-   user_id BIGINT PRIMARY KEY,
+   user_id BIGINT PRIMARY KEY REFERENCES bot.user(user_id),
    last_message_id TEXT
 );
 
