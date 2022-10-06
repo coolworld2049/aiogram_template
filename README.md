@@ -153,6 +153,7 @@ LANGUAGE plpgsql;
     ln -s /etc/nginx/sites-available/www.testbot.com /etc/nginx/sites-enabled/;
     ```
     ```
+    sudo nano /etc/nginx/nginx.conf;
     Uncomment: server_names_hash_bucket_size 64;
     ```
     ```
