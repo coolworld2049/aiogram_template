@@ -109,40 +109,40 @@ LANGUAGE plpgsql;
   - **Setting Up Server Blocks**
   
     ```
-    mkdir -p /var/www/1039835-ch37929.tmweb.ru/html;
-    chown -R $USER:$USER /var/www/1039835-ch37929.tmweb.ru/html;
-    chmod -R 755 /var/www/1039835-ch37929.tmweb.ru;
+    mkdir -p /var/www/REVERSE_IP/html;
+    chown -R $USER:$USER /var/www/REVERSE_IP/html;
+    chmod -R 755 /var/www/REVERSE_IP;
     ```
     
     - *index.html*
       ```
-      nano /var/www/1039835-ch37929.tmweb.ru/html/index.html
+      nano /var/www/REVERSE_IP/html/index.html
       ```
       ```
       <html>
           <head>
-              <title>Welcome to 1039835-ch37929.tmweb.ru!</title>
+              <title>Welcome to REVERSE_IP!</title>
           </head>
           <body>
-              <h1>Success!  The 1039835-ch37929.tmweb.ru server block is working!</h1>
+              <h1>Success!  The REVERSE_IP server block is working!</h1>
           </body>
       </html>
       ```
       
-    - *1039835-ch37929.tmweb.ru*
+    - *REVERSE_IP*
 
       ```
-      nano /etc/nginx/sites-available/1039835-ch37929.tmweb.ru
+      nano /etc/nginx/sites-available/REVERSE_IP
       ```
       ```
       server {
               listen 80;
               listen [::]:80;
 
-              root /var/www/1039835-ch37929.tmweb.ru/html;
+              root /var/www/REVERSE_IP/html;
               index index.html index.htm index.nginx-debian.html;
 
-              server_name 1039835-ch37929.tmweb.ru www.1039835-ch37929.tmweb.ru;
+              server_name REVERSE_IP www.REVERSE_IP;
 
               location / {
                       try_files $uri $uri/ =404;
@@ -150,7 +150,7 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    ln -s /etc/nginx/sites-available/1039835-ch37929.tmweb.ru /etc/nginx/sites-enabled/;
+    ln -s /etc/nginx/sites-available/REVERSE_IP /etc/nginx/sites-enabled/;
     ```
     ```
     sudo nano /etc/nginx/nginx.conf;
@@ -161,7 +161,7 @@ LANGUAGE plpgsql;
     systemctl restart nginx;
     ```
     ```
-    open in web browser on local machine: http://1039835-ch37929.tmweb.ru
+    open in web browser on local machine: http://REVERSE_IP
     ```
     
   - **Nginx files and directories**
@@ -185,12 +185,12 @@ LANGUAGE plpgsql;
   sudo apt remove certbot;
   sudo snap install --classic certbot;
   sudo ln -s /snap/bin/certbot /usr/bin/certbot;
-  sudo nano /etc/nginx/sites-available/example.com;
+  sudo nano /etc/nginx/sites-available/REVERSE_IP;
   ```
-  - *example.com*
+  - *REVERSE_IP*
     
     ```
-    server_name example.com www.example.com;
+    server_name REVERSE_IP www.REVERSE_IP;
     ```
   ```
   nginx -t;
@@ -201,7 +201,7 @@ LANGUAGE plpgsql;
   sudo ufw delete allow 'Nginx HTTP';
   ```
   ```
-  sudo certbot --nginx -d example.com -d www.example.com;
+  sudo certbot --nginx -d REVERSE_IP -d www.REVERSE_IP;
   sudo systemctl status snap.certbot.renew.service;
   sudo certbot renew --dry-run;
   ```
