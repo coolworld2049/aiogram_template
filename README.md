@@ -108,9 +108,9 @@ LANGUAGE plpgsql;
   
   - **Setting Up Server Blocks**. `login as user: bot`**\!**
     ```
-    mkdir -p /var/www/bot/html;
-    chown -R $USER:$USER /var/www/bot/html;
-    chmod -R 755 /var/www/bot;
+    sudo mkdir -p /var/www/bot/html;
+    sudo chown -R $USER:$USER /var/www/bot/html;
+    sudo chmod -R 755 /var/www/bot;
     ```
     
     - *index.html*
@@ -131,7 +131,7 @@ LANGUAGE plpgsql;
     - *server*
 
       ```
-      nano /etc/nginx/sites-available/bot
+      sudo nano /etc/nginx/sites-available/bot
       ```
       ```
       server {
@@ -149,14 +149,14 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    ln -s /etc/nginx/sites-available/bot /etc/nginx/sites-enabled/;
+    sudo ln -s /etc/nginx/sites-available/bot /etc/nginx/sites-enabled/;
     ```
     ```
     Uncomment: server_names_hash_bucket_size 64;
     ```
     ```
-    nginx -t;
-    systemctl restart nginx;
+    sudo nginx -t;
+    sudo systemctl restart nginx;
     ```
     ```
     open in web browser on local machine: http://bot
