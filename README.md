@@ -106,42 +106,43 @@ LANGUAGE plpgsql;
   forward port: from local machine: 127.0.0.1:5000 to remote server: 127.0.0.1:80
   ```
   
-  - **Setting Up Server Blocks**. `login as user: bot`**\!**
+  - **Setting Up Server Blocks**
+  
     ```
-    sudo mkdir -p /var/www/bot/html;
-    sudo chown -R $USER:$USER /var/www/bot/html;
-    sudo chmod -R 755 /var/www/bot;
+    mkdir -p /var/www/www.testbot.com/html;
+    chown -R $USER:$USER /var/www/www.testbot.com/html;
+    chmod -R 755 /var/www/www.testbot.com;
     ```
     
     - *index.html*
       ```
-      nano /var/www/bot/html/index.html
+      nano /var/www/www.testbot.com/html/index.html
       ```
       ```
       <html>
           <head>
-              <title>Welcome to bot!</title>
+              <title>Welcome to www.testbot.com!</title>
           </head>
           <body>
-              <h1>Success!  The bot server block is working!</h1>
+              <h1>Success!  The www.testbot.com server block is working!</h1>
           </body>
       </html>
       ```
       
-    - *server*
+    - *www.testbot.com*
 
       ```
-      sudo nano /etc/nginx/sites-available/bot
+      nano /etc/nginx/sites-available/www.testbot.com
       ```
       ```
       server {
               listen 80;
               listen [::]:80;
 
-              root /var/www/bot/html;
+              root /var/www/www.testbot.com/html;
               index index.html index.htm index.nginx-debian.html;
 
-              server_name bot www.bot;
+              server_name www.testbot.com www.www.testbot.com;
 
               location / {
                       try_files $uri $uri/ =404;
@@ -149,18 +150,17 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    sudo ln -s /etc/nginx/sites-available/bot /etc/nginx/sites-enabled/;
+    ln -s /etc/nginx/sites-available/www.testbot.com /etc/nginx/sites-enabled/;
     ```
     ```
-    sudo nano /etc/nginx/nginx.conf;
     Uncomment: server_names_hash_bucket_size 64;
     ```
     ```
-    sudo nginx -t;
-    sudo systemctl restart nginx;
+    nginx -t;
+    systemctl restart nginx;
     ```
     ```
-    open in web browser on local machine: http://bot
+    open in web browser on local machine: http://www.testbot.com
     ```
     
   - **Nginx files and directories**
