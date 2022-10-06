@@ -66,6 +66,147 @@ LANGUAGE plpgsql;
 
 ## Deploy to VDS [Ubuntu 22.04]
 
+### `CI/CD`
+- **Install Jenkins**
+  ```
+  sudo apt install default-jdk;
+  wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo gpg --dearmor -o /usr/share/keyrings/jenkins.gpg;
+  sudo sh -c 'echo deb [signed-by=/usr/share/keyrings/jenkins.gpg] http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list';
+  sudo apt update;
+  sudo apt install jenkins;
+  sudo systemctl start jenkins.service;
+  sudo ufw allow 8080;
+  ```
+
+  ```
+  forward port: from local machine: 127.0.0.1:8080 to remote server: 127.0.0.1:8080
+  open in web browser on local machine: http://127.0.0.1:8080
+  Unlock Jenkins
+  ```
+  
+  ```
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+  copy&paste password
+  ...
+  Instance Configuration: http://VDS_IP:8080/
+  ```
+  
+  ```
+  select: "Install suggested plugins"
+  ```
+- **Install Nginx**  
+
+  ```
+  apt update;
+  apt install nginx;
+  ufw allow 'Nginx HTTP';
+  ```
+  
+- **Configure Jenkins with SSL Using an Nginx Reverse Proxy**
+
+  ```
+  forward port: from local machine: 127.0.0.1:5000 to remote server: 127.0.0.1:80
+  ```
+  
+  - **Setting Up Server Blocks**
+  
+    ```
+    mkdir -p /var/www/your_domain/html;
+    chown -R $USER:$USER /var/www/your_domain/html;
+    chmod -R 755 /var/www/your_domain;
+    ```
+    
+    - *index.html*
+      ```
+      nano /var/www/your_domain/html/index.html
+      ```
+      ```
+      <html>
+          <head>
+              <title>Welcome to your_domain!</title>
+          </head>
+          <body>
+              <h1>Success!  The your_domain server block is working!</h1>
+          </body>
+      </html>
+      ```
+      
+    - *server*
+
+      ```
+      nano /etc/nginx/sites-available/your_domain
+      ```
+      ```
+      server {
+              listen 80;
+              listen [::]:80;
+
+              root /var/www/your_domain/html;
+              index index.html index.htm index.nginx-debian.html;
+
+              server_name your_domain www.your_domain;
+
+              location / {
+                      try_files $uri $uri/ =404;
+              }
+      }
+      ```
+    ```
+    ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/;
+    ```
+    ```
+    Uncomment: server_names_hash_bucket_size 64;
+    ```
+    ```
+    nginx -t;
+    systemctl restart nginx;
+    ```
+    ```
+    open in web browser on local machine: http://your_domain
+    ```
+    
+  - **Nginx files and directories**
+  
+    - **Content**
+      `/var/www/html`: The actual web content, which by default only consists of the default Nginx page you saw earlier, is served out of the `/var/www/html`                 directory. This can be changed by altering Nginx configuration files.
+    - **Server Configuration**
+      - `/etc/nginx`: The Nginx configuration directory. All of the Nginx configuration files reside here.
+      - `/etc/nginx/nginx.conf`: The main Nginx configuration file. This can be modified to make changes to the Nginx global configuration.
+      - `/etc/nginx/sites-available/`: The directory where per-site server blocks can be stored. Nginx will not use the configuration files found in this directory             unless they are linked to the sites-enabled directory. Typically, all server block configuration is done in this directory, and then enabled by linking to the         other directory.
+      - `/etc/nginx/sites-enabled/`: The directory where enabled per-site server blocks are stored. Typically, these are created by linking to configuration files             found in the sites-available directory.
+      - `/etc/nginx/snippets`: This directory contains configuration fragments that can be included elsewhere in the Nginx configuration. Potentially repeatable                 configuration segments are good candidates for refactoring into snippets.
+    - **Server Logs**
+      - `/var/log/nginx/access.log`: Every request to your web server is recorded in this log file unless Nginx is configured to do otherwise.
+      - `/var/log/nginx/error.log`: Any Nginx errors will be recorded in this log.
+  
+- **Secure Nginx with Let's Encrypt**
+  ```
+  sudo snap install core;
+  sudo snap refresh core;
+  sudo apt remove certbot;
+  sudo snap install --classic certbot;
+  sudo ln -s /snap/bin/certbot /usr/bin/certbot;
+  sudo nano /etc/nginx/sites-available/example.com;
+  ```
+  - **example.com*
+    
+    ```
+    server_name example.com www.example.com;
+    ```
+  ```
+  nginx -t;
+  systemctl restart nginx;
+  ```
+  ```
+  sudo ufw allow 'Nginx Full';
+  sudo ufw delete allow 'Nginx HTTP';
+  ```
+  ```
+  sudo certbot --nginx -d example.com -d www.example.com;
+  sudo systemctl status snap.certbot.renew.service;
+  sudo certbot renew --dry-run;
+  ```
+
 ### `root` user
 
 ```
@@ -77,6 +218,9 @@ apt install python3-venv;
 apt install python3-pip;
 apt install postgresql postgresql-contrib;
 apt install redis;
+sudo ufw allow ssh;
+sudo ufw allow OpenSSH;
+sudo ufw enable;
 ```
 
 ### `bot` user
