@@ -152,6 +152,7 @@ LANGUAGE plpgsql;
     sudo ln -s /etc/nginx/sites-available/bot /etc/nginx/sites-enabled/;
     ```
     ```
+    sudo nano /etc/nginx/nginx.conf;
     Uncomment: server_names_hash_bucket_size 64;
     ```
     ```
