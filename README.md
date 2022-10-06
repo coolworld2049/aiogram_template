@@ -1,86 +1,21 @@
-## PostgresQL database
-![Diagram](https://github.com/coolworld2049/aiogram-template/blob/master/bot.png)
-```
-CREATE DATABASE test OWNER admin;
-CREATE SCHEMA bot;
-SET SCHEMA 'bot';
-
-DELETE FROM pg_type WHERE typname = 'base_role';
-DELETE FROM pg_type WHERE typname = 'user_state';
-
-CREATE TYPE base_role AS ENUM ('customer', 'contractor', 'admin');
-CREATE TYPE user_state AS ENUM (
-            'UserStates:creating',
-            'UserStates:accepted',
-            'UserStates:progress',
-            'UserStates:completed',
-            'UserStates:terminated'
-        );
-
-CREATE TABLE IF NOT EXISTS bot.user (
-   user_id BIGINT PRIMARY KEY NOT NULL UNIQUE,
-   username TEXT,
-   first_name TEXT,
-   last_name TEXT,
-   state user_state,
-   "role" base_role,
-   is_admin BOOLEAN,
-   last_seen FLOAT
-);
-
-
-CREATE TABLE IF NOT EXISTS bot.order (
-   id BIGINT PRIMARY KEY,
-   contractor_id  BIGINT REFERENCES bot.user(user_id) NULL,
-   customer_id  BIGINT REFERENCES bot.user(user_id) NULL,
-   "role" base_role,
-   state user_state,
-   create_time FLOAT
-);
-
-CREATE TABLE IF NOT EXISTS bot.temp (
-   user_id BIGINT PRIMARY KEY,
-   last_message_id TEXT
-);
-
-CREATE OR REPLACE FUNCTION bot.upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
-BEGIN
-    UPDATE bot.temp SET last_message_id = $2 WHERE user_id = $1;
-    IF NOT FOUND THEN
-        INSERT INTO bot.temp values ($1, $2);
-    END IF;
-END;
-$$
-LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION bot.upsert_table_user(us_id BIGINT, is_admin BOOLEAN) RETURNS VOID AS $$
-BEGIN
-    UPDATE bot.user SET is_admin = $2 WHERE user_id = $1;
-    IF NOT FOUND THEN
-        INSERT INTO bot.user values ($1, $2);
-    END IF;
-END;
-$$
-LANGUAGE plpgsql;
-```
-
 ## Deploy to VDS [Ubuntu 22.04]
 
-### CI/CD
-- **Install Docker**
-  ```
-  sudo apt update;
-  sudo apt install apt-transport-https ca-certificates curl software-properties-common;
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null;
-  sudo apt update;
-  apt-cache policy docker-ce;
-  sudo apt install docker-ce;
-  sudo systemctl status docker;
-  sudo usermod -aG docker ${USER}
-  ```
-  
-- **Install Jenkins**
+### `root` user
+
+```
+sudo apt update && sudo apt upgrade;
+adduser bot;
+usermod -aG sudo bot;
+apt install python3;
+apt install python3-venv;
+apt install python3-pip;
+apt install postgresql postgresql-contrib;
+apt install redis;
+sudo ufw allow ssh;
+sudo ufw allow OpenSSH;
+sudo ufw enable;
+```
+#### **Install Jenkins**
   ```
   sudo apt install default-jdk;
   wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo gpg --dearmor -o /usr/share/keyrings/jenkins.gpg;
@@ -107,7 +42,7 @@ LANGUAGE plpgsql;
   ```
   select: "Install suggested plugins"
   ```
-- **Install Nginx**  
+#### **Install Nginx**  
 
   ```
   apt update;
@@ -178,6 +113,23 @@ LANGUAGE plpgsql;
     open in web browser on local machine: http://REVERSE_IP
     ```
     
+  - **Secure Nginx with Let's Encrypt**
+    ```
+    sudo snap install core;
+    sudo snap refresh core;
+    sudo apt remove certbot;
+    sudo snap install --classic certbot;
+    ```
+    ```
+    sudo ufw allow 'Nginx Full';
+    sudo ufw delete allow 'Nginx HTTP';
+    ```
+    ```
+    sudo certbot --nginx -d REVERSE_IP -d www.REVERSE_IP;
+    sudo systemctl status snap.certbot.renew.service;
+    sudo certbot renew --dry-run;
+    ```
+    
   - **Nginx files and directories**
   
     - **Content**
@@ -191,54 +143,24 @@ LANGUAGE plpgsql;
     - **Server Logs**
       - `/var/log/nginx/access.log`: Every request to your web server is recorded in this log file unless Nginx is configured to do otherwise.
       - `/var/log/nginx/error.log`: Any Nginx errors will be recorded in this log.
+      
+- **Install Docker**
+  ```
+  sudo apt update;
+  sudo apt install apt-transport-https ca-certificates curl software-properties-common;
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null;
+  sudo apt update;
+  apt-cache policy docker-ce;
+  sudo apt install docker-ce;
+  sudo systemctl status docker;
+  sudo usermod -aG docker ${USER};
+  ```
   
-- **Secure Nginx with Let's Encrypt**
-  ```
-  sudo snap install core;
-  sudo snap refresh core;
-  sudo apt remove certbot;
-  sudo snap install --classic certbot;
-  sudo ln -s /snap/bin/certbot /usr/bin/certbot;
-  ```
-  - *REVERSE_IP*
-    
-    ```
-    sudo nano /etc/nginx/sites-available/REVERSE_IP;
-    server_name REVERSE_IP www.REVERSE_IP;
-    ```
-  ```
-  nginx -t;
-  systemctl restart nginx;
-  ```
-  ```
-  sudo ufw allow 'Nginx Full';
-  sudo ufw delete allow 'Nginx HTTP';
-  ```
-  ```
-  sudo certbot --nginx -d REVERSE_IP -d www.REVERSE_IP;
-  sudo systemctl status snap.certbot.renew.service;
-  sudo certbot renew --dry-run;
-  ```
-
-### `root` user
-
-```
-sudo apt update && sudo apt upgrade;
-adduser bot;
-usermod -aG sudo bot;
-apt install python3;
-apt install python3-venv;
-apt install python3-pip;
-apt install postgresql postgresql-contrib;
-apt install redis;
-sudo ufw allow ssh;
-sudo ufw allow OpenSSH;
-sudo ufw enable;
-```
-
 ### `bot` user
 
 ```
+sudo usermod -aG docker ${USER};
 sudo mkdir -p home/bot/BOTNAME;
 sudo chown -R bot /home/bot/
 cd home/bot/BOTNAME;
@@ -313,3 +235,69 @@ sudo nano /etc/systemd/system/bot.service;
   systemctl start bot.service;
   systemctl status bot.service;
   ```
+  
+## PostgresQL database
+![Diagram](https://github.com/coolworld2049/aiogram-template/blob/master/bot.png)
+```
+CREATE DATABASE test OWNER admin;
+CREATE SCHEMA bot;
+SET SCHEMA 'bot';
+
+DELETE FROM pg_type WHERE typname = 'base_role';
+DELETE FROM pg_type WHERE typname = 'user_state';
+
+CREATE TYPE base_role AS ENUM ('customer', 'contractor', 'admin');
+CREATE TYPE user_state AS ENUM (
+            'UserStates:creating',
+            'UserStates:accepted',
+            'UserStates:progress',
+            'UserStates:completed',
+            'UserStates:terminated'
+        );
+
+CREATE TABLE IF NOT EXISTS bot.user (
+   user_id BIGINT PRIMARY KEY NOT NULL UNIQUE,
+   username TEXT,
+   first_name TEXT,
+   last_name TEXT,
+   state user_state,
+   "role" base_role,
+   is_admin BOOLEAN,
+   last_seen FLOAT
+);
+
+
+CREATE TABLE IF NOT EXISTS bot.order (
+   id BIGINT PRIMARY KEY,
+   contractor_id  BIGINT REFERENCES bot.user(user_id) NULL,
+   customer_id  BIGINT REFERENCES bot.user(user_id) NULL,
+   "role" base_role,
+   state user_state,
+   create_time FLOAT
+);
+
+CREATE TABLE IF NOT EXISTS bot.temp (
+   user_id BIGINT PRIMARY KEY,
+   last_message_id TEXT
+);
+
+CREATE OR REPLACE FUNCTION bot.upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
+BEGIN
+    UPDATE bot.temp SET last_message_id = $2 WHERE user_id = $1;
+    IF NOT FOUND THEN
+        INSERT INTO bot.temp values ($1, $2);
+    END IF;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION bot.upsert_table_user(us_id BIGINT, is_admin BOOLEAN) RETURNS VOID AS $$
+BEGIN
+    UPDATE bot.user SET is_admin = $2 WHERE user_id = $1;
+    IF NOT FOUND THEN
+        INSERT INTO bot.user values ($1, $2);
+    END IF;
+END;
+$$
+LANGUAGE plpgsql;
+```
