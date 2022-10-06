@@ -185,11 +185,11 @@ LANGUAGE plpgsql;
   sudo apt remove certbot;
   sudo snap install --classic certbot;
   sudo ln -s /snap/bin/certbot /usr/bin/certbot;
-  sudo nano /etc/nginx/sites-available/REVERSE_IP;
   ```
   - *REVERSE_IP*
     
     ```
+    sudo nano /etc/nginx/sites-available/REVERSE_IP;
     server_name REVERSE_IP www.REVERSE_IP;
     ```
   ```
