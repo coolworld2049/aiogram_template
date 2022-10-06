@@ -66,7 +66,7 @@ LANGUAGE plpgsql;
 
 ## Deploy to VDS [Ubuntu 22.04]
 
-### `CI/CD`
+### CI/CD
 - **Install Jenkins**
   ```
   sudo apt install default-jdk;
@@ -102,8 +102,6 @@ LANGUAGE plpgsql;
   ufw allow 'Nginx HTTP';
   ```
   
-- **Configure Jenkins with SSL Using an Nginx Reverse Proxy**
-
   ```
   forward port: from local machine: 127.0.0.1:5000 to remote server: 127.0.0.1:80
   ```
@@ -111,22 +109,22 @@ LANGUAGE plpgsql;
   - **Setting Up Server Blocks**
   
     ```
-    mkdir -p /var/www/your_domain/html;
-    chown -R $USER:$USER /var/www/your_domain/html;
-    chmod -R 755 /var/www/your_domain;
+    mkdir -p /var/www/bot/html;
+    chown -R $USER:$USER /var/www/bot/html;
+    chmod -R 755 /var/www/bot;
     ```
     
     - *index.html*
       ```
-      nano /var/www/your_domain/html/index.html
+      nano /var/www/bot/html/index.html
       ```
       ```
       <html>
           <head>
-              <title>Welcome to your_domain!</title>
+              <title>Welcome to bot!</title>
           </head>
           <body>
-              <h1>Success!  The your_domain server block is working!</h1>
+              <h1>Success!  The bot server block is working!</h1>
           </body>
       </html>
       ```
@@ -134,17 +132,17 @@ LANGUAGE plpgsql;
     - *server*
 
       ```
-      nano /etc/nginx/sites-available/your_domain
+      nano /etc/nginx/sites-available/bot
       ```
       ```
       server {
               listen 80;
               listen [::]:80;
 
-              root /var/www/your_domain/html;
+              root /var/www/bot/html;
               index index.html index.htm index.nginx-debian.html;
 
-              server_name your_domain www.your_domain;
+              server_name bot www.bot;
 
               location / {
                       try_files $uri $uri/ =404;
@@ -152,7 +150,7 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/;
+    ln -s /etc/nginx/sites-available/bot /etc/nginx/sites-enabled/;
     ```
     ```
     Uncomment: server_names_hash_bucket_size 64;
@@ -162,7 +160,7 @@ LANGUAGE plpgsql;
     systemctl restart nginx;
     ```
     ```
-    open in web browser on local machine: http://your_domain
+    open in web browser on local machine: http://bot
     ```
     
   - **Nginx files and directories**
@@ -170,7 +168,7 @@ LANGUAGE plpgsql;
     - **Content**
       `/var/www/html`: The actual web content, which by default only consists of the default Nginx page you saw earlier, is served out of the `/var/www/html`                 directory. This can be changed by altering Nginx configuration files.
     - **Server Configuration**
-      - `/etc/nginx`: The Nginx configuration directory. All of the Nginx configuration files reside here.
+      - `/etc/nginx`: The Nginx configuration directory. All the Nginx configuration files reside here.
       - `/etc/nginx/nginx.conf`: The main Nginx configuration file. This can be modified to make changes to the Nginx global configuration.
       - `/etc/nginx/sites-available/`: The directory where per-site server blocks can be stored. Nginx will not use the configuration files found in this directory             unless they are linked to the sites-enabled directory. Typically, all server block configuration is done in this directory, and then enabled by linking to the         other directory.
       - `/etc/nginx/sites-enabled/`: The directory where enabled per-site server blocks are stored. Typically, these are created by linking to configuration files             found in the sites-available directory.
@@ -188,7 +186,7 @@ LANGUAGE plpgsql;
   sudo ln -s /snap/bin/certbot /usr/bin/certbot;
   sudo nano /etc/nginx/sites-available/example.com;
   ```
-  - **example.com*
+  - *example.com*
     
     ```
     server_name example.com www.example.com;
