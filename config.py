@@ -4,7 +4,7 @@ from filters.command_filters import command_cancel
 
 timezone = "Europe/Moscow"
 
-ADMINS = {"alex3000": "qwerty"}  # <username>: <passphrase>
+ADMINS = {"I13rsnwhy": "qwerty"}  # <username>: <passphrase>
 
 DEBUG_MODE = False
 USE_LOCAL_SERVER = False
@@ -17,7 +17,7 @@ ITEMS_PER_PAGE = 3
 NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для всех пользователей
 NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
 
-DEFAULT_RATE_LIMIT = .50
+RATE_LIMIT = .50
 
 REDIS_CONFIG = {
     "host": "localhost",
@@ -64,6 +64,7 @@ user_registration_TEXT = "Введите ваше Имя Фамилия (При�
 user_state_finish_TEXT = "Данные сохранены"
 user_state_incorrect_input_TEXT = "Неправильный формат ввода"
 
+approve_as_admin_incorrect_passphrase_TEXT = 'Кодовое слово не совпало'
 admin_panel_TEXT = 'Админ панель'
 admin_panel_BTN_TEXT = 'Управление элементами'
 

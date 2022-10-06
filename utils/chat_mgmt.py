@@ -6,13 +6,14 @@ from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFou
 
 from config import DEBUG_MODE, MESSAGE_DELAY
 from core import bot, logger, asyncPostgresModel
-from models.database.db_api import fetchone_temp
+from models.database.db_api import fetchone_temp, fetchone_user
 
 
 async def save_message(user_id: int, message_id: int):
-    await asyncPostgresModel.executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
-    if DEBUG_MODE:
-        logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
+    if await fetchone_user(user_id):
+        await asyncPostgresModel.executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
+        if DEBUG_MODE:
+            logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
 
 async def del_message(chat_id: int, message_id: str, delay: float = 0):

@@ -31,10 +31,10 @@ class ThrottlingMiddleware(BaseMiddleware):
         self.prefix = key_prefix
         super(ThrottlingMiddleware, self).__init__()
 
+    # noinspection PyUnusedLocal
     async def on_process_message(self, message: types.Message, data: dict):
         """
         This handler is called when dispatcher receives a message
-
         :param data:
         :param message:
         """
@@ -64,7 +64,6 @@ class ThrottlingMiddleware(BaseMiddleware):
     async def message_throttled(self, message: types.Message, throttled: Throttled):
         """
         Notify user only on first exceed and notify about unlocking only on last exceed
-
         :param message:
         :param throttled:
         """

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from aiogram.types import User
 
-from core import logger, asyncPostgresModel
+from core import asyncPostgresModel
 from states.UserStates import UserStates
 
 
@@ -17,7 +17,6 @@ async def save_user(user: User):
     ]
     result = await asyncPostgresModel.executeone(query, values)
     if not result or len(result) == 0:
-        logger.info(f"save_user: CONFLICT")
         return None
     else:
         return result
@@ -33,7 +32,6 @@ async def update_user(user: User, f_name: str, l_name: str):
     ]
     result = await asyncPostgresModel.executeone(query, values)
     if not result or len(result) == 0:
-        logger.info(f"update_user: CONFLICT")
         return None
     else:
         return result
@@ -43,7 +41,6 @@ async def fetchone_user(user_id: int):
     query = '''SELECT * FROM bot."user" WHERE user_id = $1'''
     result = await asyncPostgresModel.fetchone(query, [user_id])
     if not result or len(result) == 0:
-        logger.info(f"fetchone_user: CONFLICT")
         return None
     else:
         return result
@@ -52,7 +49,6 @@ async def fetchone_user(user_id: int):
 async def fetchall_user():
     result = await asyncPostgresModel.fetchmany('''SELECT * FROM bot."user"''')
     if not result or len(result) == 0:
-        logger.info(f"fetchall_user: CONFLICT")
         return None
     else:
         return result
@@ -61,7 +57,6 @@ async def fetchall_user():
 async def fetchall_user_ids():
     result = await asyncPostgresModel.fetchmany('''SELECT user_id FROM bot."user"''')
     if not result or len(result) == 0:
-        logger.info(f"fetchall_user_ids: CONFLICT")
         return None
     else:
         return result
@@ -71,7 +66,6 @@ async def fetchone_order(order_id: int):
     query = '''SELECT * FROM bot."order" WHERE id = $1'''
     result = await asyncPostgresModel.fetchone(query, [order_id])
     if not result or len(result) == 0:
-        logger.info(f"fetchone_order: CONFLICT")
         return None
     else:
         return result
@@ -87,7 +81,6 @@ async def fetchone_temp(user_id: int):
     query = '''SELECT last_message_id FROM bot.temp WHERE user_id = $1'''
     result = await asyncPostgresModel.fetchone(query, [user_id])
     if not result or len(result) == 0:
-        logger.info(f"fetchone_temp: CONFLICT")
         return None
     else:
         return result
@@ -96,12 +89,12 @@ async def fetchone_temp(user_id: int):
 async def check_user_active_orders(user_id: int):
     values = [user_id, UserStates.accepted.state, UserStates.progress.state]
     cs_query = '''
-            SELECT count(*) FROM bot.order WHERE customer_id = $1 AND role = 'sender' AND state = $2 
+            SELECT count(*) FROM bot.order WHERE customer_id = $1 AND state = $2 
             OR state = $3'''
     customer_has_orders = await asyncPostgresModel.fetchone(cs_query, values)
 
     ct_query = '''
-            SELECT count(*) FROM bot.order WHERE customer_id = $1 AND role = 'traveler' AND state = $2
+            SELECT count(*) FROM bot.order WHERE customer_id = $1 AND state = $2
             OR state = $3'''
     contractor_has_orders = await asyncPostgresModel.fetchone(ct_query, values)
 

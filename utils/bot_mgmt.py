@@ -1,17 +1,17 @@
 from contextlib import suppress
 
-from aiogram import types
 from aiogram.types import bot_command_scope, BotCommand
 from aiogram.utils.exceptions import ChatNotFound
 
-from config import base_commands, admin_commands, ADMINS
-from core import logger, bot, asyncPostgresModel
-from models.database.db_api import fetchall_user_ids, fetchone_user
+from config import base_commands
+from core import logger, bot
+from models.database.db_api import fetchall_user_ids
 
 
 async def set_my_commands(users_id: int = None, command_list: list[dict[str, str]] = None):
     if not users_id:
-        users = set(x['user_id'] for x in await fetchall_user_ids())
+        res = await fetchall_user_ids()
+        users = set(x['user_id'] for x in res) if res else None
     else:
         users = [users_id]
     if users:
@@ -32,17 +32,4 @@ async def set_my_commands(users_id: int = None, command_list: list[dict[str, str
         logger.info('set_commands: no users')
 
 
-async def appoint_admin(user_id: int, message: types.Message) -> bool:
-    user = await fetchone_user(user_id)
-    user_passphrase = message.text.split(' ')[-1]
-    if user:
-        query = '''SELECT bot.upsert_table_user($1, $2)'''
-        for username, passphrase in ADMINS.items():
-            if user and user['username'] == username and user_passphrase == passphrase:
-                if user['is_admin'] in [False, None]:
-                    await set_my_commands(users_id=user_id, command_list=admin_commands)
-                await asyncPostgresModel.executeone(query, [user_id, True])
-                return True
-            else:
-                await asyncPostgresModel.executeone(query, [user_id, False])
-                return False
+

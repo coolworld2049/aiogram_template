@@ -6,7 +6,7 @@ from core import dp, bot
 from filters.callback_filters import reg_user_cb
 from filters.command_filters import command_start
 from keyboards.user.common.common_inline_kb import base_navigation, main_menu_message_IK
-from models.database.db_api import save_user, update_user
+from models.database.db_api import save_user, update_user, fetchone_user
 from states.UserStates import UserStates
 from utils.chat_mgmt import delete_previous_messages
 
@@ -25,9 +25,10 @@ async def start(message: types.Message):
 
 @dp.callback_query_handler(reg_user_cb.filter())
 async def user_registration(callback_query: types.CallbackQuery):
-    await delete_previous_messages(tgtype=callback_query)
-    await bot.send_message(callback_query.from_user.id, user_registration_TEXT)
-    await UserStates.set_name.set()
+    if not await fetchone_user(callback_query.from_user.id):
+        await delete_previous_messages(tgtype=callback_query)
+        await bot.send_message(callback_query.from_user.id, user_registration_TEXT)
+        await UserStates.set_name.set()
 
 
 @dp.message_handler(state=UserStates.set_name)

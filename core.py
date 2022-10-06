@@ -5,10 +5,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from aiogram.dispatcher.storage import RATE_LIMIT
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from config import REDIS_CONFIG, USE_REDIS, PG_DSN, timezone
+from config import REDIS_CONFIG, USE_REDIS, PG_DSN, timezone, RATE_LIMIT
 from models.database.model import AsyncPostgresModel
 from utils.logger_settings import custom_logger
 from utils.throttling import ThrottlingMiddleware
