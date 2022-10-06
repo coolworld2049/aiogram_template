@@ -106,8 +106,7 @@ LANGUAGE plpgsql;
   forward port: from local machine: 127.0.0.1:5000 to remote server: 127.0.0.1:80
   ```
   
-  - **Setting Up Server Blocks**
-  
+  - **Setting Up Server Blocks**. `login as user: bot`**\!**
     ```
     mkdir -p /var/www/bot/html;
     chown -R $USER:$USER /var/www/bot/html;
