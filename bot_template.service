@@ -1,0 +1,18 @@
+[Unit]
+Description=bot_service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/bot/BOTNAME
+Environment="PYTHONUNBUFFERED=1"
+Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
+Environment="PGADMIN=postgres"
+Environment="PGADMINPASS=YOUR_PASSWORD"
+ExecStart=/usr/bin/python3 /var/bot/BOTNAME/app.py
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
