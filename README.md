@@ -1,4 +1,5 @@
 ## PostgresQL database
+![Diagram](https://github.com/coolworld2049/aiogram-template/blob/master/bot.png)
 ```
 CREATE DATABASE test OWNER admin;
 CREATE SCHEMA bot;
