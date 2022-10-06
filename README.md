@@ -109,40 +109,40 @@ LANGUAGE plpgsql;
   - **Setting Up Server Blocks**
   
     ```
-    mkdir -p /var/www/www.testbot.com/html;
-    chown -R $USER:$USER /var/www/www.testbot.com/html;
-    chmod -R 755 /var/www/www.testbot.com;
+    mkdir -p /var/www/testbot/html;
+    chown -R $USER:$USER /var/www/testbot/html;
+    chmod -R 755 /var/www/testbot;
     ```
     
     - *index.html*
       ```
-      nano /var/www/www.testbot.com/html/index.html
+      nano /var/www/testbot/html/index.html
       ```
       ```
       <html>
           <head>
-              <title>Welcome to www.testbot.com!</title>
+              <title>Welcome to testbot!</title>
           </head>
           <body>
-              <h1>Success!  The www.testbot.com server block is working!</h1>
+              <h1>Success!  The testbot server block is working!</h1>
           </body>
       </html>
       ```
       
-    - *www.testbot.com*
+    - *testbot*
 
       ```
-      nano /etc/nginx/sites-available/www.testbot.com
+      nano /etc/nginx/sites-available/testbot
       ```
       ```
       server {
               listen 80;
               listen [::]:80;
 
-              root /var/www/www.testbot.com/html;
+              root /var/www/testbot/html;
               index index.html index.htm index.nginx-debian.html;
 
-              server_name www.testbot.com www.www.testbot.com;
+              server_name testbot www.testbot;
 
               location / {
                       try_files $uri $uri/ =404;
@@ -150,7 +150,7 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    ln -s /etc/nginx/sites-available/www.testbot.com /etc/nginx/sites-enabled/;
+    ln -s /etc/nginx/sites-available/testbot /etc/nginx/sites-enabled/;
     ```
     ```
     Uncomment: server_names_hash_bucket_size 64;
@@ -160,7 +160,7 @@ LANGUAGE plpgsql;
     systemctl restart nginx;
     ```
     ```
-    open in web browser on local machine: http://www.testbot.com
+    open in web browser on local machine: http://testbot
     ```
     
   - **Nginx files and directories**
