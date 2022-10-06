@@ -1,16 +1,16 @@
 [Unit]
-Description=bot_service
+Description=aiogram_template bot
 After=syslog.target
 After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/var/bot/BOTNAME
+WorkingDirectory=/var/testbot/aiogram_template
 Environment="PYTHONUNBUFFERED=1"
 Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
 Environment="PGADMIN=postgres"
 Environment="PGADMINPASS=YOUR_PASSWORD"
-ExecStart=/usr/bin/python3 /var/bot/BOTNAME/app.py
+ExecStart=/usr/bin/python3 /var/testbot/aiogram_template/app.py
 Restart=on-failure
 RestartSec=5s
 

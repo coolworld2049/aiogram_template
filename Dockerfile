@@ -1,38 +1,70 @@
-FROM python:3.10 as production
-LABEL maintainer="Nikita Ivanov <coolworld2049@gmail.com>" description="aiogram_bot_template"
+FROM ubuntu:22.04
+LABEL "aiogram_template"="coolworld2049" maintainer="coolworld2049@gmail.com"
 
-WORKDIR /var/bot/aiogram_bot_template
+ARG _PROJECT_NAME='aiogram_template'
+ARG _PROJECT_USER='testbot'
+ARG _DB_NAME='testbot'
+ARG _PGUSER='postgres'
+ARG _PGPASS='qwerty'
+ARG _TZ='Europe/Mocsow'
 
-USER bot
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN sudo mkdir -p home/bot/aiogram_bot_template && \
-    sudo chown -R bot /home/bot/ && \
-    cd home/bot/aiogram_bot_template && \
-    pip install -r requirements.txt && \
-    python3 -m venv venv && cd
+ENV PROJECT_NAME $_PROJECT_NAME
+ENV PROJECT_USER $_PROJECT_USER
+ENV DB_NAME $_DB_NAME
+ENV PGUSER $_PGUSER
+ENV PGPASS $_PGPASS
+ENV TZ $_TZ
 
-RUN cp /var/bot/aiogram_bot_template/bot_template.service /etc/systemd/system/
+RUN echo $PROJECT_NAME
+RUN echo $PROJECT_USER
+RUN echo $DB_NAME
+RUN echo $PGUSER
+RUN echo $PGPASS
 
-RUN cp -a /var/bot/aiogram_bot_template/data/database/bot.sql /tmp
+USER root
+
+RUN useradd -ms /bin/bash $PROJECT_USER && \
+    usermod -aG sudo $PROJECT_USER
+    
+RUN apt update && apt upgrade && \
+    apt --assume-yes install python3 && \
+    apt --assume-yes install python3-venv && \
+    apt --assume-yes install python3-pip && \
+    apt --assume-yes install postgresql postgresql-contrib && \
+    apt --assume-yes install redis
+
+USER $PROJECT_USER
 
 
-RUN systemctl start postgresql.service \
+RUN sudo mkdir -p /var/$PROJECT_USER/$PROJECT_NAME && \
+    sudo chown -R $PROJECT_USER /var/$PROJECT_NAME/
+
+WORKDIR /var/$PROJECT_USER/$PROJECT_NAME
+
+RUN pip install -r requirements.txt
+
+COPY . /var/$PROJECT_USER/$PROJECT_NAME/
+COPY /etc/systemd/system/ /var/$PROJECT_USER/$PROJECT_NAME/$PROJECT_NAME.service
+COPY /tmp/ /var/$PROJECT_USER/$PROJECT_NAME/database/schema.sql
+
 
 USER postgres
 
-RUN sudo -i -u postgres && \
-    createdb bot && \
-    psql -d bot -c "CREATE schema bot;" && \
-    psql -d bot -c "SET schema 'bot';" && \
-    psql -d bot -c "ALTER USER postgres PASSWORD 'qwerty';" && \
-    psql -U postgres -d bot -a -q -f /tmp/bot.sql && \
-    psql -d bot -c "COPY bot.country FROM '/tmp/country.csv' DELIMITER ',' CSV HEADER;" && \
-    psql -d bot -c "COPY bot.airport FROM '/tmp/airport.csv' DELIMITER ',' CSV HEADER;" && \
-    exit && clear
+RUN systemctl start postgresql.service && \
+    sudo -i -u postgres && \
+    createdb $DB_NAME && \
+    psql -d $DB_NAME -c "CREATE schema schema;" && \
+    psql -d $DB_NAME -c "SET schema 'schema';" && \
+    psql -d $DB_NAME -c "ALTER USER $PGUSER PASSWORD $PGUSER;" && \
+    psql -d $DB_NAME -a -q -f /tmp/schema.sql && \
+    exit && clear \
 
-USER bot
+
+USER $PROJECT_USER
 
 CMD systemctl daemon-reload && \
-    systemctl enable bot.service && \
-    systemctl start bot.service && \
-    systemctl status bot.service
+    systemctl enable $PROJECT_NAME.service && \
+    systemctl start $PROJECT_NAME.service && \
+    systemctl status $PROJECT_NAME.service

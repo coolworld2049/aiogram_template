@@ -1,6 +1,6 @@
 from aiogram import types
 
-from config import help_TEXT
+from lang import help_TEXT
 from core import dp
 from filters.command_filters import command_help
 from utils.chat_mgmt import delete_previous_messages

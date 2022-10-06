@@ -1,6 +1,5 @@
-CREATE DATABASE test OWNER admin;
-CREATE SCHEMA bot;
-SET SCHEMA 'bot';
+-- CREATE schema schema;
+-- SET schema 'schema';
 
 DELETE FROM pg_type WHERE typname = 'base_role';
 DELETE FROM pg_type WHERE typname = 'user_state';
@@ -14,7 +13,7 @@ CREATE TYPE user_state AS ENUM (
             'UserStates:terminated'
         );
 
-CREATE TABLE IF NOT EXISTS bot.user (
+CREATE TABLE IF NOT EXISTS schema.user (
    user_id BIGINT PRIMARY KEY NOT NULL UNIQUE,
    username TEXT,
    first_name TEXT,
@@ -26,34 +25,34 @@ CREATE TABLE IF NOT EXISTS bot.user (
 );
 
 
-CREATE TABLE IF NOT EXISTS bot.order (
+CREATE TABLE IF NOT EXISTS schema.order (
    id BIGINT PRIMARY KEY,
-   contractor_id  BIGINT REFERENCES bot.user(user_id) NULL,
-   customer_id  BIGINT REFERENCES bot.user(user_id) NULL,
+   contractor_id  BIGINT REFERENCES schema.user(user_id) NULL,
+   customer_id  BIGINT REFERENCES schema.user(user_id) NULL,
    state user_state,
    create_time FLOAT
 );
 
-CREATE TABLE IF NOT EXISTS bot.temp (
-   user_id BIGINT PRIMARY KEY REFERENCES bot.user(user_id),
+CREATE TABLE IF NOT EXISTS schema.temp (
+   user_id BIGINT PRIMARY KEY REFERENCES schema.user(user_id),
    last_message_id TEXT
 );
 
-CREATE OR REPLACE FUNCTION bot.upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION schema.upsert_table_temp(us_id BIGINT, l_msg TEXT) RETURNS VOID AS $$
 BEGIN
-    UPDATE bot.temp SET last_message_id = $2 WHERE user_id = $1;
+    UPDATE schema.temp SET last_message_id = $2 WHERE user_id = $1;
     IF NOT FOUND THEN
-        INSERT INTO bot.temp values ($1, $2);
+        INSERT INTO schema.temp values ($1, $2);
     END IF;
 END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION bot.upsert_table_user(us_id BIGINT, is_admin BOOLEAN) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION schema.upsert_table_user(us_id BIGINT, is_admin BOOLEAN) RETURNS VOID AS $$
 BEGIN
-    UPDATE bot.user SET is_admin = $2 WHERE user_id = $1;
+    UPDATE schema.user SET is_admin = $2 WHERE user_id = $1;
     IF NOT FOUND THEN
-        INSERT INTO bot.user values ($1, $2);
+        INSERT INTO schema.user values ($1, $2);
     END IF;
 END;
 $$

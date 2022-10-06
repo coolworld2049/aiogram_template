@@ -2,8 +2,9 @@ import typing
 
 from aiogram import types
 
-from config import MESSAGE_DELAY, registration_menu_TEXT, main_menu_TEXT, account_menu_message_IK_TEXT, \
-    navigation_BTN_back, navigation_BTN_back_to_menu, navigation_menu_TEXT, registration_menu_message_IK_TEXT, \
+from config import MESSAGE_DELAY
+from lang import registration_menu_TEXT, main_menu_TEXT, account_menu_message_IK_TEXT, navigation_menu_TEXT, \
+    navigation_BTN_back, navigation_BTN_back_to_menu, registration_menu_message_IK_TEXT, \
     main_menu_message_IK_BTN_account_TEXT
 from core import bot
 from models.database.db_api import fetchone_user

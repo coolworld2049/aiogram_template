@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT
+from lang import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT
 from core import dp, bot
 from filters.callback_filters import reg_user_cb
 from filters.command_filters import command_start

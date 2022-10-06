@@ -4,13 +4,12 @@ from contextlib import suppress
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import admin_items_mgmt_actionADD_TEXT_pre, admin_items_mgmt_actionUPDATE_TEXT_pre, \
-    admin_items_mgmt_actionDELETE_TEXT_pre, ADMINS, admin_commands, approve_as_admin_incorrect_passphrase_TEXT, \
-    navigation_BTN_back, navigation_BTN_back_to_menu
-from config import admin_panel_TEXT, admin_panel_BTN_TEXT, admin_items_mgmt_message_IK_TEXT, \
-    admin_items_mgmt_message_IK_TEXT_error
-from config import user_state_incorrect_input_TEXT, admin_items_mgmt_actionADD_TEXT_past, \
-    admin_items_mgmt_actionUPDATE_TEXT_past, admin_items_mgmt_actionDELETE_TEXT_past
+from config import ADMINS, admin_commands
+from lang import user_state_incorrect_input_TEXT, approve_as_admin_incorrect_passphrase_TEXT, admin_panel_TEXT, \
+    admin_panel_BTN_TEXT, admin_items_mgmt_message_IK_TEXT, admin_items_mgmt_message_IK_TEXT_error, \
+    admin_items_mgmt_actionADD_TEXT_pre, admin_items_mgmt_actionUPDATE_TEXT_pre, admin_items_mgmt_actionDELETE_TEXT_pre, \
+    admin_items_mgmt_actionADD_TEXT_past, admin_items_mgmt_actionUPDATE_TEXT_past, \
+    admin_items_mgmt_actionDELETE_TEXT_past, navigation_BTN_back, navigation_BTN_back_to_menu
 from core import dp, bot, asyncPostgresModel
 from filters.callback_filters import admin_cb, back_cb
 from filters.command_filters import command_admin
