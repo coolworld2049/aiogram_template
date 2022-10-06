@@ -109,40 +109,40 @@ LANGUAGE plpgsql;
   - **Setting Up Server Blocks**
   
     ```
-    mkdir -p /var/www/testbot/html;
-    chown -R $USER:$USER /var/www/testbot/html;
-    chmod -R 755 /var/www/testbot;
+    mkdir -p /var/www/1039835-ch37929.tmweb.ru/html;
+    chown -R $USER:$USER /var/www/1039835-ch37929.tmweb.ru/html;
+    chmod -R 755 /var/www/1039835-ch37929.tmweb.ru;
     ```
     
     - *index.html*
       ```
-      nano /var/www/testbot/html/index.html
+      nano /var/www/1039835-ch37929.tmweb.ru/html/index.html
       ```
       ```
       <html>
           <head>
-              <title>Welcome to testbot!</title>
+              <title>Welcome to 1039835-ch37929.tmweb.ru!</title>
           </head>
           <body>
-              <h1>Success!  The testbot server block is working!</h1>
+              <h1>Success!  The 1039835-ch37929.tmweb.ru server block is working!</h1>
           </body>
       </html>
       ```
       
-    - *testbot*
+    - *1039835-ch37929.tmweb.ru*
 
       ```
-      nano /etc/nginx/sites-available/testbot
+      nano /etc/nginx/sites-available/1039835-ch37929.tmweb.ru
       ```
       ```
       server {
               listen 80;
               listen [::]:80;
 
-              root /var/www/testbot/html;
+              root /var/www/1039835-ch37929.tmweb.ru/html;
               index index.html index.htm index.nginx-debian.html;
 
-              server_name testbot www.testbot;
+              server_name 1039835-ch37929.tmweb.ru www.1039835-ch37929.tmweb.ru;
 
               location / {
                       try_files $uri $uri/ =404;
@@ -150,7 +150,7 @@ LANGUAGE plpgsql;
       }
       ```
     ```
-    ln -s /etc/nginx/sites-available/testbot /etc/nginx/sites-enabled/;
+    ln -s /etc/nginx/sites-available/1039835-ch37929.tmweb.ru /etc/nginx/sites-enabled/;
     ```
     ```
     sudo nano /etc/nginx/nginx.conf;
@@ -161,7 +161,7 @@ LANGUAGE plpgsql;
     systemctl restart nginx;
     ```
     ```
-    open in web browser on local machine: http://testbot
+    open in web browser on local machine: http://1039835-ch37929.tmweb.ru
     ```
     
   - **Nginx files and directories**
