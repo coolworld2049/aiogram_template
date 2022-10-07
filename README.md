@@ -27,7 +27,8 @@ PROJECT_NAME="aiogram-template"
 ```
 
 ```
-sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME
+rm -rf /var/$USER/$PROJECT_NAME;
+sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME;
 cd /var/$USER/$PROJECT_NAME;
 sudo chown -R $USER $PWD/;
 pip install -r $PWD/requirements.txt;
@@ -66,6 +67,15 @@ exit;
 ```
 
 ```
+sudo systemctl daemon-reload;
+sudo systemctl enable aiogram-template.service;
+sudo systemctl start aiogram-template.service;
+sudo systemctl status aiogram-template.service;
+```
+
+```
+rm -rf /var/$USER/$PROJECT_NAME;
+sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME;
 sudo systemctl daemon-reload;
 sudo systemctl enable aiogram-template.service;
 sudo systemctl start aiogram-template.service;

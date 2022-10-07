@@ -1,5 +1,3 @@
-import os
-
 ADMINS = {"I13rsnwhy": "qwerty"}  # <username>: <passphrase>
 
 DEBUG_MODE = False
@@ -14,13 +12,13 @@ NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для все
 NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
 
 # ----------------------------------------------------------------------------------------
-PROJECT_NAME = os.environ['PROJECT_NAME']
+DB_NAME = 'aiogram-template-db'
 TZ = 'Europe/Moscow'
 
 PG_CONFIG = {
     "host": "127.0.0.1",
     "port": 5432,
-    "database": PROJECT_NAME,
+    "database": DB_NAME,
     "user": 'postgres',
     "password": 'postgres',
 }
