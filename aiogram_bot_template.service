@@ -8,8 +8,8 @@ Type=simple
 WorkingDirectory=/var/testbot/aiogram_template
 Environment="PYTHONUNBUFFERED=1"
 Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
-Environment="PGADMIN=postgres"
-Environment="PGADMINPASS=YOUR_PASSWORD"
+Environment="POSTGRES_USER=postgres"
+Environment="POSTGRES_PASSWORD=postgres"
 ExecStart=/usr/bin/python3 /var/testbot/aiogram_template/app.py
 Restart=on-failure
 RestartSec=5s

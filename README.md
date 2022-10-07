@@ -7,36 +7,67 @@ sudo ufw allow ssh;
 sudo ufw enable;
 ```
 
-- `nano /etc/environment`
-    ```
-    PROJECT_NAME="aiogram_template"
-    PROJECT_USER="${USER}"
-    DB_NAME="${USER}"
-    POSTGRES_USER="postgres"
-    POSTGRES_PASSWORD="postgres"
-    TZ="Europe/Moscow"
-    ````
-
 ```
-sudo apt update && sudo apt upgrade;
+apt --assume-yes update;
+apt --assume-yes upgrade;
 apt --assume-yes install python3;
 apt --assume-yes install python3-venv;
 apt --assume-yes install python3-pip;
+apt --assume-yes install redis;
+apt --assume-yes install postgresql postgresql-contrib;
+```
+
+### `$USER`
+```
+sudo nano /etc/environment
 ```
 
 ```
-sudo apt update && sudo apt --assume-yes install install apt-transport-https ca-certificates curl software-properties-common;
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null;
-sudo apt update && apt-cache policy docker-ce;
-sudo apt --assume-yes installinstall docker-ce;
-sudo systemctl status docker;
+PROJECT_NAME="aiogram-template"
 ```
 
 ```
-mkdir -p ~/.docker/cli-plugins/
-curl -SL https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
-chmod +x ~/.docker/cli-plugins/docker-compose
+sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME
+cd /var/$USER/$PROJECT_NAME;
+sudo chown -R $USER $PWD/;
+pip install -r $PWD/requirements.txt;
+sudo nano /etc/systemd/system/$PROJECT_NAME.service;
 ```
 
-#### next step: `MANUAL_INSTALL.md` or `Dockerfile`
+```
+[Unit]
+Description=$PROJECT_NAME bot
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/var/$USER/$PROJECT_NAME
+Environment="PYTHONUNBUFFERED=1"
+Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
+ExecStart=/usr/bin/python3 /var/$USER/$PROJECT_NAME/app.py
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+sudo -i -u postgres;  
+cd /var/$USER/$PROJECT_NAME
+cp -a $PWD/data/database/schema.sql /tmp;  
+createdb $PWD; 
+psql -d $PWD -c "CREATE schema schema;";
+psql -d $PWD -c "SET schema 'schema';";
+psql -d $PWD -c "ALTER USER postgres PASSWORD 'postgres';";
+psql -d $PWD -a -q -f /tmp/schema.sql;
+exit;
+```
+
+```
+sudo systemctl daemon-reload;
+sudo systemctl enable aiogram-template.service;
+sudo systemctl start aiogram-template.service;
+sudo systemctl status aiogram-template.service;
+```
