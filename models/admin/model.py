@@ -45,7 +45,7 @@ class AdminPanel:
     async def approve_as_admin(user_id: int, message: types.Message) -> bool:
         user = await fetchone_user(user_id)
         if user:
-            query = '''SELECT bot.upsert_table_user($1, $2)'''
+            query = '''SELECT schema.upsert_table_user($1, $2)'''
             for username, passphrase in ADMINS.items():
                 with suppress(AttributeError):
                     user_passphrase = message.text.split(' ')[-1]

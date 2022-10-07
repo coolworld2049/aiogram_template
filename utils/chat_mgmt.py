@@ -11,7 +11,7 @@ from models.database.db_api import fetchone_temp, fetchone_user
 
 async def save_message(user_id: int, message_id: int):
     if await fetchone_user(user_id):
-        await asyncPostgresModel.executeone('''SELECT bot.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
+        await asyncPostgresModel.executeone('''SELECT schema.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
         if DEBUG_MODE:
             logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
