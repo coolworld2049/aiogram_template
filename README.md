@@ -18,13 +18,6 @@ apt --assume-yes install postgresql postgresql-contrib;
 ```
 
 ### `$USER`
-```
-sudo nano /etc/environment
-```
-
-```
-PROJECT_NAME="aiogram-template"
-```
 
 ```
 sudo rm -rf /var/$USER/$PROJECT_NAME;
@@ -43,10 +36,12 @@ After=network.target
 
 [Service]
 Type=simple
+User=testbot
 WorkingDirectory=/var/$USER/$PROJECT_NAME
 Environment="PYTHONUNBUFFERED=1"
 Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
-ExecStart=/usr/bin/python /var/$USER/$PROJECT_NAME/app.py
+Environment="PROJECT_NAME=YOUR_PROJECT_NAME"
+ExecStart=/usr/bin/python3 /var/$USER/$PROJECT_NAME/app.py
 Restart=on-failure
 RestartSec=5s
 
@@ -82,6 +77,6 @@ sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/
 cd /var/$USER/$PROJECT_NAME;
 sudo chown -R $USER $PWD/;
 sudo systemctl daemon-reload;
-sudo systemctl restart aiogram-template.service;
-sudo systemctl status aiogram-template.service;
+sudo systemctl restart $PROJECT_NAME.service;
+sudo systemctl status $PROJECT_NAME.service;
 ```

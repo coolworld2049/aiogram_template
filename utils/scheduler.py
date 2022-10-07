@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from config import USE_SCHEDULER, NOTIFY_USER_EVERY_HOURS, NOTIFY_USER_MIN
+from config import USE_SCHEDULER, NOTIFY_USER_EVERY_HOURS, NOTIFY_USER_DELTA_MIN
 from core import logger, scheduler
 
 
@@ -13,8 +13,8 @@ async def task_scheduler():
 
 async def notify_users():
     orders = ...
-    if len(orders) > 0 and NOTIFY_USER_MIN > 0:
+    if len(orders) > 0 and NOTIFY_USER_DELTA_MIN > 0:
         for order in orders:
             delta = datetime.timestamp(datetime.now()) - order['create_time']
-            if delta >= timedelta(minutes=NOTIFY_USER_MIN):
+            if delta >= timedelta(minutes=NOTIFY_USER_DELTA_MIN):
                 ...

@@ -1,24 +1,26 @@
-ADMINS = {"I13rsnwhy": "qwerty"}  # <username>: <passphrase>
+import os
+
+ADMINS = {"I13rsnwhy": "qwerty", 'nickname': 'passphrase'}
 
 DEBUG_MODE = False
 USE_REDIS = True
-USE_SCHEDULER = True
+USE_SCHEDULER = False
 
-MESSAGE_DELAY = 0.2  # greater than zero
+MESSAGE_DELAY = 0.2
 RATE_LIMIT = .50
 ITEMS_PER_PAGE = 3
 
-NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для всех пользователей
-NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
+NOTIFY_USER_EVERY_HOURS = 6
+NOTIFY_USER_DELTA_MIN = 60
 
 # ----------------------------------------------------------------------------------------
-DB_NAME = 'aiogram-template'
-TZ = 'Europe/Moscow'
+
+TIMEZONE_UTC = 'Europe/Moscow'
 
 PG_CONFIG = {
     "host": "127.0.0.1",
     "port": 5432,
-    "database": DB_NAME,
+    "database":  os.environ['PROJECT_NAME'],
     "user": 'postgres',
     "password": 'postgres',
 }
@@ -31,6 +33,6 @@ REDIS_CONFIG = {
     "port": 6379,
     "db": 15,
     "pool_size": 100000,
-    "state_ttl": 5,  # 5 min
-    "data_ttl": 1800,  # 30 min
+    "state_ttl": 300,
+    "data_ttl": 1800,
 }

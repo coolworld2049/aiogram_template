@@ -24,12 +24,13 @@ class AdminPanel:
     @staticmethod
     async def _admin_panel(message: types.Message):
         user = await fetchone_user(message.from_user.id)
-        if user and user['is_admin'] is False or user['is_admin'] is None:
-            await delete_previous_messages(tgtype=message)
-            if await AdminPanel.approve_as_admin(message.from_user.id, message):
+        if user:
+            if user['is_admin'] is False or user['is_admin'] is None:
+                await delete_previous_messages(tgtype=message)
+                if await AdminPanel.approve_as_admin(message.from_user.id, message):
+                    await AdminModel.admin_panel_message_IK(message.from_user.id)
+            else:
                 await AdminModel.admin_panel_message_IK(message.from_user.id)
-        else:
-            await AdminModel.admin_panel_message_IK(message.from_user.id)
 
     @staticmethod
     @dp.message_handler(command_admin)
