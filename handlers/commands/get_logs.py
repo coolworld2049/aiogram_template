@@ -1,6 +1,5 @@
 from aiogram import types
 
-from config import PATH_TO_LOG_FILE
 from core import dp
 from filters.command_filters import command_get_logs
 from models.admin.model import adminModel

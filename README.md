@@ -55,14 +55,16 @@ WantedBy=multi-user.target
 ```
 
 ```
-sudo -i -u postgres;  
+sudo -i -u postgres; 
+```
+```
 cd /var/$USER/$PROJECT_NAME
 cp -a $PWD/data/database/schema.sql /tmp;  
-createdb $PWD; 
-psql -d $PWD -c "CREATE schema schema;";
-psql -d $PWD -c "SET schema 'schema';";
-psql -d $PWD -c "ALTER USER postgres PASSWORD 'postgres';";
-psql -d $PWD -a -q -f /tmp/schema.sql;
+createdb $PROJECT_NAME; 
+psql -d $PROJECT_NAME -c "CREATE schema schema;";
+psql -d $PROJECT_NAME -c "SET schema 'schema';";
+psql -d $PROJECT_NAME -c "ALTER USER postgres PASSWORD 'postgres';";
+psql -d $PROJECT_NAME -a -q -f /tmp/schema.sql;
 exit;
 ```
 
