@@ -12,7 +12,7 @@ NOTIFY_USER_EVERY_HOURS = 6  # запуск уведомлений для все
 NOTIFY_USER_MIN = 60  # параметр для проверки времени прошедшего с момента создания заказа
 
 # ----------------------------------------------------------------------------------------
-DB_NAME = 'aiogram-template-db'
+DB_NAME = 'aiogram-template'
 TZ = 'Europe/Moscow'
 
 PG_CONFIG = {

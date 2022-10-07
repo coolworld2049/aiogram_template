@@ -27,7 +27,7 @@ PROJECT_NAME="aiogram-template"
 ```
 
 ```
-rm -rf /var/$USER/$PROJECT_NAME;
+sudo rm -rf /var/$USER/$PROJECT_NAME;
 sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME;
 cd /var/$USER/$PROJECT_NAME;
 sudo chown -R $USER $PWD/;
@@ -37,7 +37,7 @@ sudo nano /etc/systemd/system/$PROJECT_NAME.service;
 
 ```
 [Unit]
-Description=$PROJECT_NAME bot
+Description=service
 After=syslog.target
 After=network.target
 
@@ -46,7 +46,7 @@ Type=simple
 WorkingDirectory=/var/$USER/$PROJECT_NAME
 Environment="PYTHONUNBUFFERED=1"
 Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
-ExecStart=/usr/bin/python3 /var/$USER/$PROJECT_NAME/app.py
+ExecStart=/usr/bin/python /var/$USER/$PROJECT_NAME/app.py
 Restart=on-failure
 RestartSec=5s
 
@@ -74,10 +74,12 @@ sudo systemctl status aiogram-template.service;
 ```
 
 ```
-rm -rf /var/$USER/$PROJECT_NAME;
+cd
+sudo rm -rf /var/$USER/$PROJECT_NAME;
 sudo git clone https://github.com/coolworld2049/aiogram-template.git /var/$USER/$PROJECT_NAME;
+cd /var/$USER/$PROJECT_NAME;
+sudo chown -R $USER $PWD/;
 sudo systemctl daemon-reload;
-sudo systemctl enable aiogram-template.service;
-sudo systemctl start aiogram-template.service;
+sudo systemctl restart aiogram-template.service;
 sudo systemctl status aiogram-template.service;
 ```
