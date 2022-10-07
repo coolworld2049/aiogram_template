@@ -3,7 +3,6 @@ from contextlib import suppress
 from aiogram.types import bot_command_scope, BotCommand
 from aiogram.utils.exceptions import ChatNotFound
 
-from config import base_commands
 from core import logger, bot
 from models.database.db_api import fetchall_user_ids
 
@@ -32,4 +31,13 @@ async def set_my_commands(users_id: int = None, command_list: list[dict[str, str
         logger.info('set_commands: no users')
 
 
-
+base_commands = \
+    [
+        {"command": "start", "description": "запуск бота"},
+        {"command": "help", "description": "помощь"},
+    ]
+admin_commands = \
+    [
+        {"command": "admin", "description": "администратор"},
+        {"command": "get_logs", "description": "журнал событий"}
+    ]

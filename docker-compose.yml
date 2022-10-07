@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  redis:
+    container_name: redis_container
+    image: redis:latest
+
+    volumes:
+      - redis:/data/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - redis
+
+networks:
+  redis:
+    driver: bridge
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:
+    redis:

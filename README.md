@@ -1,5 +1,5 @@
 ## Initial server setup
-### `root` user
+
 ```
 adduser testbot;
 usermod -aG sudo testbot;
@@ -7,25 +7,36 @@ sudo ufw allow ssh;
 sudo ufw enable;
 ```
 
+- `nano /etc/environment`
+    ```
+    PROJECT_NAME="aiogram_template"
+    PROJECT_USER="${USER}"
+    DB_NAME="${USER}"
+    POSTGRES_USER="postgres"
+    POSTGRES_PASSWORD="postgres"
+    TZ="Europe/Moscow"
+    ````
+
 ```
 sudo apt update && sudo apt upgrade;
-apt install python3;
-apt install python3-venv;
-apt install python3-pip;
-apt install postgresql postgresql-contrib;
-apt install redis;
+apt --assume-yes install python3;
+apt --assume-yes install python3-venv;
+apt --assume-yes install python3-pip;
 ```
 
 ```
-nano /etc/environment
+sudo apt update && sudo apt --assume-yes install install apt-transport-https ca-certificates curl software-properties-common;
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null;
+sudo apt update && apt-cache policy docker-ce;
+sudo apt --assume-yes installinstall docker-ce;
+sudo systemctl status docker;
 ```
-- **aiogram_template_env.sh**
-    ```
-    PROJECT_NAME="aiogram_template"
-    PROJECT_USER="testbot"
-    DB_NAME="testbot"
-    PGUSER="postgres"
-    PGPASS="qwerty"
-    TZ="Europe/Mocsow"
-    ```
-### next step: MANUAL_INSTALL or Dockerfile
+
+```
+mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/download/v2.11.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+```
+
+#### next step: `MANUAL_INSTALL.md` or `Dockerfile`

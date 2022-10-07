@@ -7,7 +7,7 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from config import REDIS_CONFIG, USE_REDIS, PG_DSN, TZ, RATE_LIMIT
+from config import REDIS_CONFIG, USE_REDIS, PG_DSN, RATE_LIMIT
 from models.database.model import AsyncPostgresModel
 from utils.logger_settings import custom_logger
 from utils.throttling import ThrottlingMiddleware
@@ -31,4 +31,4 @@ dp.middleware.setup(LoggingMiddleware(logger))
 asyncPostgresModel = AsyncPostgresModel(PG_DSN)
 
 # ---Scheduler
-scheduler = AsyncIOScheduler(timezone=TZ)
+scheduler = AsyncIOScheduler(timezone=os.environ['TZ'])

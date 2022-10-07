@@ -15,5 +15,5 @@ def reg_get_logs_handler():
 async def get_logs(message: types.Message):
     if await adminModel.approve_as_admin(message.from_user.id, message):
         await delete_previous_messages(tgtype=message)
-        message = await message.answer_document(types.InputFile(PATH_TO_LOG_FILE))
+        message = await message.answer_document(types.InputFile("log.log"))
         await save_message(message.from_user.id, message.message_id)

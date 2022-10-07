@@ -1,14 +1,14 @@
 FROM ubuntu:22.04
 LABEL "aiogram_template"="coolworld2049" maintainer="coolworld2049@gmail.com"
 
-ARG _PROJECT_NAME='aiogram_template'
+ARG _PROJECT_NAME='aiogram_bot_template'
 ARG _PROJECT_USER='testbot'
 ARG _DB_NAME='testbot'
 ARG _PGUSER='postgres'
 ARG _PGPASS='qwerty'
-ARG _TZ='Europe/Mocsow'
-
-ARG DEBIAN_FRONTEND=noninteractive
+ARG _TZ='Europe/Moscow'
+ARG DEBIAN_FRONTEND_nonintv='noninteractive'
+ARG DEBIAN_FRONTEND_intv='interactive'
 
 ENV PROJECT_NAME $_PROJECT_NAME
 ENV PROJECT_USER $_PROJECT_USER
@@ -23,46 +23,45 @@ RUN echo $DB_NAME
 RUN echo $PGUSER
 RUN echo $PGPASS
 
+
 USER root
 
-RUN useradd -ms /bin/bash $PROJECT_USER && \
-    usermod -aG sudo $PROJECT_USER
-    
-RUN apt update && apt upgrade && \
-    apt --assume-yes install python3 && \
+COPY . /$PROJECT_NAME/
+
+RUN useradd -ms /bin/bash $PROJECT_USER && usermod -aG sudo $PROJECT_USER
+
+RUN apt update && apt upgrade
+
+ENV DEBIAN_FRONTEND $DEBIAN_FRONTEND_nonintv
+RUN apt --assume-yes install postgresql postgresql-contrib
+ENV DEBIAN_FRONTEND $DEBIAN_FRONTEND_intv
+
+RUN apt --assume-yes install python3 && \
     apt --assume-yes install python3-venv && \
     apt --assume-yes install python3-pip && \
-    apt --assume-yes install postgresql postgresql-contrib && \
     apt --assume-yes install redis
 
+
 USER $PROJECT_USER
 
+RUN echo PROJECT_USER
 
-RUN sudo mkdir -p /var/$PROJECT_USER/$PROJECT_NAME && \
-    sudo chown -R $PROJECT_USER /var/$PROJECT_NAME/
-
-WORKDIR /var/$PROJECT_USER/$PROJECT_NAME
-
+WORKDIR /$PROJECT_NAME/
 RUN pip install -r requirements.txt
 
-COPY . /var/$PROJECT_USER/$PROJECT_NAME/
-COPY /etc/systemd/system/ /var/$PROJECT_USER/$PROJECT_NAME/$PROJECT_NAME.service
-COPY /tmp/ /var/$PROJECT_USER/$PROJECT_NAME/database/schema.sql
 
+USER root
 
-USER postgres
-
-RUN systemctl start postgresql.service && \
-    sudo -i -u postgres && \
-    createdb $DB_NAME && \
-    psql -d $DB_NAME -c "CREATE schema schema;" && \
-    psql -d $DB_NAME -c "SET schema 'schema';" && \
-    psql -d $DB_NAME -c "ALTER USER $PGUSER PASSWORD $PGUSER;" && \
-    psql -d $DB_NAME -a -q -f /tmp/schema.sql && \
-    exit && clear \
+RUN -i -u postgres
+RUN createdb $DB_NAME
+RUN psql -d $DB_NAME -c "CREATE schema schema;"
+RUN psql -d $DB_NAME -c "SET schema 'schema';"
+RUN psql -d $DB_NAME -c "ALTER USER $PGUSER PASSWORD '$PGUSER';" \
+RUN psql -d $DB_NAME -f /$PROJECT_NAME/schema.sql
 
 
 USER $PROJECT_USER
+RUN echo $PROJECT_USER
 
 CMD systemctl daemon-reload && \
     systemctl enable $PROJECT_NAME.service && \

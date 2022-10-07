@@ -3,10 +3,9 @@ import asyncio
 import aiogram
 from aiogram.utils import executor
 
-from config import base_commands
 from core import dp, logger
 from handlers.registration_handlers import setup_handlers
-from utils.bot_mgmt import set_my_commands
+from utils.bot_mgmt import set_my_commands, base_commands
 from utils.scheduler import task_scheduler
 
 

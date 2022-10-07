@@ -4,7 +4,7 @@ from contextlib import suppress
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from config import ADMINS, admin_commands
+from config import ADMINS
 from lang import user_state_incorrect_input_TEXT, approve_as_admin_incorrect_passphrase_TEXT, admin_panel_TEXT, \
     admin_panel_BTN_TEXT, admin_items_mgmt_message_IK_TEXT, admin_items_mgmt_message_IK_TEXT_error, \
     admin_items_mgmt_actionADD_TEXT_pre, admin_items_mgmt_actionUPDATE_TEXT_pre, admin_items_mgmt_actionDELETE_TEXT_pre, \
@@ -16,7 +16,7 @@ from filters.command_filters import command_admin
 from filters.command_filters import command_cancel
 from models.database.db_api import fetchone_user
 from states.AdminStates import AdminStates
-from utils.bot_mgmt import set_my_commands
+from utils.bot_mgmt import set_my_commands, admin_commands
 from utils.chat_mgmt import delete_previous_messages, save_message
 
 
