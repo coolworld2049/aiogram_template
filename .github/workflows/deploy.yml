@@ -17,4 +17,4 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.REMOTE_HOST }}  >> ~/.ssh/known_hosts
       - name: Deploy with rsync
-        run: rsync -n -e "ssh -p ${{ secrets.SSH_PORT }}" ./dist/ ${{ secrets.REMOTE_USER }}@${{ secrets.SSH_HOST }}:/var/${{ secrets.REMOTE_USER }}/aiogram_template
+        run: rsync -n ./dist/ root@$85.193.94.190:/var/testbot/aiogram_template
