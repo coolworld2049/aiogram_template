@@ -15,6 +15,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: unnecessary
       - name: Adding Known Hosts
-        run: ssh-keyscan -p 22 -H ${{ secrets.REMOTE_HOST }}  >> ~/.ssh/known_hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.REMOTE_HOST }}  >> ~/.ssh/known_hosts
       - name: Deploy with rsync
-        run: rsync -avz -e "ssh -p ${{ secrets.REMOTE_USER }}" ~/clone/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/${{ secrets.REMOTE_USER }}/aiogram_template
+        run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ~/clone/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/var/${{ secrets.REMOTE_USER }}/aiogram_template
