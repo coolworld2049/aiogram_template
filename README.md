@@ -106,7 +106,6 @@
         sudo systemctl status $PROJECT_NAME.service;
         ```
 - github-actions
-
     ```
     ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
     cat github-actions.pub >> ~/.ssh/authorized_keys
