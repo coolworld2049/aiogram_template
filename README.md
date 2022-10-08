@@ -1,4 +1,5 @@
 ## Initial server setup
+
 ### `root`
 
 - set: `YOU_USERNAME`
