@@ -1,6 +1,8 @@
 ## Initial server setup
 
-- `YOU_USERNAME`
+### `root`
+
+- set: `YOU_USERNAME`
 
     ```
     adduser YOU_USERNAME;
