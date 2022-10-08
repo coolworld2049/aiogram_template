@@ -1,4 +1,4 @@
-   ## Initial server setup
+## Initial server setup
 
 ### `root`
 
