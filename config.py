@@ -1,4 +1,4 @@
-import os
+import pathlib
 
 ADMINS = {"I13rsnwhy": "qwerty", 'nickname': 'passphrase'}
 
@@ -20,7 +20,7 @@ TIMEZONE_UTC = 'Europe/Moscow'
 PG_CONFIG = {
     "host": "127.0.0.1",
     "port": 5432,
-    "database":  os.environ['PROJECT_NAME'],
+    "database":  pathlib.Path().cwd().name,
     "user": 'postgres',
     "password": 'postgres',
 }
