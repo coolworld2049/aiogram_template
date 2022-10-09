@@ -21,16 +21,14 @@
 
 - `cd && sudo nano .bashrc`
 
-    - set: `PROJECT_NAME` `SOURCE_CODE_LINK` `BOT_TOKEN`
+    - set: `PROJECT_NAME` `SOURCE_CODE_LINK`
     
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
         PYTHONUNBUFFERED=1
-        BOT_TOKEN="YOUR_BOT_TOKEN"
         ```
-    - reboot server: `sudo reboot`
-    
+        
 - virtualenv
 
     ```
