@@ -87,6 +87,10 @@
     cd && sudo rm -rf /var/$USER/$PROJECT_NAME;
     sudo git clone $SOURCE_CODE_LINK /var/$USER/$PROJECT_NAME;
     cd /var/$USER/$PROJECT_NAME && sudo chown -R $USER $PWD/;
+    virtualenv venv;
+    source venv/bin/activate;
+    pip install -r $PWD/requirements.txt;
+    deactivate
     ```
     
     - restart service
