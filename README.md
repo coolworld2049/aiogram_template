@@ -19,7 +19,7 @@
 
 ### `$USER`
 
-- `sudo nano .bashrc`
+- `cd && sudo nano .bashrc`
 
     - set: `PROJECT_NAME` `SOURCE_CODE_LINK` `BOT_TOKEN`
     
