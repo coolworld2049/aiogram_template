@@ -26,6 +26,8 @@
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
+        PYTHONUNBUFFERED=1
+        BOT_TOKEN="YOUR_BOT_TOKEN"
         ```
     - reboot server: `sudo reboot`
     
@@ -56,10 +58,6 @@
         Type=simple
         User=$USER
         WorkingDirectory=/var/${USER}/${PROJECT_NAME}
-        Environment="PYTHONUNBUFFERED=1"
-        Environment="BOT_TOKEN=YOUR_BOT_TOKEN"
-        Environment="PROJECT_NAME=YOUR_PROJECT_NAME"
-        Environment="SOURCE_CODE_LINK=YOUR_SOURCE_CODE_LINK"
         ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
         Restart=on-failure
         RestartSec=5s
