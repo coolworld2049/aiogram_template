@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+import argparse
 import asyncio
+import os
+import pathlib
+import sys
 
 import aiogram
 from aiogram.utils import executor
@@ -7,6 +12,9 @@ from core import dp, logger
 from handlers.registration_handlers import setup_handlers
 from utils.bot_mgmt import set_my_commands, base_commands
 from utils.scheduler import task_scheduler
+
+parser = argparse.ArgumentParser(description=f'{pathlib.Path().cwd().name}')
+parser.add_argument('--token', '-t', nargs='?', type=str, default=None, help='bot token')
 
 
 # noinspection PyUnusedLocal
@@ -23,8 +31,20 @@ async def on_shutdown_app(dispatcher: aiogram.Dispatcher):
     logger.info('app.py: shutdown')
 
 
-if __name__ == "__main__":
+def main(arguments):
+    args = parser.parse_args(arguments)
+    os.environ["BOT_TOKEN"] = args.token
     try:
         executor.start_polling(dp, skip_updates=True, on_startup=on_startup_app, on_shutdown=on_shutdown_app)
     except Exception as e:
-        logger.warning(f"__main__: Exception: {e.args}")
+        logger.warning(f"main: Exception: {e.args}")
+
+
+if __name__ == "__main__":
+    argv = sys.argv[1:]
+
+    if not len(argv):
+        parser.print_help()
+        sys.exit(1)
+
+    main(argv)
