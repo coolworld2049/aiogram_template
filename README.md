@@ -67,12 +67,12 @@
         [Install]
         WantedBy=multi-user.target
         ```
+        
+- `cp -a $PWD/data/database/schema.sql /tmp;`
 
 - `sudo -i -u postgres`
 
     ```
-    cd /var/$USER/$PROJECT_NAME
-    cp -a $PWD/data/database/schema.sql /tmp;  
     createdb $PROJECT_NAME; 
     psql -d $PROJECT_NAME -c "CREATE schema schema;";
     psql -d $PROJECT_NAME -c "SET schema 'schema';";
