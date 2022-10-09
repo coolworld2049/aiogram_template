@@ -21,12 +21,13 @@
 
 - `cd && sudo nano .bashrc`
 
-    - set: `PROJECT_NAME` `SOURCE_CODE_LINK`
+    - set: `PROJECT_NAME` `SOURCE_CODE_LINK` `BOT_TOKEN`
     
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
         PYTHONUNBUFFERED=1
+        BOT_TOKEN="YOUR_BOT_TOKEN"
         ```
         
 - virtualenv
