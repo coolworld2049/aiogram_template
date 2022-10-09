@@ -1,5 +1,6 @@
 import pathlib
 
+BOT_TOKEN = "5654331350:AAE_bFpSBupMmx0Sz_6BOPEIyMVh_67QNPc"
 ADMINS = {"I13rsnwhy": "qwerty", 'nickname': 'passphrase'}
 
 DEBUG_MODE = False
