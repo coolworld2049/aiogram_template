@@ -19,7 +19,7 @@
 
 ### `$USER`
 
-- `sudo nano /etc/environment`
+- `sudo nano .bashrc`
 
     - set: `YOUR_PROJECT_NAME` `YOUR_SOURCE_CODE_LINK`
     
