@@ -21,7 +21,7 @@
 
 - `sudo nano .bashrc`
 
-    - set: `YOUR_PROJECT_NAME` `YOUR_SOURCE_CODE_LINK`
+    - set: `PROJECT_NAME` `SOURCE_CODE_LINK` `BOT_TOKEN`
     
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
@@ -46,25 +46,23 @@
     
 - `sudo nano /etc/systemd/system/$PROJECT_NAME.service`
 
-    - set: `YOUR_BOT_TOKEN` `YOUR_PROJECT_NAME` `YOUR_SOURCE_CODE_LINK`
-   
-        ```
-        [Unit]
-        Description=service
-        After=syslog.target
-        After=network.target
+    ```
+    [Unit]
+    Description=service
+    After=syslog.target
+    After=network.target
 
-        [Service]
-        Type=simple
-        User=$USER
-        WorkingDirectory=/var/${USER}/${PROJECT_NAME}
-        ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
-        Restart=on-failure
-        RestartSec=5s
+    [Service]
+    Type=simple
+    User=$USER
+    WorkingDirectory=/var/${USER}/${PROJECT_NAME}
+    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
+    Restart=on-failure
+    RestartSec=5s
 
-        [Install]
-        WantedBy=multi-user.target
-        ```
+    [Install]
+    WantedBy=multi-user.target
+    ```
         
 - `cp -a $PWD/data/database/schema.sql /tmp;`
 
