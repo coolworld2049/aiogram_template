@@ -63,17 +63,12 @@
     [Install]
     WantedBy=multi-user.target
     ```
-        
-- `cp -a $PWD/data/database/schema.sql /tmp;`
-
-- `sudo -i -u postgres`
+    
+- postgres
 
     ```
-    createdb $PROJECT_NAME; 
-    psql -d $PROJECT_NAME -c "CREATE schema schema;";
-    psql -d $PROJECT_NAME -c "SET schema 'schema';";
-    psql -d $PROJECT_NAME -c "ALTER USER postgres PASSWORD 'postgres';";
-    psql -d $PROJECT_NAME -a -q -f /tmp/schema.sql;
+    sudo -u postgres psql -d postgres -c "CREATE DATABASE $PROJECT_NAME;";
+    sudo -u postgres psql -d $PROJECT_NAME -c "CREATE SCHEMA schema;" -c "SET schema 'schema';" -c "ALTER USER postgres PASSWORD 'postgres';" -f /var/$USER/$PROJECT_NAME/data/database/schema.sql
     exit;
     ```
 
@@ -101,8 +96,3 @@
         sudo systemctl restart $PROJECT_NAME.service;
         sudo systemctl status $PROJECT_NAME.service;
         ```
-- github-actions
-    ```
-    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-    cat github-actions.pub >> ~/.ssh/authorized_keys
-    ```
