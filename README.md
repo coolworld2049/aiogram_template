@@ -14,7 +14,7 @@
 - packages
 
     ```
-    apt update && apt upgrade && apt install python3 python3-virtualenv python3-pip redis postgresql postgresql-contrib -y;
+    apt update && apt upgrade && apt -y install python3 python3-virtualenv python3-pip redis postgresql postgresql-contrib;
     ```
 
 ### `$USER`
@@ -26,8 +26,6 @@
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
-        PYTHONUNBUFFERED=1
-        BOT_TOKEN="YOUR_BOT_TOKEN"
         ```
     - reboot server: `sudo reboot`
     
@@ -55,8 +53,8 @@
     [Service]
     Type=simple
     User=$USER
-    WorkingDirectory=/var/${USER}/${PROJECT_NAME}
-    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && export BOT_TOKEN=$BOT_TOKEN && python3 app.py"
+    WorkingDirectory=/var/$USER/$PROJECT_NAME
+    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
     Restart=on-failure
     RestartSec=5s
 
