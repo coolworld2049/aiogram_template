@@ -43,23 +43,24 @@
     
 - `sudo nano /etc/systemd/system/$PROJECT_NAME.service`
 
-    ```
-    [Unit]
-    Description=service
-    After=syslog.target
-    After=network.target
+  - set: `USER` `$PROJECT_NAME` `BOT_TOKEN`
+  
+      ```
+      [Unit]
+      Description=service
+      After=syslog.target
+      After=network.target
 
-    [Service]
-    Type=simple
-    User=$USER
-    WorkingDirectory=/var/$USER/$PROJECT_NAME
-    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
-    Restart=on-failure
-    RestartSec=5s
+      [Service]
+      Type=simple
+      WorkingDirectory=/var/$USER/$PROJECT_NAME
+      ExecStart=bash -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
+      Restart=on-failure
+      RestartSec=5s
 
-    [Install]
-    WantedBy=multi-user.target
-    ```
+      [Install]
+      WantedBy=multi-user.target
+      ```
     
 - postgres
 
