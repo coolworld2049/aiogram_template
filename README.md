@@ -14,7 +14,7 @@
 - packages
 
     ```
-    apt update && apt upgrade && apt install python3 python3-virtualenv python3-pip redis postgresql postgresql-contrib -y;
+    apt update && apt upgrade && apt -y install python3 python3-virtualenv python3-pip redis postgresql postgresql-contrib;
     ```
 
 ### `$USER`
@@ -26,8 +26,6 @@
         ```
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
-        PYTHONUNBUFFERED=1
-        BOT_TOKEN="YOUR_BOT_TOKEN"
         ```
         
 - virtualenv
@@ -40,7 +38,6 @@
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
-    export BOT_TOKEN=$BOT_TOKEN
     deactivate
     ```
     
@@ -55,7 +52,7 @@
     [Service]
     Type=simple
     User=$USER
-    WorkingDirectory=/var/${USER}/${PROJECT_NAME}
+    WorkingDirectory=/var/$USER/$PROJECT_NAME
     ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
     Restart=on-failure
     RestartSec=5s
@@ -90,7 +87,6 @@
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
-    export BOT_TOKEN=$BOT_TOKEN
     deactivate
     ```
     
