@@ -41,7 +41,6 @@
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
-    export BOT_TOKEN=$BOT_TOKEN
     deactivate
     ```
     
@@ -57,7 +56,7 @@
     Type=simple
     User=$USER
     WorkingDirectory=/var/${USER}/${PROJECT_NAME}
-    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
+    ExecStart=/bin/sh -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && export BOT_TOKEN=$BOT_TOKEN && python3 app.py"
     Restart=on-failure
     RestartSec=5s
 
@@ -91,7 +90,6 @@
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
-    export BOT_TOKEN=$BOT_TOKEN
     deactivate
     ```
     
