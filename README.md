@@ -40,6 +40,7 @@
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
+    export BOT_TOKEN=$BOT_TOKEN
     deactivate
     ```
     
