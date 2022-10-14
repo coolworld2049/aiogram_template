@@ -43,20 +43,19 @@
     
 - `sudo nano /etc/systemd/system/$PROJECT_NAME.service`
 
-  - set: `USER` `$PROJECT_NAME` `BOT_TOKEN`
+  - set: `USER` `PROJECT_NAME` `BOT_TOKEN`
   
       ```
       [Unit]
       Description=service
-      After=syslog.target
       After=network.target
 
       [Service]
       Type=simple
       WorkingDirectory=/var/$USER/$PROJECT_NAME
       ExecStart=bash -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
-      Restart=on-failure
-      RestartSec=5s
+      Restart=always
+      RestartSec=30s
 
       [Install]
       WantedBy=multi-user.target
@@ -66,7 +65,9 @@
 
     ```
     sudo -u postgres psql -d postgres -c "CREATE DATABASE $PROJECT_NAME;";
-    sudo -u postgres psql -d $PROJECT_NAME -c "CREATE SCHEMA schema;" -c "SET schema 'schema';" -c "ALTER USER postgres PASSWORD 'postgres';" -f /var/$USER/$PROJECT_NAME/data/database/schema.sql
+    sudo -u postgres psql -d $PROJECT_NAME -c "CREATE SCHEMA schema;" -c "SET schema 'schema';"
+    sudo -u postgres psql -d $PROJECT_NAME -c "ALTER USER postgres PASSWORD 'postgres';"
+    sudo -u postgres psql -d $PROJECT_NAME -f /var/$USER/$PROJECT_NAME/schema.sql
     exit;
     ```
 
@@ -82,9 +83,10 @@
 - update source code
 
     ```
-    cd && sudo rm -rf /var/$USER/$PROJECT_NAME;
+    sudo rm -rf /var/$USER/$PROJECT_NAME;
     sudo git clone $SOURCE_CODE_LINK /var/$USER/$PROJECT_NAME;
-    cd /var/$USER/$PROJECT_NAME && sudo chown -R $USER $PWD/;
+    cd /var/$USER/$PROJECT_NAME;
+    sudo chown -R $USER $PWD/;
     virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
