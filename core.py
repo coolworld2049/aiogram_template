@@ -5,10 +5,10 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from config import REDIS_CONFIG, USE_REDIS, TIMEZONE_UTC, BOT_TOKEN
-from utils.misc.logger_settings import custom_logger
+from bot.config import REDIS_CONFIG, USE_REDIS, TIMEZONE_UTC, BOT_TOKEN, PROJECT_NAME
+from logger.logger_settings import custom_logger
 
-logger = custom_logger('root', 'INFO', 'log.log')
+logger = custom_logger(PROJECT_NAME, 'INFO', 'log.log')
 
 scheduler = AsyncIOScheduler(timezone=TIMEZONE_UTC)
 

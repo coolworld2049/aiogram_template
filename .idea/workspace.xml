@@ -1,54 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="README.md">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/filters/role_filters.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/keyboards/user/contractor/contractor_kb.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/keyboards/user/customer/customer_kb.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/middlewares/role.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/admin/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/database/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/role/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/role/role.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/ItemMgmtStates.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/bot_mgmt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/aiogram_template.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aiogram_template.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="roles">
+      <change afterPath="$PROJECT_DIR$/src/bot/handlers/user/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bot/handlers/user/common/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bot/handlers/user/contractor/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bot/handlers/user/customer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bot/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bot/models/role/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/database/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_diagram.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/filters/callback_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/filters/callback_filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/filters/command_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/filters/command_filters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/get_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/commands/get_logs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/help.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/commands/help.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/commands/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/commands/start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/registration_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/user/common/common_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/user/common/common_hd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/user/contractor/contractor_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/user/contractor/contractor_hd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/user/customer/customer_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/user/customer/customer_hd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/user/common/common_inline_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/keyboards/user/common/common_inline_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/user/contractor/contractor_kb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keyboards/user/customer/customer_kb.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/answer_blanks/lang.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/admin/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/admin/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/database/db_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/pgdbapi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/database/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/AdminStates.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/PagionationStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/PagionationStates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/states/UserStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/states/UserStates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/bot_mgmt.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/chat_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/chat_mgmt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/logger_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/misc/logger_settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/pagination.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/scheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/throttling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/throttling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/answer_blanks/lang.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/answer_blanks/lang.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/filters/callback_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/filters/callback_filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/filters/command_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/filters/command_filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/filters/role_filters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/filters/role_filters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/commands/get_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/commands/get_logs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/commands/help.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/commands/help.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/commands/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/commands/start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/user/common/common_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/common/common_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/user/contractor/contractor_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/contractor/contractor_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/user/customer/customer_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/customer/customer_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboards/user/common/common_inline_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/common/common_inline_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboards/user/contractor/contractor_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/contractor/contractor_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/keyboards/user/customer/customer_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/customer/customer_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/middlewares/role.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middlewares/throttling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/middlewares/throttling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/admin/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/admin/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/admin/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/admin/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/database/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/database/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/database/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/role/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/commands/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/role/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/role/role.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/ItemMgmtStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/states/ItemMgmtStates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/PagionationStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/states/PagionationStates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/states/UserStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/states/UserStates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/bot_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/bot_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/chat_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/chat_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/misc/logger_settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/logger/logger_settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/pagination.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/pgdbapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/pgdbapi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/scheduler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,11 +94,11 @@
       <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\middlewares" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\bot" />
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\logger" />
       <recent name="C:\Users\R\PycharmProjects\aiogram_template" />
       <recent name="C:\Users\R\PycharmProjects\aiogram_template\src" />
       <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\utils" />
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\answer_blanks" />
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\middlewares" />
     </key>
   </component>
   <component name="RunManager">
@@ -157,7 +150,7 @@
       <workItem from="1665647020013" duration="29000" />
       <workItem from="1665647057693" duration="2000" />
       <workItem from="1665647382916" duration="408000" />
-      <workItem from="1665739499569" duration="12000000" />
+      <workItem from="1665739499569" duration="12517000" />
     </task>
     <task id="LOCAL-00001" summary="upd">
       <created>1665305112467</created>
@@ -194,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665376918624</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="roles">
+      <created>1665758310004</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1665758310004</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,9 +219,10 @@
     <MESSAGE value="readme" />
     <MESSAGE value="env" />
     <MESSAGE value="README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="README.md" />
+    <MESSAGE value="roles" />
+    <option name="LAST_COMMIT_MESSAGE" value="roles" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1665757975021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1665758511781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
