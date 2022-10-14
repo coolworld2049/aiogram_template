@@ -1,30 +1,36 @@
-import asyncio
-
 import aiogram
 from aiogram.utils import executor
 
-from core import dp, logger
-from handlers.registration_handlers import setup_handlers
-from utils.bot_mgmt import set_my_commands, base_commands
+import config
+from config import RATE_LIMIT, base_commands
+from core import dispatcher, logger
+from filters.role_filters import RoleFilter, AdminFilter
+from handlers import setup_handlers
+from middlewares.role import RoleMiddleware
+from middlewares.throttling import ThrottlingMiddleware
+from utils.bot_mgmt import set_bot_commands
 from utils.scheduler import task_scheduler
 
 
-# noinspection PyUnusedLocal
-async def on_startup_app(dispatcher: aiogram.Dispatcher):
+async def on_startup(_dispatcher: aiogram.Dispatcher):
     setup_handlers()
-    asyncio.create_task(set_my_commands(command_list=base_commands))
-    asyncio.create_task(task_scheduler())
-    logger.info('app.py: start')
+    _dispatcher.middleware.setup(ThrottlingMiddleware(limit=RATE_LIMIT))
+    _dispatcher.middleware.setup(RoleMiddleware(list(config.ADMIN.items())[0][0]))
+    _dispatcher.filters_factory.bind(RoleFilter)
+    _dispatcher.filters_factory.bind(AdminFilter)
+    await set_bot_commands(command_list=base_commands)
+    await task_scheduler()
+    logger.info('start')
 
 
-async def on_shutdown_app(dispatcher: aiogram.Dispatcher):
-    await dispatcher.storage.close()
-    await dispatcher.storage.wait_closed()
-    logger.info('app.py: shutdown')
+async def on_shutdown(_dispatcher: aiogram.Dispatcher):
+    await _dispatcher.storage.close()
+    await _dispatcher.storage.wait_closed()
+    logger.info('shutdown')
 
 
 if __name__ == "__main__":
     try:
-        executor.start_polling(dp, skip_updates=True, on_startup=on_startup_app, on_shutdown=on_shutdown_app)
-    except Exception as e:
-        logger.warning(f"main: Exception: {e.args}")
+        executor.start_polling(dispatcher, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
+    except aiogram.exceptions as e:
+        logger.warning(f"__main__: TelegramAPIError: {e.args}")
