@@ -55,4 +55,16 @@ async def user_mgmt_message_IK(user_id: int):
         await save_message(user_id, message.message_id)
 
 
+async def admin_panel_ADD_item():
+    print('admin_panel_ADD_item')
+
+
+async def admin_panel_UPDATE_item():
+    print('admin_panel_UPDATE_item')
+
+
+async def admin_panel_DELETE_item():
+    print('admin_panel_DELETE_item')
+
+
 itemManagerModel = ItemManagerModel(admin_panel_message_IK, user_mgmt_message_IK)

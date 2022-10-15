@@ -3,7 +3,8 @@ from aiogram.dispatcher import FSMContext
 
 from bot.filters.callback_filters import back_cb
 from bot.filters.command_filters import command_admin
-from bot.keyboards.admin.admin_kb import admin_panel_message_IK, itemManagerModel
+from bot.keyboards.admin.admin_kb import admin_panel_message_IK, itemManagerModel, admin_panel_ADD_item, \
+    admin_panel_UPDATE_item, admin_panel_DELETE_item
 from bot.states.ItemMgmtStates import ItemMgmtStates
 from core import dispatcher
 
@@ -28,23 +29,14 @@ async def admin_panel_back(message: types.Message):
 
 @dispatcher.message_handler(state=ItemMgmtStates.ADD)
 async def add_item_hd(message: types.Message, state: FSMContext):
-    async def add_item():
-        pass
-
-    await itemManagerModel.add_item(message, state, add_item)
+    await itemManagerModel.add_item(message, state, admin_panel_ADD_item)
 
 
 @dispatcher.message_handler(state=ItemMgmtStates.UPDATE)
 async def update_item_hd(message: types.Message, state: FSMContext):
-    async def update_item():
-        pass
-
-    await itemManagerModel.update_item(message, state, update_item)
+    await itemManagerModel.update_item(message, state, admin_panel_UPDATE_item)
 
 
 @dispatcher.message_handler(state=ItemMgmtStates.DELETE)
 async def delete_item_hd(message: types.Message, state: FSMContext):
-    async def delete_item():
-        pass
-
-    await itemManagerModel.delete_item(message, state, delete_item)
+    await itemManagerModel.delete_item(message, state, admin_panel_DELETE_item)

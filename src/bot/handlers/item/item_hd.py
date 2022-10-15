@@ -1,7 +1,7 @@
 from aiogram import types
 
 from bot.answer_blanks.lang import items_mgmt_action_ADD_TEXT_pre, items_mgmt_action_DELETE_TEXT_pre, \
-    items_mgmt_action_UPDATE_TEXT_pre, items_mgmt_ACTION_TEXT_cancel
+    items_mgmt_action_UPDATE_TEXT_pre
 from bot.filters.callback_filters import item_cb
 from bot.filters.command_filters import command_admin
 from bot.keyboards.admin.admin_kb import user_mgmt_message_IK
@@ -18,7 +18,7 @@ def reg_item_handlers():
 async def items_handler(callback_query: types.CallbackQuery, callback_data: dict):
     await delete_previous_messages(tgtype=callback_query)
     action = callback_data.get('action')
-    text = items_mgmt_ACTION_TEXT_cancel
+    text = str()
     if action == 'add':
         text = items_mgmt_action_ADD_TEXT_pre
         await ItemMgmtStates.ADD.set()
@@ -32,8 +32,9 @@ async def items_handler(callback_query: types.CallbackQuery, callback_data: dict
         callback = callback_data.get('callback')
         if callback == command_admin.commands[0]:
             await user_mgmt_message_IK(callback_query.from_user.id)
-    message = await bot.send_message(callback_query.from_user.id, text,
-                                     parse_mode=types.ParseMode.MARKDOWN)
-    await dispatcher.current_state(chat=callback_query.from_user.id,
-                                   user=callback_query.from_user.id) \
-        .update_data({'items_management_msg_id': f"{message.message_id}"})
+    if text:
+        message = await bot.send_message(callback_query.from_user.id, text,
+                                         parse_mode=types.ParseMode.MARKDOWN)
+        await dispatcher.current_state(chat=callback_query.from_user.id,
+                                       user=callback_query.from_user.id) \
+            .update_data({'items_management_msg_id': f"{message.message_id}"})
