@@ -1,3 +1,4 @@
+from bot import config
 from bot.config import admin_commands, manager_commands, common_commands, ADMINS, MANAGERS
 from bot.models.database import asyncPostgresModel
 from bot.utils.bot_mgmt import set_bot_commands
@@ -20,24 +21,24 @@ class VerifyUser:
         scope = ADMINS + MANAGERS
         if user and len(scope) > 0:
             for user_id in scope:
-                if user['user_id'] == user_id:
-                    check = (False, None)
-                    if user['is_admin'] in check:
-                        self.commands = admin_commands
-                        self.values = [user_id, True, True]  # admin and manger privelegies
-                    elif user['is_manager'] in check:
-                        self.commands = manager_commands
-                        self.values = [user_id, False, True]
-                    else:
-                        self.commands = common_commands
-                        self.values = [user_id, False, False]
+                check = (False, None)
+                if user['is_admin'] in check or user_id in config.ADMINS:
+                    self.commands = admin_commands
+                    self.values = [user_id, True, True]
+                elif user['is_manager'] in check or user_id in config.MANAGERS:
+                    self.commands = manager_commands
+                    self.values = [user_id, False, True]
+                elif not user['is_admin'] and not user['is_manager']:
+                    self.commands = common_commands
+                    self.values = [user_id, False, False]
 
-                    await set_bot_commands(users_id=user_id, command_list=self.commands)
-                    await asyncPostgresModel.executeone(query, self.values)
+                await set_bot_commands(users_id=user_id, command_list=self.commands)
+                await asyncPostgresModel.executeone(query, self.values)
 
-                    if user['is_admin'] in check:
-                        return {'is_admin': True, 'is_manager': True}
-                    elif user['is_manager'] in check:
-                        return {'is_admin': False, 'is_manager': True}
-                    else:
-                        return {'is_admin': False, 'is_manager': False}
+                updated_user = await fetchone_user(user_id)
+                if updated_user['is_admin'] in check:
+                    return {'is_admin': True, 'is_manager': True}
+                elif updated_user['is_manager'] in check:
+                    return {'is_admin': False, 'is_manager': True}
+                else:
+                    return {'is_admin': False, 'is_manager': False}

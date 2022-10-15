@@ -9,7 +9,7 @@ from core import dispatcher, bot
 from bot.filters.callback_filters import pagination_cb, back_cb
 from bot.keyboards.user.common.common_inline_kb import main_menu_message_IK
 from bot.states.PagionationStates import PaginationStates
-from bot.utils.chat_mgmt import _delete_message, save_message, get_last_message
+from bot.utils.chat_mgmt import delete_message_handler, save_message, get_last_message
 
 
 def reg_pagination_handlers():
@@ -96,7 +96,7 @@ async def step_state_message_controller(message: types.Message, state: FSMContex
             try:
                 data = await state.get_data()
                 if data['msgs_ids']:
-                    await _delete_message(message.from_user.id, data['msgs_ids'])
+                    await delete_message_handler(message.from_user.id, data['msgs_ids'])
             except KeyError:
                 pass
             await state.finish()
@@ -109,7 +109,7 @@ async def step_state_callback_controller(callback_query: types.CallbackQuery, st
         msg_ids = callback_query.data.split('_')[-1]
         if msg_ids:
             await callback_query.message.delete()
-            await _delete_message(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
+            await delete_message_handler(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
         else:
             await callback_query.message.delete()
         await state.finish()
@@ -126,7 +126,7 @@ async def next_step(callback_query: types.CallbackQuery, state: FSMContext):
         msg_ids = callback_query.data.split('_')[-1]
         if msg_ids:
             await callback_query.message.delete()
-            await _delete_message(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
+            await delete_message_handler(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
         else:
             await callback_query.message.delete()
 
@@ -143,7 +143,7 @@ async def back_step(callback_query: types.CallbackQuery, state: FSMContext):
         msg_ids = callback_query.data.split('_')[-1]
         if msg_ids:
             await callback_query.message.delete()
-            await _delete_message(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
+            await delete_message_handler(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
         else:
             await callback_query.message.delete()
         await answer_with_pagination(callback_query.from_user.id, -1, state)
@@ -156,7 +156,7 @@ async def stop_step(callback_query: types.CallbackQuery, state: FSMContext):
     msg_ids = callback_query.data.split('_')[-1]
     if msg_ids:
         await callback_query.message.delete()
-        await _delete_message(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
+        await delete_message_handler(callback_query.from_user.id, msg_ids, MESSAGE_DELAY)
     else:
         await callback_query.message.delete()
     await state.finish()

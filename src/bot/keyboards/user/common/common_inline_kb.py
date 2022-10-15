@@ -9,7 +9,7 @@ from bot.answer_blanks.lang import registration_menu_TEXT, main_menu_TEXT, accou
 from core import bot
 from bot.utils.pgdbapi import fetchone_user
 from bot.filters.callback_filters import back_cb, reg_user_cb, common_cb
-from bot.utils.chat_mgmt import save_message, _delete_message, get_last_message
+from bot.utils.chat_mgmt import save_message, delete_message_handler, get_last_message
 
 
 async def base_navigation(user_id: int):
@@ -39,7 +39,7 @@ async def navigation_menu(user_id: int, custom_cb: str = None, direction: str = 
     :return:
     """
     if delete_yourself:
-        await _delete_message(user_id, await get_last_message(user_id), message_del_delay)
+        await delete_message_handler(user_id, await get_last_message(user_id), message_del_delay)
     IK_back = types.InlineKeyboardMarkup()
     if direction:
         bk_cb = back_cb.new(to=direction, msg_ids=messages_id if messages_id else None)
@@ -61,7 +61,7 @@ async def navigation_menu(user_id: int, custom_cb: str = None, direction: str = 
 
 
 async def registration_menu_message_IK(user_id: int):
-    await _delete_message(user_id, await get_last_message(user_id), MESSAGE_DELAY)
+    await delete_message_handler(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     IK = types.InlineKeyboardMarkup(row_width=2).add(
         types.InlineKeyboardButton(registration_menu_message_IK_TEXT, callback_data=reg_user_cb.new()))
     message = await bot.send_message(user_id, registration_menu_TEXT, reply_markup=IK)
@@ -69,7 +69,7 @@ async def registration_menu_message_IK(user_id: int):
 
 
 async def main_menu_message_IK(user_id: int):
-    await _delete_message(user_id, await get_last_message(user_id), MESSAGE_DELAY)
+    await delete_message_handler(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     IK = types.InlineKeyboardMarkup(row_width=2) \
         .add(types.InlineKeyboardButton(main_menu_message_IK_BTN_account_TEXT, callback_data=common_cb.new()))
     message = await bot.send_message(user_id, main_menu_TEXT, reply_markup=IK, parse_mode=types.ParseMode.MARKDOWN)
@@ -77,7 +77,7 @@ async def main_menu_message_IK(user_id: int):
 
 
 async def account_menu_message_IK(user_id: int):
-    await _delete_message(user_id, await get_last_message(user_id), MESSAGE_DELAY)
+    await delete_message_handler(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     user = await fetchone_user(user_id)
     IK = types.InlineKeyboardMarkup(row_width=2)
     IK.row(types.InlineKeyboardButton(navigation_BTN_back, callback_data=back_cb.new(to='menu', msg_ids='None')))

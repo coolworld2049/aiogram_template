@@ -22,13 +22,12 @@ async def admin_panel_message_IK(user_id: int):
         await save_message(user_id, msg.message_id)
 
     user = await fetchone_user(user_id)
-    if user['is_admin'] in (None, False):
-        await delete_previous_messages(user_id)
-        verify_result = await verifyUserModel.verify(user_id)
+    verify_result = await verifyUserModel.verify(user_id)
+    if user['is_admin']:
+        await _panel()
+    else:
         if verify_result['is_admin']:
             await _panel()
-    else:
-        await _panel()
 
 
 async def user_mgmt_message_IK(user_id: int):

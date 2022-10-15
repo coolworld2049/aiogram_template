@@ -1,7 +1,7 @@
 from bot.config import MESSAGE_DELAY
-from bot.utils.chat_mgmt import get_last_message, _delete_message
+from bot.utils.chat_mgmt import get_last_message, delete_message_handler
 
 
 async def customer_account_message_IK(user_id: int):
-    await _delete_message(user_id, await get_last_message(user_id), MESSAGE_DELAY)
+    await delete_message_handler(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     pass

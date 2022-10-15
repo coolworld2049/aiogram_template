@@ -6,7 +6,7 @@ from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFou
 
 from bot.config import DEBUG_MODE, MESSAGE_DELAY
 from core import bot
-from logger.logger import logger
+from services.logger import logger
 from bot.models.database import asyncPostgresModel
 from bot.utils.pgdbapi import fetchone_temp, fetchone_user
 
@@ -18,7 +18,7 @@ async def save_message(user_id: int, message_id: int):
             logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
 
-async def _delete_message(chat_id: int, message_id: str, delay: float = 0):
+async def delete_message_handler(chat_id: int, message_id: str, delay: float = 0):
     """
     :param chat_id:
     :param message_id: "123,124,125" or "123-125" or "123"
@@ -42,7 +42,7 @@ async def _delete_message(chat_id: int, message_id: str, delay: float = 0):
                     for item in _message_id:
                         if item != 'None' and item != '':
                             with suppress(MessageToDeleteNotFound):
-                                await bot._delete_message(chat_id, item)
+                                await bot.delete_message(chat_id, item)
                 else:
                     if message_id != 'None' and message_id != '' and message_id != ' ':
                         await bot.delete_message(chat_id, message_id)
@@ -66,16 +66,16 @@ async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None,
                 await asyncio.sleep(MESSAGE_DELAY)
                 await tgtype.message.delete()
                 if msg_ids:
-                    await _delete_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+                    await delete_message_handler(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
             elif isinstance(tgtype, types.Message) and msg_ids:
                 await asyncio.sleep(MESSAGE_DELAY)
-                await _delete_message(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+                await delete_message_handler(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
         if by_user_id:
             await asyncio.sleep(MESSAGE_DELAY)
             if not msg_ids:
-                await _delete_message(by_user_id, await get_last_message(by_user_id), MESSAGE_DELAY)
+                await delete_message_handler(by_user_id, await get_last_message(by_user_id), MESSAGE_DELAY)
             else:
-                await _delete_message(by_user_id, msg_ids, MESSAGE_DELAY)
+                await delete_message_handler(by_user_id, msg_ids, MESSAGE_DELAY)
 
 
 async def get_last_message(user_id: int):

@@ -16,7 +16,7 @@ from core import dispatcher, bot
 def reg_common_handlers():
     dispatcher.register_callback_query_handler(user_registration, reg_user_cb.filter())
     dispatcher.register_message_handler(set_name, state=UserStates.SET_NAME)
-    dispatcher.register_callback_query_handler(my_account, common_cb.filter(), state='*')
+    dispatcher.register_callback_query_handler(account, common_cb.filter(), state='*')
     dispatcher.register_callback_query_handler(back_to_account, back_cb.filter(to='account'), state='*')
     dispatcher.register_callback_query_handler(back_to_menu, back_cb.filter(to='menu'), state='*')
 
@@ -49,7 +49,7 @@ async def set_name(message: types.Message, state: FSMContext):
 
 
 @dispatcher.callback_query_handler(common_cb.filter(), state='*')
-async def my_account(callback_query: types.CallbackQuery):
+async def account(callback_query: types.CallbackQuery):
     await delete_previous_messages(tgtype=callback_query)
     await account_menu_message_IK(callback_query.from_user.id)
 

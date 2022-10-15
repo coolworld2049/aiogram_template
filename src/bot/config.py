@@ -1,5 +1,6 @@
 import pathlib
 
+ROOT_DIRECTORY = pathlib.Path(__file__).parent.parent
 PROJECT_NAME = pathlib.Path().cwd().name
 
 BOT_TOKEN = ""
@@ -19,7 +20,9 @@ ITEMS_PER_PAGE = 3
 NOTIFY_USER_EVERY_HOURS = 6
 NOTIFY_USER_DELTA_MIN = 60
 
+LOG_PATH = 'src/services/logs/'
 LOG_FILE_SIZE_BYTES = 10 * 104857600
+LOGGING_LEVEL = 'INFO'
 
 REDIS_CONFIG = {
     "host": "127.0.0.1",
