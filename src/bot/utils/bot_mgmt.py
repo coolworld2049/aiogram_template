@@ -3,14 +3,15 @@ from contextlib import suppress
 from aiogram.types import bot_command_scope, BotCommand
 from aiogram.utils.exceptions import ChatNotFound
 
-from bot.config import base_commands
-from core import logger, bot
+from bot.config import common_commands
+from core import bot
+from logger.logger import logger
 from bot.utils.pgdbapi import fetchall_user_ids
 
 
 async def _set_commands(users: list, command_list: list[dict[str, str]] = None):
     for user_id in users:
-        list_of_base_commands = set(BotCommand(x['command'], x['description']) for x in base_commands)
+        list_of_base_commands = set(BotCommand(x['command'], x['description']) for x in common_commands)
         scope = bot_command_scope.BotCommandScopeChat(chat_id=str(user_id))
         current_commands = []
         with suppress(ChatNotFound):

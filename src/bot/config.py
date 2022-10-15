@@ -4,14 +4,15 @@ PROJECT_NAME = pathlib.Path().cwd().name
 
 BOT_TOKEN = ""
 
-ADMIN: dict[int, str] = {5227303016: "qwerty"}
-MANAGERS: dict[int, str] = {}
+OWNER: int = 5227303016
+ADMINS: list = [OWNER]
+MANAGERS: list = []
 
 DEBUG_MODE = False
 USE_REDIS = True
 USE_SCHEDULER = False
 
-MESSAGE_DELAY = 0.1
+MESSAGE_DELAY = 0.01
 RATE_LIMIT = .50
 ITEMS_PER_PAGE = 3
 
@@ -29,15 +30,21 @@ REDIS_CONFIG = {
     "data_ttl": 1800,
 }
 
-base_commands = \
+common_commands = \
     [
         {"command": "start", "description": "запуск бота"},
         {"command": "help", "description": "помощь"},
     ]
+
 admin_commands = \
     [
         {"command": "admin", "description": "администратор"},
         {"command": "get_logs", "description": "журнал событий"}
+    ]
+
+manager_commands = \
+    [
+        {"command": "example", "description": "example"}
     ]
 
 # ----------------------------------------------------------------------------------------

@@ -3,3 +3,4 @@ redis~=4.3.4
 aioredis~=2.0.1
 asyncpg~=0.26.0
 APScheduler~=3.9.1
+nest_asyncio~=1.5.6

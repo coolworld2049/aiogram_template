@@ -1,6 +1,6 @@
 from aiogram.utils.callback_data import CallbackData
 
-admin_cb = CallbackData('items-management', 'action')
+item_cb = CallbackData('items-management', 'action', 'callback')
 common_cb = CallbackData('account')
 reg_user_cb = CallbackData('reg-user')
 back_cb = CallbackData('back', 'to', 'msg_ids')

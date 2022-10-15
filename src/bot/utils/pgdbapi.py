@@ -7,7 +7,7 @@ from bot.states.UserStates import UserStates
 
 
 async def save_user(user: User):
-    query = '''INSERT INTO schema.user(user_id, username, is_admin, last_seen) VALUES($1,$2,$3,$4)
+    query = '''INSERT INTO schema.user(user_id, username, is_admin, last_seen) VALUES($1,$2,$3,$4) 
     ON CONFLICT DO NOTHING'''
     values = [
         user.id,

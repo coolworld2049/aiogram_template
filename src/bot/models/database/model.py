@@ -6,9 +6,10 @@ from asyncpg import Connection
 
 
 class AsyncPostgresModel:
+    __slots__ = ('DSN', 'pool')
+
     def __init__(self, DSN: str):
         """
-
         :param DSN:
         """
         self.DSN: str = DSN

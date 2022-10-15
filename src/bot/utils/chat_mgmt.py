@@ -5,7 +5,8 @@ from aiogram import types
 from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFound, MessageIdentifierNotSpecified
 
 from bot.config import DEBUG_MODE, MESSAGE_DELAY
-from core import bot, logger
+from core import bot
+from logger.logger import logger
 from bot.models.database import asyncPostgresModel
 from bot.utils.pgdbapi import fetchone_temp, fetchone_user
 
@@ -51,6 +52,14 @@ async def _delete_message(chat_id: int, message_id: str, delay: float = 0):
 
 async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None,
                                    tgtype: types.CallbackQuery | types.Message = None):
+    """
+    Usage: [tgtype | tgtype && msg_ids] or [by_user_id | by_user_id && msg_ids]
+
+    :param by_user_id:
+    :param msg_ids:
+    :param tgtype:
+    :return:
+    """
     with suppress(MessageToDeleteNotFound):
         if tgtype:
             if isinstance(tgtype, types.CallbackQuery):
