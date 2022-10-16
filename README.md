@@ -35,7 +35,7 @@
     sudo git clone $SOURCE_CODE_LINK /var/$USER/$PROJECT_NAME;
     cd /var/$USER/$PROJECT_NAME;
     sudo chown -R $USER $PWD/;
-    virtualenv venv;
+    python3 -m virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
     deactivate
@@ -54,7 +54,7 @@
       Type=simple
       WorkingDirectory=/var/$USER/$PROJECT_NAME
       ExecStart=bash -c "cd /var/$USER/$PROJECT_NAME/ && source venv/bin/activate && python3 app.py"
-      Restart=always
+      Restart=on-failure
       RestartSec=30s
 
       [Install]
@@ -87,7 +87,7 @@
     sudo git clone $SOURCE_CODE_LINK /var/$USER/$PROJECT_NAME;
     cd /var/$USER/$PROJECT_NAME;
     sudo chown -R $USER $PWD/;
-    virtualenv venv;
+    python3 -m virtualenv venv;
     source venv/bin/activate;
     pip install -r $PWD/requirements.txt;
     deactivate
