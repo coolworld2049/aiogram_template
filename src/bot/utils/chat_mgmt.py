@@ -11,7 +11,12 @@ from bot.models.database import asyncPostgresModel
 from bot.utils.pgdbapi import fetchone_temp, fetchone_user
 
 
-async def save_message(user_id: int, message_id: int):
+async def save_message(user_id: int, message_id: int | str):
+    """
+    :param user_id:
+    :param message_id: 1234 or '1234-1240'
+    :return:
+    """
     if await fetchone_user(user_id):
         await asyncPostgresModel.executeone('''SELECT schema.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
         if DEBUG_MODE:

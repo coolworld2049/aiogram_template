@@ -9,7 +9,7 @@ from services.journal.logger import logger
 from bot.utils.pgdbapi import fetchall_user_ids, fetchone_user
 
 
-async def set_commands(users: list | set, command_list: list[dict[str, str]] = None):
+async def _set_commands(users: list | set, command_list: list[dict[str, str]] = None):
     for user_id in users:
         list_of_base_commands = set(BotCommand(x['command'], x['description']) for x in common_commands)
         scope = bot_command_scope.BotCommandScopeChat(chat_id=str(user_id))
@@ -32,4 +32,4 @@ async def set_bot_commands(users_id: int = None, command_list: list[dict[str, st
     else:
         res = await fetchall_user_ids()
         users = [x['user_id'] for x in res] if res else logger.info('set_bot_commands: no users')
-    await set_commands(users, command_list)
+    await _set_commands(users, command_list)

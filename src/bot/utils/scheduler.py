@@ -5,7 +5,7 @@ from core import scheduler
 from services.journal.logger import logger
 
 
-async def task_scheduler():
+async def bot_scheduler():
     if USE_SCHEDULER:
         logger.info(f'task_scheduler: RUN PENDING')
         scheduler.add_job(notify_users, 'cron', hour=NOTIFY_USER_EVERY_HOURS, minute=0)

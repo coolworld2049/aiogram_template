@@ -13,7 +13,8 @@ user_state_finish_TEXT = "Данные сохранены"
 user_state_incorrect_input_TEXT = "Неправильный формат ввода"
 
 admin_panel_TEXT = 'Админ панель'
-admin_panel_BTN_TEXT = 'Управление элементами'
+admin_panel_BTN_items_mgmt_TEXT = 'Управление элементами'
+admin_panel_BTN_server_stats_TEXT = 'Состояние сервера'
 
 items_mgmt_message_IK_TEXT = "Здесь вы можете редактировать список *элементов*"
 items_mgmt_message_IK_TEXT_error = "Список элементов отсутствует в базе данных"

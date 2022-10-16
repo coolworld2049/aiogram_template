@@ -4,7 +4,7 @@ from bot.answer_blanks.lang import items_mgmt_action_ADD_TEXT_pre, items_mgmt_ac
     items_mgmt_action_UPDATE_TEXT_pre
 from bot.filters.callback_filters import item_cb
 from bot.filters.command_filters import command_admin
-from bot.keyboards.admin.admin_kb import user_mgmt_message_IK
+from bot.keyboards.staff.admin_kb import user_mgmt_message_IK
 from bot.states.ItemMgmtStates import ItemMgmtStates
 from bot.utils.chat_mgmt import delete_previous_messages
 from core import dispatcher, bot

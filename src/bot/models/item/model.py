@@ -24,10 +24,10 @@ class ItemManagerModel:
         async def post_proccess_func(user_id: int):
             await delete_previous_messages(user_id)
             IK = types.InlineKeyboardMarkup(row_width=2)
-            items = ['item 1', 'item 2', 'item 3', 'item 4']
+            items = ['helpers 1', 'helpers 2', 'helpers 3', 'helpers 4']
             if items and len(items) > 0:
-                for item in items:
-                    item_text = f"{item}"
+                for helpers in items:
+                    item_text = f"{helpers}"
                     IK.insert(types.InlineKeyboardButton(item_text, callback_data=admin_cb.new(action='update')))
                 IK.row(types.InlineKeyboardButton('➕', callback_data=admin_cb.new(action='add')),
                        types.InlineKeyboardButton('➖', callback_data=admin_cb.new(action='delete')))

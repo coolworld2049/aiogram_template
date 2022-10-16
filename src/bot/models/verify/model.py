@@ -36,9 +36,4 @@ class VerifyUser:
                 await asyncPostgresModel.executeone(query, self.values)
 
                 updated_user = await fetchone_user(user_id)
-                if updated_user['is_admin'] in check:
-                    return {'is_admin': True, 'is_manager': True}
-                elif updated_user['is_manager'] in check:
-                    return {'is_admin': False, 'is_manager': True}
-                else:
-                    return {'is_admin': False, 'is_manager': False}
+                return {'is_admin': updated_user['is_admin'], 'is_manager': updated_user['is_manager']}

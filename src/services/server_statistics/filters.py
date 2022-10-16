@@ -1,4 +1,4 @@
-from aiogram.dispatcher.filters import Command
+from aiogram.utils.callback_data import CallbackData
 
-command_stats = Command('stats')
-command_memgraph = Command('memgraph')
+stats_cb = CallbackData('stats')
+memgraph_cb = CallbackData('memgraph')

@@ -6,13 +6,15 @@ from datetime import datetime
 import matplotlib
 import psutil
 from aiogram import types
-from aiogram.types import InputMedia, InputMediaPhoto, InputFile
+from aiogram.types import InputFile
 from matplotlib import pyplot as plt
 
 from bot import config
+from bot.answer_blanks.lang import navigation_BTN_back
+from bot.filters.callback_filters import server_stats_cb
+from bot.utils.chat_mgmt import save_message, delete_previous_messages
 from core import bot
 from services.journal.logger import logger
-from services.server_statistics.config import server_stats_commands
 from services.server_statistics.utils import async_wrapper
 
 matplotlib.use("Agg")
@@ -26,6 +28,7 @@ memorythreshold = 85
 
 
 async def stats(user_id):
+    await delete_previous_messages(by_user_id=user_id)
     await bot.send_chat_action(user_id, 'typing')
     memory = psutil.virtual_memory()
     disk = psutil.disk_usage('/')
@@ -54,14 +57,21 @@ async def stats(user_id):
     for proc in sortedprocs:
         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
     reply = timedif + "\n" + memtotal + "\n" + memavail + "\n" + memuseperc + "\n" + diskused + "\n\n" + pidsreply
-    await bot.send_message(user_id, reply, disable_web_page_preview=True)
+    IK = types.InlineKeyboardMarkup()
+    IK.row(types.InlineKeyboardButton(navigation_BTN_back, callback_data=server_stats_cb.new()))
+    msg = await bot.send_message(user_id, reply, disable_web_page_preview=True, reply_markup=IK)
+    await save_message(user_id, msg.message_id)
 
 
 async def memgraph(user_id):
+    await delete_previous_messages(by_user_id=user_id)
     await bot.send_chat_action(user_id, 'typing')
     tmperiod = "Last %.2f hours" % ((datetime.now() - graphstart).total_seconds() / 3600)
     path = await async_wrapper(plotmemgraph, tmperiod)
-    await bot.send_photo(user_id, InputFile(path))
+    IK = types.InlineKeyboardMarkup()
+    IK.row(types.InlineKeyboardButton(navigation_BTN_back, callback_data=server_stats_cb.new()))
+    msg = await bot.send_photo(user_id, InputFile(path), reply_markup=IK)
+    await save_message(user_id, msg.message_id)
 
 
 def plotmemgraph(tmperiod):
@@ -84,8 +94,6 @@ async def server_stats_run():
     global memlist
     tr = 0
     xx = 0
-    for admin_id in config.ADMINS:
-        await bot.send_message(admin_id, server_stats_commands)
     while True:
         if tr == poll_seconds:
             tr = 0
@@ -105,9 +113,14 @@ async def server_stats_run():
                 memavail = "Available memory: %.2f GB" % (memck.available / 1000000000)
                 graphend = datetime.now()
                 tmperiod = "Last %.2f hours" % ((graphend - graphstart).total_seconds() / 3600)
-                for admin_id in config.ADMINS:
-                    await bot.send_message(admin_id, "CRITICAL! LOW MEMORY!\n" + memavail)
+                f_msg = int()
+                for i, admin_id in enumerate(config.ADMINS):
+                    await delete_previous_messages(by_user_id=admin_id)
                     path = async_wrapper(plotmemgraph(tmperiod))
-                    await bot.send_photo(admin_id, path)
+                    msg = await bot.send_photo(admin_id, path, caption="CRITICAL! LOW MEMORY!\n" + memavail)
+                    if i == 0:
+                        f_msg = msg.message_id
+                    elif i == len(config.ADMINS) - 1:
+                        await save_message(admin_id, f"{f_msg}-{msg.message_id}")
         await asyncio.sleep(10)
         tr += 10

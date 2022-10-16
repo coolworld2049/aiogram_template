@@ -6,7 +6,7 @@ from logging.handlers import RotatingFileHandler
 from bot.config import LOG_FILE_SIZE_BYTES, LOGGING_LEVEL, LOG_PATH, PROJECT_NAME
 
 logger = logging.Logger(PROJECT_NAME, LOGGING_LEVEL)
-log_file = f"{datetime.today().strftime('%d_%m_%Y  %I %p')}.log"
+log_file = f"{datetime.today().strftime('%d_%m_%Y')}.log"
 pathlib.Path(LOG_PATH).mkdir(parents=True, exist_ok=True)
 
 file_handler = logging.FileHandler(LOG_PATH + log_file, encoding="utf-8")

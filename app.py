@@ -12,13 +12,14 @@ from bot.handlers import setup_handlers
 from bot.middlewares.role import RoleMiddleware
 from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.utils.bot_mgmt import set_bot_commands
-from bot.utils.scheduler import task_scheduler
+from bot.utils.scheduler import bot_scheduler
 from core import dispatcher
 from services.journal.logger import logger
 from services.server_statistics import setup_server_stats_handlers
 from services.server_statistics.main import server_stats_run
 
 nest_asyncio.apply()
+loop = asyncio.get_event_loop()
 
 
 async def on_startup(_):
@@ -29,8 +30,8 @@ async def on_startup(_):
     dispatcher.middleware.setup(RoleMiddleware(config.ADMINS, config.MANAGERS))
     dispatcher.filters_factory.bind(RoleFilter)
     dispatcher.filters_factory.bind(AdminFilter)
-    asyncio.get_event_loop().run_until_complete(set_bot_commands(command_list=common_commands))
-    asyncio.get_event_loop().run_until_complete(task_scheduler())
+    loop.run_until_complete(set_bot_commands(command_list=common_commands))
+    loop.run_until_complete(bot_scheduler())
     logger.info('start')
 
 
@@ -42,7 +43,7 @@ async def on_shutdown(_):
 
 if __name__ == "__main__":
     try:
-        asyncio.get_event_loop().create_task(server_stats_run())
+        loop.create_task(server_stats_run())
     except Exception as e:
         logger.exception(f"{config.PROJECT_NAME}: server_stats_service: Exception: {e.args}")
 
