@@ -14,10 +14,15 @@ from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.utils.bot_mgmt import set_bot_commands
 from bot.utils.scheduler import task_scheduler
 from core import dispatcher
-from services.logger import logger
+from services.journal.logger import logger
+from services.server_statistics import setup_server_stats_handlers
+from services.server_statistics.main import server_stats_run
+
+nest_asyncio.apply()
 
 
 async def on_startup(_):
+    setup_server_stats_handlers()
     setup_handlers()
     dispatcher.middleware.setup(ThrottlingMiddleware(limit=RATE_LIMIT))
     dispatcher.middleware.setup(LoggingMiddleware(logger))
@@ -36,8 +41,12 @@ async def on_shutdown(_):
 
 
 if __name__ == "__main__":
-    nest_asyncio.apply()
+    try:
+        asyncio.get_event_loop().create_task(server_stats_run())
+    except Exception as e:
+        logger.exception(f"{config.PROJECT_NAME}: server_stats_service: Exception: {e.args}")
+
     try:
         executor.start_polling(dispatcher, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
-    except aiogram.exceptions and BaseException as e:
-        logger.warning(f"{config.PROJECT_NAME}: TelegramAPIError: {e.args}")
+    except aiogram.exceptions and Exception as e:
+        logger.exception(f"{config.PROJECT_NAME}: bot: TelegramAPIError: {e.args}")

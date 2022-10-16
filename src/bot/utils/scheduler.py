@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from bot.config import USE_SCHEDULER, NOTIFY_USER_EVERY_HOURS, NOTIFY_USER_DELTA_MIN
 from core import scheduler
-from services.logger import logger
+from services.journal.logger import logger
 
 
 async def task_scheduler():

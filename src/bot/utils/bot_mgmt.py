@@ -5,7 +5,7 @@ from aiogram.utils.exceptions import ChatNotFound
 
 from bot.config import common_commands
 from core import bot
-from services.logger import logger
+from services.journal.logger import logger
 from bot.utils.pgdbapi import fetchall_user_ids, fetchone_user
 
 

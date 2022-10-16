@@ -20,7 +20,7 @@ ITEMS_PER_PAGE = 3
 NOTIFY_USER_EVERY_HOURS = 6
 NOTIFY_USER_DELTA_MIN = 60
 
-LOG_PATH = 'src/services/logs/'
+LOG_PATH = 'src/services/journal/logs/'
 LOG_FILE_SIZE_BYTES = 10 * 104857600
 LOGGING_LEVEL = 'INFO'
 

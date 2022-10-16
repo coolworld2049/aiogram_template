@@ -6,7 +6,7 @@ from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFou
 
 from bot.config import DEBUG_MODE, MESSAGE_DELAY
 from core import bot
-from services.logger import logger
+from services.journal.logger import logger
 from bot.models.database import asyncPostgresModel
 from bot.utils.pgdbapi import fetchone_temp, fetchone_user
 
