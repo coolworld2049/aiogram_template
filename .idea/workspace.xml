@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="fix roles">
+    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="loguru">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/restart.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/restart.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/handlers/helpers/item_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/helpers/item_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/help.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/help.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/user/common/common_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/common/common_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/middlewares/throttling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/middlewares/throttling.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/strings/answer_blanks.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/strings/answer_blanks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/utils/bot_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/bot_mgmt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/utils/chat_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/chat_mgmt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/utils/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/utils/scheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/journal/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/journal/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/server_statistics/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/server_statistics/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666012739633</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="loguru">
+      <created>1666027237653</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1666027237653</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,10 +270,11 @@
     <MESSAGE value="server_statistics panel" />
     <MESSAGE value="fix verify" />
     <MESSAGE value="fix roles" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix roles" />
+    <MESSAGE value="loguru" />
+    <option name="LAST_COMMIT_MESSAGE" value="loguru" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666027095886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666030167401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/aiogram_template$servstatsbot.coverage" NAME="servstatsbot Coverage Results" MODIFIED="1665915621390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services/server_stats_bot" />
   </component>
 </project>

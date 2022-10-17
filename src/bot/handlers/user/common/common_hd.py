@@ -7,8 +7,9 @@ from bot.filters.command_filters import command_start
 from bot.keyboards.user.common.common_inline_kb import account_menu_message_IK
 from bot.keyboards.user.common.common_inline_kb import base_navigation, main_menu_message_IK
 from bot.states.UserStates import UserStates
-from bot.strings.answer_blanks import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT
-from bot.utils.chat_mgmt import delete_previous_messages
+from bot.strings.answer_blanks import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT, \
+    user_state_incorrect_input_TEXT_delimeter_error
+from bot.utils.chat_mgmt import delete_previous_messages, save_message
 from bot.utils.pgdbapi import save_user, update_user
 from core import dispatcher, bot
 
@@ -36,15 +37,18 @@ async def set_name(message: types.Message, state: FSMContext):
         if not message.text.startswith('/') and not message.text.isdigit() and ' ' in message.text:
             spl = message.text.split(' ')
             await update_user(message.from_user, spl[0], spl[1])
-            await bot.send_message(message.from_user.id, user_state_finish_TEXT,
-                                   reply_markup=types.ReplyKeyboardRemove())
+            msg = await bot.send_message(message.from_user.id, user_state_finish_TEXT,
+                                         reply_markup=types.ReplyKeyboardRemove())
             await state.finish()
             await main_menu_message_IK(message.from_user.id)
+        elif ' ' not in message.text:
+            msg = await message.answer(user_state_incorrect_input_TEXT_delimeter_error)
         else:
-            await message.answer(user_state_incorrect_input_TEXT)
+            msg = await message.answer(user_state_incorrect_input_TEXT)
         if await command_start.check(message):
             await state.finish()
             await base_navigation(message.from_user.id)
+        await save_message(message.from_user.id, msg.message_id)
 
 
 @dispatcher.callback_query_handler(common_cb.filter(), state='*')
