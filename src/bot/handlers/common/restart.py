@@ -19,5 +19,5 @@ async def restart(message: types.Message):
     await dispatcher.current_state(chat=message.from_user.id, user=message.from_user.id).reset_state(with_data=True)
     msg = await message.answer(restart_command_TEXT)
     await save_message(message.from_user.id, msg.message_id)
-    await asyncio.sleep(2)
+    await asyncio.sleep(1)
     await base_navigation(message.from_user.id)

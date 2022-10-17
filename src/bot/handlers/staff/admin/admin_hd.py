@@ -2,7 +2,7 @@ from aiogram import types
 
 from bot.filters.callback_filters import back_cb
 from bot.filters.command_filters import command_admin
-from bot.keyboards.staff.admin_kb import pre_admin_panel_message_IK
+from bot.keyboards.staff.admin.admin_kb import pre_admin_panel_message_IK
 from bot.models.role.role import UserRole
 from core import dispatcher
 
@@ -14,11 +14,11 @@ def reg_admin_handlers():
 
 @dispatcher.message_handler(command_admin)
 async def admin_panel(message: types.Message):
-    await pre_admin_panel_message_IK(message.from_user.id)
+    await pre_admin_panel_message_IK(message.from_user.id, UserRole.ADMIN)
 
 
 @dispatcher.callback_query_handler(back_cb.filter(to=UserRole.ADMIN))
 async def admin_panel_back(message: types.Message):
-    await pre_admin_panel_message_IK(message.from_user.id)
+    await pre_admin_panel_message_IK(message.from_user.id, UserRole.ADMIN)
 
 
