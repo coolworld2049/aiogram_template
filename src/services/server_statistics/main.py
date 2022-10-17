@@ -14,7 +14,7 @@ from bot.strings.answer_blanks import navigation_BTN_back
 from bot.filters.callback_filters import server_stats_cb
 from bot.utils.chat_mgmt import save_message, delete_previous_messages
 from core import bot
-from services.journal.logger import logger
+from loguru import logger
 from services.server_statistics.filters import memgraph_cb, stats_cb
 from services.server_statistics.strings import server_stats_BTN_reload
 from services.server_statistics.utils import async_wrapper

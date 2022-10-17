@@ -13,11 +13,15 @@ def reg_restart_handlers():
     dispatcher.register_message_handler(restart, command_restart, state='*')
 
 
-@dispatcher.message_handler(command_restart, state='*')
-async def restart(message: types.Message):
+async def reset_state(message: types.Message, text: str):
     await delete_previous_messages(tgtype=message)
     await dispatcher.current_state(chat=message.from_user.id, user=message.from_user.id).reset_state(with_data=True)
-    msg = await message.answer(restart_command_TEXT)
+    msg = await message.answer(text)
     await save_message(message.from_user.id, msg.message_id)
+
+
+@dispatcher.message_handler(command_restart, state='*')
+async def restart(message: types.Message):
+    await reset_state(message, restart_command_TEXT)
     await asyncio.sleep(1)
     await base_navigation(message.from_user.id)

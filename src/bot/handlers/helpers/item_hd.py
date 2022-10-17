@@ -1,8 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from loguru import logger
 
 from bot import config
 from bot.filters.callback_filters import item_cb
+from bot.handlers.common.restart import reset_state
 from bot.keyboards.staff.admin.admin_kb import itemManagerModel_admin, admin_panel_ADD_item_func, \
     admin_panel_UPDATE_item_func, admin_panel_DELETE_item_func
 from bot.keyboards.staff.common.user_mgmt import post_user_mgmt_message_IK
@@ -10,7 +12,7 @@ from bot.keyboards.staff.manager.manager_kb import itemManagerModel_manager, man
     manager_panel_UPDATE_item_func, manager_panel_DELETE_item_func
 from bot.states.ItemMgmtStates import ItemMgmtStates
 from bot.strings.answer_blanks import items_mgmt_action_ADD_TEXT_pre, items_mgmt_action_DELETE_TEXT_pre, \
-    items_mgmt_action_UPDATE_TEXT_pre
+    items_mgmt_action_UPDATE_TEXT_pre, restart_command_TEXT_error
 from bot.utils.chat_mgmt import delete_previous_messages
 from core import dispatcher, bot
 
@@ -42,10 +44,25 @@ async def items_handler(callback_query: types.CallbackQuery, callback_data: dict
     current_state = dispatcher.current_state(chat=callback_query.from_user.id, user=callback_query.from_user.id)
     if text:
         message = await bot.send_message(callback_query.from_user.id, text, parse_mode=types.ParseMode.MARKDOWN)
-        current_state.update_data({'items_management_msg_id': f"{message.message_id}", "role": f"{role}"})
+        await current_state.update_data({'items_management_msg_id': f"{message.message_id}", 'role': f"{role}"})
+
+
+def item_mgmt_error_handler(func):
+    async def inner_function(message: types.Message, state: FSMContext):
+        try:
+            data = await state.get_data()
+            assert data['role'] is not None
+            await func(message,  state)
+        except KeyError as e:
+            await state.finish()
+            await reset_state(message, restart_command_TEXT_error)
+            logger.error(f"add_item_hd: KeyError: {e.args}")
+
+    return inner_function
 
 
 @dispatcher.message_handler(state=ItemMgmtStates.ADD)
+@item_mgmt_error_handler
 async def add_item_hd(message: types.Message, state: FSMContext):
     data = await state.get_data()
     if message.from_user.id in config.ADMINS:
@@ -55,6 +72,7 @@ async def add_item_hd(message: types.Message, state: FSMContext):
 
 
 @dispatcher.message_handler(state=ItemMgmtStates.UPDATE)
+@item_mgmt_error_handler
 async def update_item_hd(message: types.Message, state: FSMContext):
     data = await state.get_data()
     if message.from_user.id in config.ADMINS:
@@ -64,6 +82,7 @@ async def update_item_hd(message: types.Message, state: FSMContext):
 
 
 @dispatcher.message_handler(state=ItemMgmtStates.DELETE)
+@item_mgmt_error_handler
 async def delete_item_hd(message: types.Message, state: FSMContext):
     data = await state.get_data()
     if message.from_user.id in config.ADMINS:

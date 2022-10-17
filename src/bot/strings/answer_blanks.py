@@ -4,6 +4,7 @@ registration_menu_TEXT = "Чтобы начать пользоваться се�
 registration_menu_message_IK_TEXT = '🆗'
 
 restart_command_TEXT = 'Текущее состояние сброшено'
+restart_command_TEXT_error = 'Произошла ошибка. ' + restart_command_TEXT
 
 main_menu_TEXT = """Основное меню"""
 main_menu_message_IK_BTN_account_TEXT = '👤'

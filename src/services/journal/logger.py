@@ -1,20 +1,32 @@
 import logging
 import pathlib
 from datetime import datetime
-from logging.handlers import RotatingFileHandler
 
-from bot.config import LOG_FILE_SIZE_BYTES, LOGGING_LEVEL, LOG_PATH, PROJECT_NAME
+import loguru
 
-pathlib.Path(LOG_PATH).mkdir(parents=True, exist_ok=True)
+from bot import config
+from bot.config import LOG_PATH, LOG_FILE
 
 
-logger = logging.Logger(PROJECT_NAME, LOGGING_LEVEL)
-file_name = f"{datetime.today().strftime('%d_%m_%Y')}.log"
-row_format = "{'time':'%(asctime)s', 'name': '%(name)s', 'level': '%(levelname)s', 'message': '%(message)s'}"
-file_handler = logging.FileHandler(LOG_PATH + file_name, encoding="utf-8")
-file_handler.setFormatter(logging.Formatter(row_format, datefmt='%d/%m/%Y %I:%M:%S %p'))
-stream_handler = logging.StreamHandler()
-stream_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
-logger.addHandler(RotatingFileHandler(LOG_PATH + file_name, maxBytes=LOG_FILE_SIZE_BYTES, backupCount=5))
+class InterceptHandler(logging.Handler):
+    LEVELS_MAP = {
+        logging.CRITICAL: "CRITICAL",
+        logging.ERROR: "ERROR",
+        logging.WARNING: "WARNING",
+        logging.INFO: "INFO",
+        logging.DEBUG: "DEBUG",
+    }
+
+    def _get_level(self, record):
+        return self.LEVELS_MAP.get(record.levelno, record.levelno)
+
+    def emit(self, record):
+        logger_opt = loguru.logger.opt(depth=6, exception=record.exc_info)
+        logger_opt.log(self._get_level(record), record.getMessage())
+
+
+def setup_logger():
+    pathlib.Path(LOG_PATH).mkdir(parents=True, exist_ok=True)
+    fmt = "{time}, {name}, {level}, {message}"
+    loguru.logger.add(LOG_PATH + LOG_FILE, rotation="1024 MB", level="INFO", format=fmt, colorize=True, enqueue=True)
+    logging.basicConfig(handlers=[InterceptHandler()], level=config.LOGGING_LEVEL)

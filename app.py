@@ -1,9 +1,11 @@
 import asyncio
+import logging
 
 import aiogram
 import nest_asyncio
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.utils import executor
+from loguru import logger
 
 from bot import config
 from bot.config import RATE_LIMIT, common_commands
@@ -14,7 +16,7 @@ from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.utils.bot_mgmt import set_bot_commands
 from bot.utils.scheduler import bot_scheduler
 from core import dispatcher
-from services.journal.logger import logger
+from services.journal.logger import setup_logger
 from services.server_statistics import setup_server_stats_handlers
 from services.server_statistics.main import server_stats_run
 
@@ -23,10 +25,11 @@ loop = asyncio.get_event_loop()
 
 
 async def on_startup(_):
+    setup_logger()
     setup_server_stats_handlers()
     setup_handlers()
     dispatcher.middleware.setup(ThrottlingMiddleware(limit=RATE_LIMIT))
-    dispatcher.middleware.setup(LoggingMiddleware(logger))
+    dispatcher.middleware.setup(LoggingMiddleware(logging.getLogger()))
     dispatcher.middleware.setup(RoleMiddleware(config.ADMINS, config.MANAGERS))
     dispatcher.filters_factory.bind(RoleFilter)
     dispatcher.filters_factory.bind(AdminFilter)
