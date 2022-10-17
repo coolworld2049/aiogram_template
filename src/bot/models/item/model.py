@@ -3,6 +3,7 @@ import typing
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from bot.models.role.role import UserRole
 from bot.strings.answer_blanks import user_state_incorrect_input_TEXT
 from bot.filters.command_filters import command_cancel
 from bot.utils.chat_mgmt import delete_previous_messages
@@ -63,9 +64,6 @@ class ItemManagerModel:
                 await self.pre_proccess_func(tgtype.from_user.id)
             else:
                 await tgtype.answer(user_state_incorrect_input_TEXT)
-
-    async def pick_item(self,  callback_query: types.Message, state: FSMContext, func):
-        await self.__state_handler(callback_query, state, func)
 
     async def add_item(self, message: types.Message, state: FSMContext, func):
         await self.__state_handler(message, state, func)

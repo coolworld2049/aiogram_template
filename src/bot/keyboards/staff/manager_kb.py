@@ -1,6 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
+from bot import config
 from bot.filters.callback_filters import item_cb, back_cb
 from bot.filters.command_filters import command_manager
 from bot.keyboards.user.common.common_inline_kb import base_navigation
@@ -18,30 +19,25 @@ async def pre_manager_panel_message_IK(user_id: int):
     await delete_previous_messages(user_id)
 
     async def _panel():
-        btn_panel = types.InlineKeyboardButton(manager_panel_BTN_items_mgmt_TEXT,
-                                               callback_data=item_cb.new(action='None',
-                                                                         callback=command_manager.commands[0]))
+        cb = item_cb.new(action='None', callback=command_manager.commands[0])
+        btn_panel = types.InlineKeyboardButton(manager_panel_BTN_items_mgmt_TEXT, callback_data=cb)
         IK = types.InlineKeyboardMarkup().add(btn_panel)
         msg = await bot.send_message(user_id, manager_panel_TEXT, reply_markup=IK)
         await save_message(user_id, msg.message_id)
 
     verify_result = await verifyUserModel.verify(user_id)
-    if verify_result['role'] == UserRole.MANAGER:
+    if verify_result['role'] == UserRole.MANAGER or verify_result['user_id'] in config.MANAGERS:
         await _panel()
-    else:
-        await base_navigation(user_id)
 
 
-async def post_user_mgmt_message_IK(user_id: int):
+async def post_user_mgmt_message_IK_manager(user_id: int):
     await delete_previous_messages(user_id)
     IK = types.InlineKeyboardMarkup(row_width=2)
     users = await fetchall_user()
     if users and len(users) > 0:
         for user in users:
-            text = f"*{user['user_id']}* | username: {user['username']} | role: {user['role']}"
+            text = f"{user['user_id']} | username: {user['username']} | role: {user['role']}"
             item_callback = f"{user_id}_edit_{user['user_id']}"
-            IK.insert(types.InlineKeyboardButton(text, callback_data=item_cb.new(action='pick',
-                                                                                 callback=item_callback)))
             IK.insert(types.InlineKeyboardButton(text, callback_data=item_cb.new(action='update',
                                                                                  callback=item_callback)))
         IK.row(types.InlineKeyboardButton('➕', callback_data=item_cb.new(action='add', callback='None')),
@@ -56,7 +52,7 @@ async def post_user_mgmt_message_IK(user_id: int):
         await save_message(user_id, message.message_id)
 
 
-itemManagerModel_manager = ItemManagerModel(pre_manager_panel_message_IK, post_user_mgmt_message_IK)
+itemManagerModel_manager = ItemManagerModel(pre_manager_panel_message_IK, post_user_mgmt_message_IK_manager)
 
 
 async def manager_panel_ADD_item_func(message: types.Message, state: FSMContext):

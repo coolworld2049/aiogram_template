@@ -6,7 +6,7 @@ from bot.models.role.role import UserRole
 class RoleMiddleware(LifetimeControllerMiddleware):
     skip_patterns = ["error", "update"]
 
-    def __init__(self, admins: list, managers: list):
+    def __init__(self, admins: set, managers: set):
         super().__init__()
         self.admins = admins
         self.managers = managers
