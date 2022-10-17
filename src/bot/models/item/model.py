@@ -3,7 +3,7 @@ import typing
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from bot.answer_blanks.lang import user_state_incorrect_input_TEXT
+from bot.strings.answer_blanks import user_state_incorrect_input_TEXT
 from bot.filters.command_filters import command_cancel
 from bot.utils.chat_mgmt import delete_previous_messages
 
@@ -46,23 +46,26 @@ class ItemManagerModel:
         self.pre_proccess_func = pre_proccess_func
         self.post_proccess_func = post_proccess_func
 
-    async def __state_handler(self, message: types.Message, state: FSMContext, func: typing.Any):
-        """
-        :param func: return: message: types.Message
-        """
+    async def __state_handler(self, tgtype: types.Message | types.CallbackQuery, state: FSMContext,
+                              func: typing.Any):
         data = await state.get_data()
         state_msg_id = data.get('items_management_msg_id')
-        await delete_previous_messages(tgtype=message, msg_ids=state_msg_id)
+        await delete_previous_messages(tgtype=tgtype, msg_ids=state_msg_id)
         async with state.proxy():
-            if not message.text.startswith('/'):
+            check = await command_cancel.check(tgtype) if isinstance(tgtype, types.Message)\
+                else tgtype.data == command_cancel.commands[0]
+            if not check:
                 await state.finish()
-                await func()
-                await self.post_proccess_func(message.from_user.id)
-            elif await command_cancel.check(message):
+                await func(tgtype, state)
+                await self.post_proccess_func(tgtype.from_user.id)
+            elif check:
                 await state.finish()
-                await self.pre_proccess_func(message.from_user.id)
+                await self.pre_proccess_func(tgtype.from_user.id)
             else:
-                await message.answer(user_state_incorrect_input_TEXT)
+                await tgtype.answer(user_state_incorrect_input_TEXT)
+
+    async def pick_item(self,  callback_query: types.Message, state: FSMContext, func):
+        await self.__state_handler(callback_query, state, func)
 
     async def add_item(self, message: types.Message, state: FSMContext, func):
         await self.__state_handler(message, state, func)

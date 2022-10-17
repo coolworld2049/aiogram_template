@@ -3,7 +3,7 @@
 
 DELETE FROM pg_type WHERE typname = 'base_role';
 
-CREATE TYPE base_role AS ENUM ('customer', 'contractor', 'admin');
+CREATE TYPE base_role AS ENUM ('user', 'customer', 'contractor', 'admin', 'manager');
 
 CREATE TABLE IF NOT EXISTS schema.user (
    user_id BIGINT PRIMARY KEY NOT NULL UNIQUE,
@@ -11,9 +11,7 @@ CREATE TABLE IF NOT EXISTS schema.user (
    first_name TEXT,
    last_name TEXT,
    state TEXT,
-   "role" base_role,
-   is_admin BOOLEAN,
-   is_manager BOOLEAN,
+   "role" base_role default 'user',
    last_seen FLOAT
 );
 
@@ -41,11 +39,11 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION schema.upsert_table_user(us_id BIGINT, is_admin BOOLEAN, is_manager BOOLEAN) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION schema.upsert_table_user(us_id BIGINT, "role" base_role) RETURNS VOID AS $$
 BEGIN
-    UPDATE schema.user SET is_admin = $2, is_manager = $3 WHERE user_id = $1;
+    UPDATE schema.user SET role = $2 WHERE user_id = $1;
     IF NOT FOUND THEN
-        INSERT INTO schema.user(user_id, is_admin, is_manager) VALUES ($1, $2, $3);
+        INSERT INTO schema.user(user_id, role) VALUES ($1, $2);
     END IF;
 END;
 $$

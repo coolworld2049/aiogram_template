@@ -10,11 +10,13 @@ from aiogram.types import InputFile
 from matplotlib import pyplot as plt
 
 from bot import config
-from bot.answer_blanks.lang import navigation_BTN_back
+from bot.strings.answer_blanks import navigation_BTN_back
 from bot.filters.callback_filters import server_stats_cb
 from bot.utils.chat_mgmt import save_message, delete_previous_messages
 from core import bot
 from services.journal.logger import logger
+from services.server_statistics.filters import memgraph_cb, stats_cb
+from services.server_statistics.strings import server_stats_BTN_reload
 from services.server_statistics.utils import async_wrapper
 
 matplotlib.use("Agg")
@@ -59,6 +61,7 @@ async def stats(user_id):
     reply = timedif + "\n" + memtotal + "\n" + memavail + "\n" + memuseperc + "\n" + diskused + "\n\n" + pidsreply
     IK = types.InlineKeyboardMarkup()
     IK.row(types.InlineKeyboardButton(navigation_BTN_back, callback_data=server_stats_cb.new()))
+    IK.insert(types.InlineKeyboardButton(server_stats_BTN_reload, callback_data=stats_cb.new()))
     msg = await bot.send_message(user_id, reply, disable_web_page_preview=True, reply_markup=IK)
     await save_message(user_id, msg.message_id)
 
@@ -70,6 +73,7 @@ async def memgraph(user_id):
     path = await async_wrapper(plotmemgraph, tmperiod)
     IK = types.InlineKeyboardMarkup()
     IK.row(types.InlineKeyboardButton(navigation_BTN_back, callback_data=server_stats_cb.new()))
+    IK.insert(types.InlineKeyboardButton(server_stats_BTN_reload, callback_data=memgraph_cb.new()))
     msg = await bot.send_photo(user_id, InputFile(path), reply_markup=IK)
     await save_message(user_id, msg.message_id)
 

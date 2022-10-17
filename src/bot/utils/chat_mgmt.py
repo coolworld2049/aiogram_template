@@ -72,9 +72,14 @@ async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None,
                 await tgtype.message.delete()
                 if msg_ids:
                     await delete_message_handler(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
-            elif isinstance(tgtype, types.Message) and msg_ids:
-                await asyncio.sleep(MESSAGE_DELAY)
-                await delete_message_handler(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+                else:
+                    await delete_message_handler(tgtype.from_user.id, await get_last_message(tgtype.from_user.id))
+            elif isinstance(tgtype, types.Message):
+                if msg_ids:
+                    await asyncio.sleep(MESSAGE_DELAY)
+                    await delete_message_handler(tgtype.from_user.id, msg_ids, MESSAGE_DELAY)
+                else:
+                    await delete_message_handler(tgtype.from_user.id, await get_last_message(tgtype.from_user.id))
         if by_user_id:
             await asyncio.sleep(MESSAGE_DELAY)
             if not msg_ids:

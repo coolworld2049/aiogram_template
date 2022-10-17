@@ -1,3 +1,4 @@
+from bot.handlers.common.restart import reg_restart_handlers
 from bot.handlers.staff.admin_hd import reg_admin_handlers
 from bot.handlers.common.get_logs import reg_get_logs_handler
 from bot.handlers.common.help import reg_help_handler
@@ -11,6 +12,7 @@ from bot.utils.pagination import reg_pagination_handlers
 
 def setup_handlers():
     reg_start_handlers()
+    reg_restart_handlers()
     reg_help_handler()
     reg_get_logs_handler()
     reg_common_handlers()

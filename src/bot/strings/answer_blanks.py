@@ -1,20 +1,25 @@
 from bot.filters.command_filters import command_cancel
 
 registration_menu_TEXT = "Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию."
-registration_menu_message_IK_TEXT = 'Регистрация'
+registration_menu_message_IK_TEXT = '🆗'
 
-main_menu_TEXT = """Вы находитесь в главном меню."""
-main_menu_message_IK_BTN_account_TEXT = '👤 Мой аккаунт'
+restart_command_TEXT = 'Текущее состояние сброшено'
 
-help_TEXT = "support text"
+main_menu_TEXT = """Основное меню"""
+main_menu_message_IK_BTN_account_TEXT = '👤'
 
-user_registration_TEXT = "Введите ваше Имя Фамилия (Пример: Иван Иванов)"
-user_state_finish_TEXT = "Данные сохранены"
+help_TEXT = "📝"
+
+user_registration_TEXT = "Введите ваше Имя Фамилия (Пример: John Doe)"
+user_state_finish_TEXT = "💾Ваши данные сохранены"
 user_state_incorrect_input_TEXT = "Неправильный формат ввода"
 
-admin_panel_TEXT = 'Админ панель'
+admin_panel_TEXT = 'Админ панель👨‍💼'
 admin_panel_BTN_items_mgmt_TEXT = 'Управление элементами'
 admin_panel_BTN_server_stats_TEXT = 'Состояние сервера'
+
+manager_panel_TEXT = 'Менеджерская панель👨‍'
+manager_panel_BTN_items_mgmt_TEXT = 'Управление пользователями'
 
 items_mgmt_message_IK_TEXT = "Здесь вы можете редактировать список *элементов*"
 items_mgmt_message_IK_TEXT_error = "Список элементов отсутствует в базе данных"

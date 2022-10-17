@@ -36,6 +36,7 @@ REDIS_CONFIG = {
 common_commands = \
     [
         {"command": "start", "description": "запуск бота"},
+        {"command": "restart", "description": "перезапуск бота"},
         {"command": "help", "description": "помощь"},
     ]
 

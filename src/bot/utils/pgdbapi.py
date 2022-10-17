@@ -3,16 +3,17 @@ from datetime import datetime
 from aiogram.types import User
 
 from bot.models.database import asyncPostgresModel
+from bot.models.role.role import UserRole
 from bot.states.UserStates import UserStates
 
 
 async def save_user(user: User):
-    query = '''INSERT INTO schema.user(user_id, username, is_admin, last_seen) VALUES($1,$2,$3,$4) 
+    query = '''INSERT INTO schema.user(user_id, username, "role", last_seen) VALUES($1,$2,$3,$4) 
     ON CONFLICT DO NOTHING'''
     values = [
         user.id,
         user.username,
-        None,
+        UserRole.USER,
         datetime.timestamp(datetime.now())
     ]
     result = await asyncPostgresModel.executeone(query, values)
