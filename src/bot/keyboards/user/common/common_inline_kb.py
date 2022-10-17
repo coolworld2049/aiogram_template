@@ -3,7 +3,7 @@ import typing
 from aiogram import types
 
 from bot.config import MESSAGE_DELAY
-from bot.answer_blanks.lang import registration_menu_TEXT, main_menu_TEXT, account_menu_message_IK_TEXT, navigation_menu_TEXT, \
+from bot.strings.answer_blanks import registration_menu_TEXT, main_menu_TEXT, account_menu_message_IK_TEXT, navigation_menu_TEXT, \
     navigation_BTN_back, navigation_BTN_back_to_menu, registration_menu_message_IK_TEXT, \
     main_menu_message_IK_BTN_account_TEXT
 from core import bot
@@ -13,6 +13,7 @@ from bot.utils.chat_mgmt import save_message, delete_message_handler, get_last_m
 
 
 async def base_navigation(user_id: int):
+    await delete_message_handler(user_id, await get_last_message(user_id), MESSAGE_DELAY)
     user = await fetchone_user(user_id)
     if user and user['first_name'] and user['last_name']:
         await main_menu_message_IK(user_id)

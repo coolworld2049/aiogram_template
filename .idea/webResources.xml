@@ -5,7 +5,7 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/src/bot/answer_blanks" />
+            <path value="file://$PROJECT_DIR$/src/bot/strings" />
           </resourceRoots>
         </entryData>
       </entry>

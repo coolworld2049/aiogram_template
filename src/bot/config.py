@@ -6,8 +6,8 @@ PROJECT_NAME = pathlib.Path().cwd().name
 BOT_TOKEN = ""
 
 OWNER: int = 5227303016
-ADMINS: list = [OWNER]
-MANAGERS: list = []
+ADMINS: set = {OWNER}
+MANAGERS: set = {OWNER, 1070277776}
 
 DEBUG_MODE = False
 USE_REDIS = True
@@ -36,6 +36,7 @@ REDIS_CONFIG = {
 common_commands = \
     [
         {"command": "start", "description": "запуск бота"},
+        {"command": "restart", "description": "перезапуск бота"},
         {"command": "help", "description": "помощь"},
     ]
 
@@ -47,7 +48,7 @@ admin_commands = \
 
 manager_commands = \
     [
-        {"command": "example", "description": "example"}
+        {"command": "manager", "description": "менеджер"}
     ]
 
 # ----------------------------------------------------------------------------------------
