@@ -3,7 +3,7 @@ from aiogram import types
 from bot.strings.answer_blanks import help_EMOJI, help_TEXT
 from core import dispatcher
 from bot.filters.command_filters import command_help
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
 
 
 def reg_help_handler():

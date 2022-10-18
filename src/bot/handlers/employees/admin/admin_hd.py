@@ -2,7 +2,7 @@ from aiogram import types
 
 from bot.filters.callback_filters import back_cb
 from bot.filters.command_filters import command_admin
-from bot.keyboards.staff.admin.admin_kb import pre_admin_panel_message_IK
+from bot.keyboards.employess.admin.admin_kb import pre_admin_panel_message_IK
 from bot.models.role.role import UserRole
 from core import dispatcher
 

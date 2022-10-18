@@ -5,7 +5,7 @@ from aiogram import types
 from bot.filters.command_filters import command_restart
 from bot.keyboards.user.common.common_inline_kb import base_navigation
 from bot.strings.answer_blanks import restart_command_TEXT
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
 from core import dispatcher
 
 

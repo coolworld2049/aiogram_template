@@ -3,8 +3,8 @@ from aiogram import types
 from bot.filters.callback_filters import item_cb, back_cb
 from bot.models.role.role import UserRole
 from bot.strings.answer_blanks import navigation_BTN_back, items_mgmt_message_IK_TEXT, items_mgmt_message_IK_TEXT_error
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
-from bot.utils.pgdbapi import fetchall_user
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
+from database.postgresql.api import fetchall_user
 from core import bot
 
 

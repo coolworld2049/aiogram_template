@@ -1,11 +1,10 @@
 import logging
 import pathlib
-from datetime import datetime
 
 import loguru
 
 from bot import config
-from bot.config import LOG_PATH, LOG_FILE
+from bot.config import LOG_PATH, LOG_FILE_NAME, LOG_FILE_NAME_ERROR
 
 
 class InterceptHandler(logging.Handler):
@@ -26,7 +25,14 @@ class InterceptHandler(logging.Handler):
 
 
 def setup_logger():
-    pathlib.Path(LOG_PATH).mkdir(parents=True, exist_ok=True)
-    fmt = "{time}, {name}, {level}, {message}"
-    loguru.logger.add(LOG_PATH + LOG_FILE, rotation="1024 MB", level="INFO", format=fmt, colorize=True, enqueue=True)
+    base_log_path = LOG_PATH + '/' + LOG_FILE_NAME
+    error_log_path = LOG_PATH + '/' + LOG_FILE_NAME_ERROR
+    pathlib.Path(base_log_path).mkdir(parents=True, exist_ok=True)
+    pathlib.Path(error_log_path).mkdir(parents=True, exist_ok=True)
+
+    fmt = "{time} {name} {level} {message}"
+    loguru.logger.add(base_log_path + '/' + LOG_FILE_NAME + '.log', rotation="1024 MB", level="INFO", format=fmt,
+                      encoding='utf-8', colorize=True, enqueue=True)
+    loguru.logger.add(error_log_path + '/' + LOG_FILE_NAME + '.log', rotation="1024 MB", level="ERROR", format=fmt,
+                      encoding='utf-8', colorize=True, enqueue=True, serialize=True)
     logging.basicConfig(handlers=[InterceptHandler()], level=config.LOGGING_LEVEL)

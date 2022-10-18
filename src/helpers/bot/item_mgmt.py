@@ -5,15 +5,15 @@ from loguru import logger
 from bot import config
 from bot.filters.callback_filters import item_cb
 from bot.handlers.common.restart import reset_state
-from bot.keyboards.staff.admin.admin_kb import itemManagerModel_admin, admin_panel_ADD_item_func, \
+from bot.keyboards.employess.admin.admin_kb import itemManagerModel_admin, admin_panel_ADD_item_func, \
     admin_panel_UPDATE_item_func, admin_panel_DELETE_item_func
-from bot.keyboards.staff.common.user_mgmt import post_user_mgmt_message_IK
-from bot.keyboards.staff.manager.manager_kb import itemManagerModel_manager, manager_panel_ADD_item_func, \
+from bot.keyboards.employess.common.user_mgmt import post_user_mgmt_message_IK
+from bot.keyboards.employess.manager.manager_kb import itemManagerModel_manager, manager_panel_ADD_item_func, \
     manager_panel_UPDATE_item_func, manager_panel_DELETE_item_func
 from bot.states.ItemMgmtStates import ItemMgmtStates
 from bot.strings.answer_blanks import items_mgmt_action_ADD_TEXT_pre, items_mgmt_action_DELETE_TEXT_pre, \
     items_mgmt_action_UPDATE_TEXT_pre, restart_command_TEXT_error
-from bot.utils.chat_mgmt import delete_previous_messages
+from helpers.bot.chat_mgmt import delete_previous_messages
 from core import dispatcher, bot
 
 

@@ -4,13 +4,13 @@ from aiogram.dispatcher import FSMContext
 from bot import config
 from bot.filters.callback_filters import item_cb, server_stats_cb
 from bot.filters.command_filters import command_admin
-from bot.keyboards.staff.common.user_mgmt import post_user_mgmt_message_IK
+from bot.keyboards.employess.common.user_mgmt import post_user_mgmt_message_IK
 from bot.models.item.model import ItemManagerModel
 from bot.models.role.role import UserRole
 from bot.models.verify import verifyUserModel
 from bot.strings.answer_blanks import admin_panel_BTN_items_mgmt_TEXT, admin_panel_TEXT, \
     admin_panel_BTN_server_stats_TEXT
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
 from core import bot
 
 

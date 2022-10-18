@@ -6,7 +6,7 @@ from aiogram.utils.exceptions import ChatNotFound
 from bot.config import common_commands
 from core import bot
 from loguru import logger
-from bot.utils.pgdbapi import fetchall_user_ids, fetchone_user
+from database.postgresql.api import fetchall_user_ids, fetchone_user
 
 
 async def _set_commands(users: list | set, command_list: list[dict[str, str]] = None):

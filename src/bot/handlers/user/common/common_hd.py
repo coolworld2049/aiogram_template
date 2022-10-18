@@ -9,8 +9,8 @@ from bot.keyboards.user.common.common_inline_kb import base_navigation, main_men
 from bot.states.UserStates import UserStates
 from bot.strings.answer_blanks import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT, \
     user_state_incorrect_input_TEXT_delimeter_error
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
-from bot.utils.pgdbapi import save_user, update_user
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
+from database.postgresql.api import save_user, update_user
 from core import dispatcher, bot
 
 

@@ -4,7 +4,7 @@ from bot import config
 from bot.models.role.role import UserRole
 from bot.strings.answer_blanks import navigation_BTN_back
 from bot.filters.callback_filters import server_stats_cb, back_cb
-from bot.utils.chat_mgmt import delete_previous_messages, save_message
+from helpers.bot.chat_mgmt import delete_previous_messages, save_message
 from core import dispatcher, bot
 from services.server_statistics.strings import server_stats_commands_TEXT, server_stats_server_resources, \
     server_stats_memory_usage
