@@ -1,5 +1,6 @@
 import asyncio
 import collections
+import io
 import operator
 from datetime import datetime
 
@@ -7,14 +8,14 @@ import matplotlib
 import psutil
 from aiogram import types
 from aiogram.types import InputFile
+from loguru import logger
 from matplotlib import pyplot as plt
 
 from bot import config
-from bot.strings.answer_blanks import navigation_BTN_back
 from bot.filters.callback_filters import server_stats_cb
-from bot.utils.chat_mgmt import save_message, delete_previous_messages
+from bot.strings.answer_blanks import navigation_BTN_back
+from helpers.bot.chat_mgmt import save_message, delete_previous_messages
 from core import bot
-from services.journal.logger import logger
 from services.server_statistics.filters import memgraph_cb, stats_cb
 from services.server_statistics.strings import server_stats_BTN_reload
 from services.server_statistics.utils import async_wrapper
@@ -79,7 +80,6 @@ async def memgraph(user_id):
 
 
 def plotmemgraph(tmperiod):
-    save_path = '/tmp/graph.png'
     plt.xlabel(tmperiod)
     plt.ylabel('% Used')
     plt.title('Memory Usage Graph')
@@ -89,12 +89,13 @@ def plotmemgraph(tmperiod):
         memthresholdarr.append(memorythreshold)
     plt.plot(axis_X, memlist, 'b-', axis_X, memthresholdarr, 'r--')
     plt.axis([0, len(axis_X) - 1, 0, 100])
-    plt.savefig(save_path)
-    plt.close()
-    return save_path
+    buffer = io.BytesIO()
+    plt.savefig(buffer)
+    buffer.seek(0)
+    return buffer
 
 
-async def server_stats_run():
+async def SERVICE_server_stats():
     global memlist
     tr = 0
     xx = 0

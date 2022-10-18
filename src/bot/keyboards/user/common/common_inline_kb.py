@@ -7,9 +7,9 @@ from bot.strings.answer_blanks import registration_menu_TEXT, main_menu_TEXT, ac
     navigation_BTN_back, navigation_BTN_back_to_menu, registration_menu_message_IK_TEXT, \
     main_menu_message_IK_BTN_account_TEXT
 from core import bot
-from bot.utils.pgdbapi import fetchone_user
+from database.postgresql.api import fetchone_user
 from bot.filters.callback_filters import back_cb, reg_user_cb, common_cb
-from bot.utils.chat_mgmt import save_message, delete_message_handler, get_last_message
+from helpers.bot.chat_mgmt import save_message, delete_message_handler, get_last_message
 
 
 async def base_navigation(user_id: int):

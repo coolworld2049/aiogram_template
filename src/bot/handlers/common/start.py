@@ -2,7 +2,7 @@ from aiogram import types
 
 from bot.filters.command_filters import command_start
 from bot.keyboards.user.common.common_inline_kb import base_navigation
-from bot.utils.chat_mgmt import delete_previous_messages
+from helpers.bot.chat_mgmt import delete_previous_messages
 from core import dispatcher
 
 

@@ -1,5 +1,5 @@
 from bot.config import MESSAGE_DELAY
-from bot.utils.chat_mgmt import delete_message_handler, get_last_message
+from helpers.bot.chat_mgmt import delete_message_handler, get_last_message
 
 
 async def contractor_account_message_IK(user_id: int):

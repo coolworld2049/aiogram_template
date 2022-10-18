@@ -1,9 +1,9 @@
 -- CREATE schema schema;
--- SET schema 'schema';
+SET schema 'schema';
 
 DELETE FROM pg_type WHERE typname = 'base_role';
 
-CREATE TYPE base_role AS ENUM ('user', 'customer', 'contractor', 'admin', 'manager');
+CREATE TYPE base_role AS ENUM ('user', 'admin', 'manager', 'contractor', 'customer');
 
 CREATE TABLE IF NOT EXISTS schema.user (
    user_id BIGINT PRIMARY KEY NOT NULL UNIQUE,

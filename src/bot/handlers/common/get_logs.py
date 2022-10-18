@@ -9,7 +9,7 @@ from bot.models.role.role import UserRole
 from bot.models.verify import verifyUserModel
 from core import dispatcher
 from bot.filters.command_filters import command_get_logs
-from bot.utils.chat_mgmt import save_message, delete_previous_messages
+from helpers.bot.chat_mgmt import save_message, delete_previous_messages
 import shutil
 
 

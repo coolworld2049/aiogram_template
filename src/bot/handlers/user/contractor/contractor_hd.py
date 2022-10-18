@@ -3,7 +3,7 @@ from aiogram import types
 from core import dispatcher
 from bot.filters.callback_filters import contractor_cb
 from bot.keyboards.user.contractor.contractor_kb import contractor_account_message_IK
-from bot.utils.chat_mgmt import delete_previous_messages
+from helpers.bot.chat_mgmt import delete_previous_messages
 
 
 def reg_customer_handlers():

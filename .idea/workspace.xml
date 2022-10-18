@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="fix verify">
+    <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="throttling">
+      <change afterPath="$PROJECT_DIR$/src/database/postgresql/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/handlers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/handlers/helpers/item_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/helpers/item_hd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/staff/admin_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/staff/admin_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/staff/manager_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/staff/manager_kb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/middlewares/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/middlewares/role.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/get_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/get_logs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/help.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/help.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/restart.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/restart.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/common/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/common/start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/helpers/item_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/bot/item_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/staff/admin/admin_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/employees/admin/admin_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/staff/manager/manager_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/employees/manager/manager_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/user/common/common_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/common/common_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/user/contractor/contractor_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/contractor/contractor_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/handlers/user/customer/customer_hd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/handlers/user/customer/customer_hd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/staff/admin/admin_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/employess/admin/admin_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/staff/common/user_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/employess/common/user_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/staff/manager/manager_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/employess/manager/manager_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/user/common/common_inline_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/common/common_inline_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/user/contractor/contractor_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/contractor/contractor_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/keyboards/user/customer/customer_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/keyboards/user/customer/customer_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/models/database/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/models/database/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/postgresql/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/models/item/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/item/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/models/verify/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/verify/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bot/models/verify/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/models/verify/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bot/states/ItemMgmtStates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/bot/states/ItemMgmtStates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/utils/bot_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/bot/command_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/utils/chat_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/bot/chat_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/utils/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/bot/pagination.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/utils/pgdbapi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/postgresql/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bot/utils/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/cron/scheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/journal/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/journal/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/server_statistics/handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/server_statistics/handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/server_statistics/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/server_statistics/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +59,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2FtIOyk03G6VCARnSPXOWTM4zfo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -49,7 +77,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/R/PycharmProjects/aiogram_template/src/services/server_statistics/strings.py",
+    "last_opened_file_path": "C:/Users/R/PycharmProjects/aiogram_template/src/bot/handlers/helpers",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -69,11 +97,11 @@
       <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\middlewares" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\bot" />
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\database\postgresql" />
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\database" />
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\helpers\bot" />
+      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\services\cron" />
       <recent name="C:\Users\R\PycharmProjects\aiogram_template\src" />
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\bot\keyboards\staff" />
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\bot\keyboards" />
-      <recent name="C:\Users\R\PycharmProjects\aiogram_template\src\bot\handlers\common" />
     </key>
   </component>
   <component name="RunManager">
@@ -130,7 +158,8 @@
       <workItem from="1665863128660" duration="7966000" />
       <workItem from="1665912003078" duration="14110000" />
       <workItem from="1665926245524" duration="4361000" />
-      <workItem from="1665942515446" duration="12451000" />
+      <workItem from="1665942515446" duration="15970000" />
+      <workItem from="1666104244067" duration="3460000" />
     </task>
     <task id="LOCAL-00001" summary="upd">
       <created>1665305112467</created>
@@ -223,7 +252,28 @@
       <option name="project" value="LOCAL" />
       <updated>1666006870611</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix roles">
+      <created>1666012739633</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1666012739633</updated>
+    </task>
+    <task id="LOCAL-00015" summary="loguru">
+      <created>1666027237653</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1666027237653</updated>
+    </task>
+    <task id="LOCAL-00016" summary="throttling">
+      <created>1666030395745</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1666030395745</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,21 +307,13 @@
     <MESSAGE value="server_statistics" />
     <MESSAGE value="server_statistics panel" />
     <MESSAGE value="fix verify" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix verify" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/bot/models/verify/model.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="fix roles" />
+    <MESSAGE value="loguru" />
+    <MESSAGE value="throttling" />
+    <option name="LAST_COMMIT_MESSAGE" value="throttling" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666012663130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666107098576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/aiogram_template$servstatsbot.coverage" NAME="servstatsbot Coverage Results" MODIFIED="1665915621390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services/server_stats_bot" />
   </component>
 </project>

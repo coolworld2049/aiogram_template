@@ -1,24 +1,27 @@
 from bot.filters.command_filters import command_cancel
 
-registration_menu_TEXT = "Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию."
+registration_menu_TEXT = "Чтобы начать пользоваться сервисом, Вам нужно пройти регистрацию 😉"
 registration_menu_message_IK_TEXT = '🆗'
 
-restart_command_TEXT = 'Текущее состояние сброшено'
+restart_command_TEXT = '👉 👈Текущее состояние сброшено'
+restart_command_TEXT_error = 'Произошла ошибка. ' + restart_command_TEXT
 
 main_menu_TEXT = """Основное меню"""
 main_menu_message_IK_BTN_account_TEXT = '👤'
 
-help_TEXT = "📝"
+help_EMOJI = "📝"
+help_TEXT = "help text"
 
-user_registration_TEXT = "Введите ваше Имя Фамилия (Пример: John Doe)"
+user_registration_TEXT = "Введите Ваше Имя Фамилия (Пример: John Doe)"
 user_state_finish_TEXT = "💾Ваши данные сохранены"
-user_state_incorrect_input_TEXT = "Неправильный формат ввода"
+user_state_incorrect_input_TEXT = "❗Неправильный формат ввода"
+user_state_incorrect_input_TEXT_delimeter_error = user_state_incorrect_input_TEXT + " Отсутствует пробел между словами"
 
-admin_panel_TEXT = 'Админ панель👨‍💼'
+admin_panel_TEXT = '👨‍💼Админ панель'
 admin_panel_BTN_items_mgmt_TEXT = 'Управление элементами'
-admin_panel_BTN_server_stats_TEXT = 'Состояние сервера'
+admin_panel_BTN_server_stats_TEXT = '💻 Состояние сервера'
 
-manager_panel_TEXT = 'Менеджерская панель👨‍'
+manager_panel_TEXT = '👨Менеджерская панель‍'
 manager_panel_BTN_items_mgmt_TEXT = 'Управление пользователями'
 
 items_mgmt_message_IK_TEXT = "Здесь вы можете редактировать список *элементов*"
@@ -44,3 +47,6 @@ def account_menu_message_IK_TEXT(user):
 navigation_menu_TEXT = 'Навигация'
 navigation_BTN_back = "👈 Назад"
 navigation_BTN_back_to_menu = "👈 В меню"
+
+throttling_too_many_requsets_TEXT = f'Слишком много запросов!'
+throttling_unlocked_TEXT = 'Команда разблокирована'

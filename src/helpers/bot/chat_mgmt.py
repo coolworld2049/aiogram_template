@@ -4,11 +4,11 @@ from contextlib import suppress
 from aiogram import types
 from aiogram.utils.exceptions import MessageCantBeDeleted, MessageToDeleteNotFound, MessageIdentifierNotSpecified
 
-from bot.config import DEBUG_MODE, MESSAGE_DELAY
+from bot.config import USE_DEBUG, MESSAGE_DELAY
 from core import bot
-from services.journal.logger import logger
-from bot.models.database import asyncPostgresModel
-from bot.utils.pgdbapi import fetchone_temp, fetchone_user
+from loguru import logger
+from database import asyncPostgresModel
+from database.postgresql.api import fetchone_temp, fetchone_user
 
 
 async def save_message(user_id: int, message_id: int | str):
@@ -19,7 +19,7 @@ async def save_message(user_id: int, message_id: int | str):
     """
     if await fetchone_user(user_id):
         await asyncPostgresModel.executeone('''SELECT schema.upsert_table_temp($1, $2)''', [user_id, str(message_id)])
-        if DEBUG_MODE:
+        if USE_DEBUG:
             logger.info(f"save_message: user_id: {user_id}: message_id: {message_id}")
 
 
@@ -51,7 +51,7 @@ async def delete_message_handler(chat_id: int, message_id: str, delay: float = 0
                 else:
                     if message_id != 'None' and message_id != '' and message_id != ' ':
                         await bot.delete_message(chat_id, message_id)
-    elif DEBUG_MODE:
+    elif USE_DEBUG:
         logger.error(f'delete_last_message: chat_id: {chat_id}: FAILED: message_id is None')
 
 
@@ -91,6 +91,6 @@ async def delete_previous_messages(by_user_id: int = None, msg_ids: str = None,
 async def get_last_message(user_id: int):
     res = await fetchone_temp(user_id)
     msg_id = res['last_message_id'] if res and len(res) > 0 else None
-    if DEBUG_MODE:
+    if USE_DEBUG:
         logger.info(f"get_last_message: user_id: {user_id}: message_id: {msg_id}")
     return msg_id
