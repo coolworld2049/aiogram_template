@@ -6,7 +6,8 @@ from aiogram.dispatcher import FSMContext
 from bot.filters.command_filters import command_cancel
 from bot.models.role.role import UserRole
 from bot.strings.locale import user_state_incorrect_input_TEXT
-from bot.utils.chat_mgmt import delete_previous_messages
+from bot.utils.chat_mgmt import delete_previous_messages, save_message
+from core import bot
 
 
 class ItemManagerModel:
@@ -60,18 +61,23 @@ class ItemManagerModel:
         data = await state.get_data()
         state_msg_id = data.get('items_management_msg_id')
         await delete_previous_messages(tgtype=tgtype, msg_ids=state_msg_id)
+        user_id = tgtype.from_user.id
         async with state.proxy():
-            check = await command_cancel.check(tgtype) if isinstance(tgtype, types.Message)\
+            check = await command_cancel.check(tgtype) if isinstance(tgtype, types.Message) \
                 else tgtype.data == command_cancel.commands[0]
-            if not check:
+            check_backslach = tgtype.text if isinstance(tgtype, types.Message) and not tgtype.text.startswith("/") \
+                else None
+            if not check and check_backslach:
                 await state.finish()
                 await func(tgtype, state)
-                await self.post_proccess_func(tgtype.from_user.id, role)
+                await self.post_proccess_func(user_id, role)
             elif check:
                 await state.finish()
-                await self.pre_proccess_func(tgtype.from_user.id, role)
+                await self.pre_proccess_func(user_id, role)
             else:
-                await tgtype.answer(user_state_incorrect_input_TEXT)
+                await delete_previous_messages(tgtype=tgtype)
+                msg = await bot.send_message(user_id, user_state_incorrect_input_TEXT)
+                await save_message(user_id, msg.message_id)
 
     async def add_item(self, message: types.Message, state: FSMContext, func, role: UserRole):
         await self.__state_handler(message, state, func, role)

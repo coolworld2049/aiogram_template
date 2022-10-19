@@ -1,4 +1,5 @@
 from aiogram import types
+from loguru import logger
 
 from bot.filters.callback_filters import back_cb
 from bot.filters.command_filters import command_manager
@@ -15,6 +16,7 @@ def reg_manager_handlers():
 @dispatcher.message_handler(command_manager)
 async def manager_panel(message: types.Message):
     await pre_manager_panel_message_IK(message.from_user.id, UserRole.MANAGER)
+    logger.info(f"user_id: {message.from_user.id} is {UserRole.MANAGER}")
 
 
 @dispatcher.callback_query_handler(back_cb.filter(to=UserRole.MANAGER))

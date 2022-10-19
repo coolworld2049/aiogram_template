@@ -29,7 +29,10 @@ async def pre_admin_panel_message_IK(user_id: int, role: UserRole):
     if verify_result['role'] == UserRole.ADMIN or verify_result['user_id'] in config.ADMINS:
         await delete_previous_messages(user_id)
         await _panel()
-
+    else:
+        await delete_previous_messages(user_id)
+        msg_error = await bot.send_message(user_id, 'No access')
+        await save_message(user_id, msg_error.message_id)
 
 itemManagerModel_admin = ItemManagerModel(pre_admin_panel_message_IK, post_user_mgmt_message_IK)
 

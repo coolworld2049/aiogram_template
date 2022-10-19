@@ -65,6 +65,7 @@ async def stats(user_id):
     IK.insert(types.InlineKeyboardButton(server_stats_BTN_reload, callback_data=stats_cb.new()))
     msg = await bot.send_message(user_id, reply, disable_web_page_preview=True, reply_markup=IK)
     await save_message(user_id, msg.message_id)
+    logger.info(f"stats: user_id: {user_id}: {reply}")
 
 
 async def memgraph(user_id):

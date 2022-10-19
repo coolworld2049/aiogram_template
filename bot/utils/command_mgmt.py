@@ -1,13 +1,11 @@
-from contextlib import suppress
 from enum import Enum
 
 from aiogram.types import bot_command_scope, BotCommand
-from aiogram.utils.exceptions import ChatNotFound
 from loguru import logger
 
-from strings.locale import common_commands
-from core import bot
 from bot.models.database.postgresql.api import fetchall_user_ids, fetchone_user
+from core import bot
+from strings.locale import common_commands
 
 
 class Action(Enum):
@@ -15,22 +13,16 @@ class Action(Enum):
     DELETE = 'delete'
 
 
-async def _manage_commands(users: list | set, action: Action, command_list: list[dict[str, str]] = None):
+async def _manage_commands(users: list | set, action: Action, commands: list[dict[str, str]] = None):
     if users:
         for user_id in users:
-            list_of_base_commands = set(BotCommand(x['command'], x['description']) for x in common_commands)
-            scope = bot_command_scope.BotCommandScopeChat(chat_id=str(user_id))
-            with suppress(ChatNotFound):
-                current_commands = []
-                _current_commands = await bot.get_my_commands(scope=scope)
-                if _current_commands:
-                    current_commands = [x['command'] for x in _current_commands]
-            if command_list:
-                for command in [BotCommand(x['command'], x['description']) for x in command_list]:
-                    if command['command'] not in current_commands:
-                        list_of_base_commands.add(command)
+            if commands:
+                scope = bot_command_scope.BotCommandScopeChat(user_id)
+                set_of_common_commands = [BotCommand(x['command'], x['description']) for x in common_commands]
+                modified_commands = [BotCommand(x['command'], x['description']) for x in commands]
+                set_of_common_commands.extend(modified_commands)
                 if action == Action.SET:
-                    await bot.set_my_commands(list(list_of_base_commands), scope)
+                    await bot.set_my_commands(list(set_of_common_commands), scope)
                 elif action == Action.DELETE and scope:
                     await bot.delete_my_commands(scope)
 

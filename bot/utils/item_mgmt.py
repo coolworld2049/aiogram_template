@@ -49,14 +49,14 @@ async def items_handler(callback_query: types.CallbackQuery, callback_data: dict
 
 def item_mgmt_error_handler(func):
     async def inner_function(message: types.Message, state: FSMContext):
+        data = await state.get_data()
         try:
-            data = await state.get_data()
             assert data['role'] is not None
             await func(message,  state)
-        except KeyError as e:
+        except KeyError:
             await state.finish()
             await reset_state(message, restart_command_TEXT_error)
-            logger.error(f"add_item_hd: KeyError: {e.args}")
+            logger.error(f"item_mgmt_error_handler: data: {data}: state reset")
 
     return inner_function
 

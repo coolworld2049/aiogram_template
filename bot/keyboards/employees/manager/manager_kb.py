@@ -27,7 +27,9 @@ async def pre_manager_panel_message_IK(user_id: int, role: UserRole):
         await delete_previous_messages(user_id)
         await _panel()
     else:
-        await bot.send_message(user_id)
+        await delete_previous_messages(user_id)
+        msg_error = await bot.send_message(user_id, 'No access')
+        await save_message(user_id, msg_error.message_id)
 
 itemManagerModel_manager = ItemManagerModel(pre_manager_panel_message_IK, post_user_mgmt_message_IK)
 

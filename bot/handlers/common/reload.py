@@ -1,6 +1,7 @@
 import asyncio
 
 from aiogram import types
+from loguru import logger
 
 from bot.filters.command_filters import command_reload
 from bot.keyboards.user.common.common_inline_kb import base_navigation
@@ -25,3 +26,4 @@ async def restart(message: types.Message):
     await reset_state(message, restart_command_TEXT)
     await asyncio.sleep(1)
     await base_navigation(message.from_user.id)
+    logger.info(f"user_id: {message.from_user.id}")
