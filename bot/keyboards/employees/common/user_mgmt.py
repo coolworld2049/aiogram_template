@@ -30,3 +30,4 @@ async def post_user_mgmt_message_IK(user_id: int, role: UserRole):
     else:
         message = await bot.send_message(user_id, items_mgmt_message_IK_TEXT_error, reply_markup=IK)
         await save_message(user_id, message.message_id)
+    return message

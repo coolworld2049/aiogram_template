@@ -1,5 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from loguru import logger
 
 from bot.filters.callback_filters import common_cb, back_cb
 from bot.filters.callback_filters import reg_user_cb
@@ -27,6 +28,7 @@ async def user_registration(callback_query: types.CallbackQuery):
     await delete_previous_messages(tgtype=callback_query)
     await bot.send_message(callback_query.from_user.id, user_registration_TEXT)
     await UserStates.SET_NAME.set()
+    logger.info(f"user_id: {callback_query.from_user.id}")
 
 
 @dispatcher.message_handler(state=UserStates.SET_NAME)
@@ -55,6 +57,7 @@ async def set_name(message: types.Message, state: FSMContext):
 async def account(callback_query: types.CallbackQuery):
     await delete_previous_messages(tgtype=callback_query)
     await account_menu_message_IK(callback_query.from_user.id)
+    logger.info(f"user_id: {callback_query.from_user.id}")
 
 
 @dispatcher.callback_query_handler(back_cb.filter(to='account'), state='*')
