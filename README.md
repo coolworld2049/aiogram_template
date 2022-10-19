@@ -27,8 +27,7 @@
         PROJECT_NAME="YOUR_PROJECT_NAME"
         SOURCE_CODE_LINK="YOUR_SOURCE_CODE_LINK"
         ```
-    - reboot server: `sudo reboot`
-    
+        
 - virtualenv
 
     ```
