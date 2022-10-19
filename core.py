@@ -1,13 +1,15 @@
-import os
+from pathlib import Path
 
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage2
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from aiogram.utils.executor import Executor
 
-from bot.config import REDIS_CONFIG, USE_REDIS, TIMEZONE_UTC, BOT_TOKEN
+from bot.config import REDIS_CONFIG, BOT_TOKEN
 
-scheduler = AsyncIOScheduler(timezone=TIMEZONE_UTC)
-bot = Bot(token=os.environ.get('BOT_TOKEN') if os.environ.get('BOT_TOKEN') else BOT_TOKEN, validate_token=True)
-dispatcher = Dispatcher(bot, storage=RedisStorage2(**REDIS_CONFIG) if USE_REDIS else MemoryStorage())
+app_dir: Path = Path(__file__).parent.parent
+locales_dir = app_dir / "locales"
 
+bot = Bot(token=BOT_TOKEN, validate_token=True)
+redis_storage = RedisStorage2(**REDIS_CONFIG)
+dispatcher = Dispatcher(bot, storage=redis_storage)
+runner = Executor(dispatcher, skip_updates=True)

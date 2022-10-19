@@ -1,5 +1,5 @@
 -- CREATE schema schema;
-SET schema 'schema';
+-- SET schema 'schema';
 
 DELETE FROM pg_type WHERE typname = 'base_role';
 
