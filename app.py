@@ -3,20 +3,19 @@ import logging
 
 import aiogram
 import nest_asyncio
-from aiogram import Dispatcher
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.utils import executor
 from loguru import logger
 
 from bot import config
-from bot.config import RATE_LIMIT
+from bot.config import RATE_LIMIT, START_POLLING
 from bot.filters.role_filters import RoleFilter, AdminFilter
 from bot.handlers import setup_handlers
 from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.services.server_statistics import setup_server_statistics_handlers
 from bot.utils.command_mgmt import manage_commands, Action
-from core import dispatcher, redis_storage, runner
-from services.healthcheck import check_redis, run_healthchek
+from core import dispatcher, redis_storage
+from services.healthcheck import run_healthcheck
 from services.scheduler import set_scheduled_tasks, scheduler
 from services.server_statistics.main import SERVICE_server_stats
 from strings.locale import common_commands
@@ -37,30 +36,40 @@ async def on_startup(_):
     dispatcher.filters_factory.bind(AdminFilter)
     loop.run_until_complete(manage_commands(action=Action.SET, command_list=common_commands))
     setup_server_statistics_handlers()
-    await run_healthchek()
+    loop.run_until_complete(run_healthcheck())
 
 
 async def on_shutdown(_):
-    scheduler.shutdown()
-    loop.run_until_complete(redis_storage.close())
-    loop.run_until_complete(redis_storage.wait_closed())
+    scheduler.remove_all_jobs()
+    scheduler.shutdown(wait=False)
+    await redis_storage.close()
+    await redis_storage.wait_closed()
 
 
-async def on_startup_webhook(dp: Dispatcher):
-    await on_startup(dp)
-    await dp.bot.set_webhook(config.WEBHOOK_URL)
+async def on_startup_webhook(_):
+    await on_startup(_)
+    await dispatcher.bot.set_webhook(config.WEBHOOK_URL)
     logger.info("Configure Web-Hook URL to: {url}", url=config.WEBHOOK_URL)
 
 
-async def on_shutdown_webhook(dp: Dispatcher):
-    await on_shutdown(dp)
-    await dp.bot.delete_webhook()
+async def on_shutdown_webhook(_):
+    await on_shutdown(_)
+    await dispatcher.bot.delete_webhook()
     logger.info("Delete Web-Hook URL: {url}", url=config.WEBHOOK_URL)
 
 
 if __name__ == "__main__":
     try:
-        executor.start_polling(dispatcher, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
+        EXECUTOR_CONFIG = {
+            'dispatcher': dispatcher,
+            'on_startup': on_startup,
+            'on_shutdown': on_shutdown,
+            'skip_updates': True,
+        }
+        if START_POLLING:
+            executor.start_polling(**EXECUTOR_CONFIG)
+        else:
+            executor.start_webhook(**EXECUTOR_CONFIG, webhook_path=config.WEBHOOK_PATH)
     except aiogram.exceptions and Exception as e:
         logger.exception(f"{config.PROJECT_NAME}: bot: TelegramAPIError: {e.args}")
     try:

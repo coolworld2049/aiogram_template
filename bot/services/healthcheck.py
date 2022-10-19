@@ -4,7 +4,7 @@ from loguru import logger
 from models.database.postgresql import asyncPostgresModel
 
 
-async def run_healthchek():
+async def run_healthcheck():
     await check_redis()
     await check_postgres()
 

@@ -39,14 +39,14 @@ class AsyncPostgresModel:
             async def __executeone():
                 return await connection.execute(query, *values) if values else None
 
-            return await self.__transaction_wrapper(connection, __executeone)
+            return await AsyncPostgresModel.__transaction_wrapper(connection, __executeone)
 
     async def executemany(self, command: str, list_of_values: list) -> asyncpg.Record:
         async with self.pool.acquire() as connection:
             async def __executemany():
                 return await connection.executemany(command, list_of_values) if list_of_values else None
 
-            return await self.__transaction_wrapper(connection, __executemany)
+            return await AsyncPostgresModel.__transaction_wrapper(connection, __executemany)
 
     async def fetchone(self, query: str, values: list = None) -> asyncpg.Record:
         res = await self.fetchmany(query, values)
@@ -57,4 +57,4 @@ class AsyncPostgresModel:
             async def __fetchmany():
                 return await connection.fetch(query, *values) if values else await connection.fetch(query)
 
-            return await self.__transaction_wrapper(connection, __fetchmany)
+            return await AsyncPostgresModel.__transaction_wrapper(connection, __fetchmany)
