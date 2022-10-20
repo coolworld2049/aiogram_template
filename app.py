@@ -9,7 +9,6 @@ from loguru import logger
 
 from bot import config
 from bot.config import RATE_LIMIT, START_POLLING
-from bot.filters.roles import RoleFilter, AdminFilter
 from bot.handlers import setup_handlers
 from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.services.server_statistics import setup_server_statistics_handlers
@@ -32,8 +31,6 @@ async def on_startup(_):
     set_scheduled_tasks()
     dispatcher.middleware.setup(LoggingMiddleware(logging.getLogger()))
     dispatcher.middleware.setup(ThrottlingMiddleware(limit=RATE_LIMIT))
-    dispatcher.filters_factory.bind(RoleFilter)
-    dispatcher.filters_factory.bind(AdminFilter)
     loop.run_until_complete(manage_commands(action=ItemAction.SET, command_list=common_commands))
     setup_server_statistics_handlers()
     loop.run_until_complete(run_healthcheck())
