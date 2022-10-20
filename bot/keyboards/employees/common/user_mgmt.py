@@ -1,6 +1,6 @@
 from aiogram import types
 
-from bot.filters.callback_filters import item_cb, back_cb
+from bot.filters.callbacks import item_cb, back_cb
 from bot.models.role.role import UserRole
 from bot.strings.locale import navigation_BTN_back, items_mgmt_message_IK_TEXT, items_mgmt_message_IK_TEXT_error
 from bot.utils.chat_mgmt import delete_previous_messages, save_message

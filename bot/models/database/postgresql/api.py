@@ -1,13 +1,14 @@
 from datetime import datetime
 
 from aiogram.types import User
+from loguru import logger
 
 from bot.models.database.postgresql import asyncPostgresModel
 from bot.models.role.role import UserRole
 from bot.states.UserStates import UserStates
 
 
-async def save_user(user: User):
+async def insert_user(user: User):
     query = '''INSERT INTO schema.user(user_id, username, "role", last_seen) VALUES($1,$2,$3,$4) 
     ON CONFLICT DO NOTHING'''
     values = [
@@ -87,18 +88,21 @@ async def fetchone_temp(user_id: int):
         return result
 
 
-async def check_user_active_orders(user_id: int):
-    values = [user_id, UserStates.ACCEPTED.state, UserStates.PROGRESS.state]
-    cs_query = '''
-            SELECT count(*) FROM schema.order WHERE customer_id = $1 AND state = $2 
-            OR state = $3'''
-    customer_has_orders = await asyncPostgresModel.fetchone(cs_query, values)
+async def check_user_active_orders(user_id: int, states: list[UserStates]):
+    if len(states) == 2:
+        values = [user_id, *states]
+        cs_query = '''
+                SELECT count(*) FROM schema.order WHERE customer_id = $1 AND state = $2 
+                OR state = $3'''
+        customer_has_orders = await asyncPostgresModel.fetchone(cs_query, values)
 
-    ct_query = '''
-            SELECT count(*) FROM schema.order WHERE customer_id = $1 AND state = $2
-            OR state = $3'''
-    contractor_has_orders = await asyncPostgresModel.fetchone(ct_query, values)
+        ct_query = '''
+                SELECT count(*) FROM schema.order WHERE customer_id = $1 AND state = $2
+                OR state = $3'''
+        contractor_has_orders = await asyncPostgresModel.fetchone(ct_query, values)
 
-    return {'customer_has_orders': True if customer_has_orders['count'] else False,
-            'contractor_has_orders': True if contractor_has_orders['count'] else False}
+        return {'customer_has_orders': True if customer_has_orders['count'] else False,
+                'contractor_has_orders': True if contractor_has_orders['count'] else False}
+    else:
+        logger.error(f'states: expected 2 received {len(states)}')
 

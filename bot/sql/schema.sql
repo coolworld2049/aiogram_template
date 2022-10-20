@@ -1,5 +1,6 @@
--- CREATE schema schema;
--- SET schema 'schema';
+CREATE DATABASE aiogram_template;
+CREATE schema schema;
+SET schema 'schema';
 
 DELETE FROM pg_type WHERE typname = 'base_role';
 

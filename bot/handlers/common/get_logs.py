@@ -6,7 +6,7 @@ from aiogram import types
 from loguru import logger
 
 from bot.config import LOG_PATH
-from bot.filters.command_filters import command_logs
+from bot.filters.commands import command_logs
 from bot.models.role.role import UserRole
 from bot.models.verify import verifyUserModel
 from bot.utils.chat_mgmt import save_message, delete_previous_messages
