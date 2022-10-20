@@ -1,7 +1,7 @@
 from aiogram import types
 
 from bot.config import MESSAGE_DELAY
-from bot.filters.callback_filters import back_cb, reg_user_cb, common_cb
+from bot.filters.callbacks import back_cb, reg_user_cb, common_cb
 from bot.models.database.postgresql.api import fetchone_user
 from bot.strings.locale import registration_menu_TEXT, main_menu_TEXT, account_menu_message_IK_TEXT, \
     navigation_BTN_back, registration_menu_message_IK_TEXT, \

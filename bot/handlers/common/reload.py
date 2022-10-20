@@ -3,7 +3,7 @@ import asyncio
 from aiogram import types
 from loguru import logger
 
-from bot.filters.command_filters import command_reload
+from bot.filters.commands import command_reload
 from bot.keyboards.user.common.common_inline_kb import base_navigation
 from bot.strings.locale import restart_command_TEXT
 from bot.utils.chat_mgmt import delete_previous_messages, save_message

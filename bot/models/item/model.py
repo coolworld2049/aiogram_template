@@ -3,7 +3,7 @@ import typing
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from bot.filters.command_filters import command_cancel
+from bot.filters.commands import command_cancel
 from bot.models.role.role import UserRole
 from bot.strings.locale import user_state_incorrect_input_TEXT
 from bot.utils.chat_mgmt import delete_previous_messages, save_message

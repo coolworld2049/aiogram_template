@@ -1,4 +1,4 @@
-from bot.filters.command_filters import command_cancel
+from bot.filters.commands import command_cancel
 
 
 registration_menu_TEXT = "To start using the service, you need to register 😉"
@@ -33,10 +33,6 @@ items_mgmt_action_ADD_TEXT_pre = "ADD ITEM." + items_mgmt_ACTION_TEXT_cancel
 items_mgmt_action_UPDATE_TEXT_pre = "UPDATE ITEM." + items_mgmt_ACTION_TEXT_cancel
 items_mgmt_action_DELETE_TEXT_pre = "DELETE ITEM." + items_mgmt_ACTION_TEXT_cancel
 
-items_mgmt_action_ADD_TEXT_past = "ITEM ADDED."
-items_mgmt_action_UPDATE_TEXT_past = "ITEM UPDATED."
-items_mgmt_action_DELETE_TEXT_past = "ITEM DELETED."
-
 
 def account_menu_message_IK_TEXT(user):
     return f"""Your account
@@ -51,23 +47,3 @@ navigation_BTN_back_to_menu = "👈 menu"
 
 throttling_too_many_requsets_TEXT = f"Too many requests!"
 throttling_unlocked_TEXT = "The command is unblocked"
-
-# ----------------------------------------------------------------------------------------
-
-common_commands = \
-    [
-        {"command": "start", "description": "starting the bot"},
-        {"command": "help", "description": "tech support"},
-        {"command": "reload", "description": "restarting the bot and reset state"},
-    ]
-admin_commands = \
-    [
-        {"command": "admin", "description": "admin panel"},
-        {"command": "logs", "description": "event log"},
-        {"command": "cancel", "description": "when something went wrong"}
-    ]
-manager_commands = \
-    [
-        {"command": "manager", "description": "manager panel"},
-        {"command": "cancel", "description": "when something went wrong"}
-    ]

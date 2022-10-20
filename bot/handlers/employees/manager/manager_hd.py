@@ -1,8 +1,8 @@
 from aiogram import types
 from loguru import logger
 
-from bot.filters.callback_filters import back_cb
-from bot.filters.command_filters import command_manager
+from bot.filters.callbacks import back_cb
+from bot.filters.commands import command_manager
 from bot.keyboards.employees.manager.manager_kb import pre_manager_panel_message_IK
 from bot.models.role.role import UserRole
 from core import dispatcher

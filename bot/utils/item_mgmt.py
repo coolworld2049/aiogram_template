@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 from loguru import logger
 
 from bot import config
-from bot.filters.callback_filters import item_cb
+from bot.filters.callbacks import item_cb
 from bot.handlers.common.reload import reset_state
 from bot.keyboards.employees.admin.admin_kb import itemManagerModel_admin, admin_panel_ADD_item_func, \
     admin_panel_UPDATE_item_func, admin_panel_DELETE_item_func

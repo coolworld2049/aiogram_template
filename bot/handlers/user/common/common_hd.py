@@ -2,16 +2,16 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from loguru import logger
 
-from bot.filters.callback_filters import common_cb, back_cb
-from bot.filters.callback_filters import reg_user_cb
-from bot.filters.command_filters import command_start
+from bot.filters.callbacks import common_cb, back_cb
+from bot.filters.callbacks import reg_user_cb
+from bot.filters.commands import command_start
 from bot.keyboards.user.common.common_inline_kb import account_menu_message_IK
 from bot.keyboards.user.common.common_inline_kb import base_navigation, main_menu_message_IK
 from bot.states.UserStates import UserStates
 from bot.strings.locale import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT, \
     user_state_incorrect_input_TEXT_delimeter_error
 from bot.utils.chat_mgmt import delete_previous_messages, save_message
-from bot.models.database.postgresql.api import save_user, update_user
+from bot.models.database.postgresql.api import insert_user, update_user
 from core import dispatcher, bot
 
 
@@ -34,7 +34,7 @@ async def user_registration(callback_query: types.CallbackQuery):
 @dispatcher.message_handler(state=UserStates.SET_NAME)
 async def set_name(message: types.Message, state: FSMContext):
     await delete_previous_messages(tgtype=message)
-    await save_user(message.from_user)
+    await insert_user(message.from_user)
     async with state.proxy():
         if not message.text.startswith('/') and not message.text.isdigit() and ' ' in message.text:
             spl = message.text.split(' ')

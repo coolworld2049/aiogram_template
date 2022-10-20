@@ -9,16 +9,16 @@ from loguru import logger
 
 from bot import config
 from bot.config import RATE_LIMIT, START_POLLING
-from bot.filters.role_filters import RoleFilter, AdminFilter
+from bot.filters.roles import RoleFilter, AdminFilter
 from bot.handlers import setup_handlers
 from bot.middlewares.throttling import ThrottlingMiddleware
 from bot.services.server_statistics import setup_server_statistics_handlers
-from bot.utils.command_mgmt import manage_commands, Action
+from bot.utils.command_mgmt import manage_commands, ItemAction
 from core import dispatcher, redis_storage
 from services.healthcheck import run_healthcheck
 from services.scheduler import set_scheduled_tasks, scheduler
 from services.server_statistics.main import SERVICE_server_stats
-from strings.locale import common_commands
+from strings.commands import common_commands
 from utils.logger import setup_logger
 
 nest_asyncio.apply()
@@ -34,7 +34,7 @@ async def on_startup(_):
     dispatcher.middleware.setup(ThrottlingMiddleware(limit=RATE_LIMIT))
     dispatcher.filters_factory.bind(RoleFilter)
     dispatcher.filters_factory.bind(AdminFilter)
-    loop.run_until_complete(manage_commands(action=Action.SET, command_list=common_commands))
+    loop.run_until_complete(manage_commands(action=ItemAction.SET, command_list=common_commands))
     setup_server_statistics_handlers()
     loop.run_until_complete(run_healthcheck())
 

@@ -12,7 +12,7 @@ from loguru import logger
 from matplotlib import pyplot as plt
 
 from bot import config
-from bot.filters.callback_filters import server_stats_cb
+from bot.filters.callbacks import server_stats_cb
 from bot.strings.locale import navigation_BTN_back
 from bot.utils.chat_mgmt import save_message, delete_previous_messages
 from core import bot

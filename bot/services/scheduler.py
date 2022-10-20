@@ -10,7 +10,7 @@ from bot.config import USE_SCHEDULER, NOTIFY_USER_EVERY_HOURS
 DEFAULT = "default"
 
 jobstores = {
-    DEFAULT: RedisJobStore(db=config.REDIS_JOBSTORE,
+    DEFAULT: RedisJobStore(db=config.REDIS_JOBSTORE_DB,
                            host=config.REDIS_CONFIG.get('host'),
                            port=config.REDIS_CONFIG.get('port'))
 }

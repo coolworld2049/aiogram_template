@@ -3,7 +3,10 @@ import secrets
 from datetime import datetime
 from envparse import env
 
+env.read_envfile('.env')
+
 START_POLLING = True
+RUN_ON_DOCKER = False
 
 TIMEZONE_UTC = 'Europe/Moscow'
 
@@ -12,7 +15,7 @@ ADMINS: set = {OWNER}
 MANAGERS: set = {1070277776}
 
 USE_DEBUG = False
-USE_SCHEDULER = True
+USE_SCHEDULER = False
 
 MESSAGE_DELAY = 0.2
 RATE_LIMIT = .50
@@ -34,27 +37,25 @@ WEBHOOK_BASE_PATH = env.str("WEBHOOK_BASE_PATH", default="/webhook")
 WEBHOOK_PATH = f"{WEBHOOK_BASE_PATH}/{SECRET_KEY}"
 WEBHOOK_URL = f"https://{DOMAIN}{WEBHOOK_PATH}"
 
-
 PG_CONFIG = {
-    "host": "127.0.0.1",
-    "port": 5432,
-    "database": PROJECT_NAME,
-    "user": 'postgres',
-    "password": 'postgres',
+    "host": 'postgres' if RUN_ON_DOCKER else env.str("PG_HOST", default='127.0.0.1'),
+    "port": env.int("PG_PORT", default=5432),
+    "database": env.str("PG_DATABASE", default='aiogram_template'),
+    "user": env.str("PG_USER", default='postgres'),
+    "password": env.str("PG_PASSWORD", default=None),
 }
 
 PG_DSN = f"postgresql://{PG_CONFIG['user']}:{PG_CONFIG['password']}" \
          f"@{PG_CONFIG['host']}:{PG_CONFIG['port']}/{PG_CONFIG['database']}"
 
 REDIS_CONFIG = {
-    "host": "127.0.0.1",
-    "port": 6379,
-    "db": 15,
-    "pool_size": 100000,
-    "state_ttl": 300,
+    "host": 'redis' if RUN_ON_DOCKER else env.str("REDIS_HOST", default='127.0.0.1'),
+    "port": env.int("REDIS_PORT", default=6379),
+    "db": env.int("REDIS_DB", default=10),
+    "pool_size": env.int("REDIS_POOL", default=10000),
 }
 
-REDIS_JOBSTORE = 10
+REDIS_JOBSTORE_DB = env.int("REDIS_JOBSTORE_DB", default=5)
 
 LOG_PATH = 'journal/logs'
 LOG_FILENAME = datetime.today().strftime('%d_%m_%Y')

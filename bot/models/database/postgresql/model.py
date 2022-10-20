@@ -25,14 +25,13 @@ class AsyncPostgresModel:
                 try:
                     res = await func()
                 except Exception as e:
-                    logging.error(f"transaction_wrapper: transaction: Exception:"
-                                  f" {e.args}: rollback")
+                    logging.exception(f"__transaction_wrapper: transaction: Exception: {e.args}: rollback")
                     await tr.rollback()
                 else:
                     await tr.commit()
                 return res
         except Exception as e:
-            logging.warning(f"__transaction_wrapper: connection: Exception: {e.args}: CONNECTION ERROR")
+            logging.exception(f"__transaction_wrapper: connection: Exception: {e.args}: connection error")
 
     async def executeone(self, query: str, values: list) -> asyncpg.Record:
         async with self.pool.acquire() as connection:

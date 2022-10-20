@@ -3,7 +3,7 @@ from typing import Any
 from bot.models.role.role import UserRole
 from bot.models.database.postgresql import asyncPostgresModel
 from bot.models.database.postgresql.api import fetchone_user
-from bot.utils.command_mgmt import manage_commands, Action
+from bot.utils.command_mgmt import manage_commands, ItemAction
 
 
 class VerifyUser:
@@ -50,7 +50,7 @@ class VerifyUser:
                 self.commands = self.common_commands
                 self.values = [user_id, UserRole.USER]
 
-            await manage_commands(action=Action.SET, users_id=user_id, command_list=self.commands)
+            await manage_commands(action=ItemAction.SET, users_id=user_id, command_list=self.commands)
             await asyncPostgresModel.executeone(query, self.values)
             updated_user = await fetchone_user(user_id)
             return {'user_id': updated_user['user_id'], 'role': updated_user['role']}
