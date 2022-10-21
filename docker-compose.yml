@@ -15,8 +15,6 @@ services:
       - PGDATA=${PG_DATA}
     ports:
       - ${PG_PORT}:${PG_PORT}
-    expose:
-      - ${PG_PORT}
     volumes:
       - /usr/src/app/data:/var/lib/postgresql/data/pgdata
 
@@ -28,8 +26,6 @@ services:
       - .env
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
-    expose:
-      - ${REDIS_PORT}
     volumes:
       - /usr/src/app/data:/bitnami/redis/data
 
