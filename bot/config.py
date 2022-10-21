@@ -6,7 +6,7 @@ from envparse import env
 env.read_envfile('.env')
 
 START_POLLING = True
-RUN_ON_DOCKER = False
+RUN_ON_DOCKER = True
 
 TIMEZONE_UTC = 'Europe/Moscow'
 
