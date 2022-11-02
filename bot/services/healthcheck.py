@@ -1,7 +1,7 @@
 import aioredis
 from loguru import logger
 
-from models.database.postgresql import asyncPostgresModel
+from bot.models.database.postgresql.model import asyncPostgresModel
 
 
 async def run_healthcheck():

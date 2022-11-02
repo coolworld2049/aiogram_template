@@ -1,4 +1,3 @@
-CREATE DATABASE aiogram_template;
 CREATE schema schema;
 SET schema 'schema';
 

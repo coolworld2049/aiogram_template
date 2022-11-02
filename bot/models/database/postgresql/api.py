@@ -3,7 +3,7 @@ from datetime import datetime
 from aiogram.types import User
 from loguru import logger
 
-from bot.models.database.postgresql import asyncPostgresModel
+from bot.models.database.postgresql.model import asyncPostgresModel
 from bot.models.role.role import UserRole
 from bot.states.UserStates import UserStates
 

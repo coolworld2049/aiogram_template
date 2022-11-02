@@ -1,8 +1,10 @@
 from typing import Any
 
-from bot.models.role.role import UserRole
-from bot.models.database.postgresql import asyncPostgresModel
+from bot import config
 from bot.models.database.postgresql.api import fetchone_user
+from bot.models.database.postgresql.model import asyncPostgresModel
+from bot.models.role.role import UserRole
+from bot.strings.commands import common_commands, admin_commands, manager_commands
 from bot.utils.command_mgmt import manage_commands, ItemAction
 
 
@@ -56,3 +58,6 @@ class VerifyUser:
             return {'user_id': updated_user['user_id'], 'role': updated_user['role']}
 
 
+verifyUserModel = VerifyUser(admins=config.ADMINS, managers=config.MANAGERS,
+                             common_commands=common_commands, admin_commands=admin_commands,
+                             manager_commands=manager_commands)

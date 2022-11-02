@@ -9,10 +9,10 @@ from bot.filters.commands import command_manager
 from bot.keyboards.employees.common.user_mgmt import post_user_mgmt_message_IK
 from bot.models.item.model import ItemManagerModel
 from bot.models.role.role import UserRole
-from bot.models.verify import verifyUserModel
+from bot.models.verify.model import verifyUserModel
 from bot.strings.locale import manager_panel_BTN_items_mgmt_TEXT, manager_panel_TEXT
 from bot.utils.chat_mgmt import delete_previous_messages, save_message
-from config import MESSAGE_DELAY
+from bot.config import MESSAGE_DELAY
 from core import bot
 
 

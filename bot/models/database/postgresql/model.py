@@ -4,6 +4,8 @@ import logging
 import asyncpg
 from asyncpg import Connection
 
+from bot.config import PG_DSN
+
 
 class AsyncPostgresModel:
     __slots__ = ('DSN', 'pool')
@@ -57,3 +59,6 @@ class AsyncPostgresModel:
                 return await connection.fetch(query, *values) if values else await connection.fetch(query)
 
             return await AsyncPostgresModel.__transaction_wrapper(connection, __fetchmany)
+
+
+asyncPostgresModel = AsyncPostgresModel(PG_DSN)

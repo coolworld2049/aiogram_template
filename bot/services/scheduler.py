@@ -4,7 +4,7 @@ from apscheduler.executors.asyncio import AsyncIOExecutor
 from apscheduler.jobstores.redis import RedisJobStore
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-import config
+from bot import config
 from bot.config import USE_SCHEDULER, NOTIFY_USER_EVERY_HOURS
 
 DEFAULT = "default"

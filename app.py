@@ -10,16 +10,16 @@ from loguru import logger
 from bot import config
 from bot.config import RATE_LIMIT, START_POLLING
 from bot.filters.roles import RoleFilter, AdminFilter
-from bot.handlers import setup_handlers
 from bot.middlewares.throttling import ThrottlingMiddleware
-from bot.services.server_statistics import setup_server_statistics_handlers
 from bot.utils.command_mgmt import manage_commands, ItemAction
 from core import dispatcher, redis_storage
-from services.healthcheck import run_healthcheck
-from services.scheduler import set_scheduled_tasks, scheduler
-from services.server_statistics.main import SERVICE_server_stats
-from strings.commands import common_commands
-from utils.logger import setup_logger
+from bot.handlers.setup import setup_handlers
+from bot.services.healthcheck import run_healthcheck
+from bot.services.scheduler import set_scheduled_tasks, scheduler
+from bot.services.server_statistics.main import SERVICE_server_stats
+from bot.services.server_statistics.setup import setup_server_statistics_handlers
+from bot.strings.commands import common_commands
+from bot.utils.logger import setup_logger
 
 nest_asyncio.apply()
 loop = asyncio.get_event_loop()

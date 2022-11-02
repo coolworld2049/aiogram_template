@@ -2,10 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6355faa1-17bf-4e73-afed-a8cfa261edf4" name="Changes" comment="upd">
+      <change beforePath="$PROJECT_DIR$/.idea/aiogram_template.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aiogram_template.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile.example" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml.example" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/handlers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/handlers/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/handlers/common/get_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/handlers/common/get_logs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/keyboards/employees/admin/admin_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/keyboards/employees/admin/admin_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/keyboards/employees/manager/manager_kb.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/keyboards/employees/manager/manager_kb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/database/postgresql/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/database/postgresql/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/models/database/postgresql/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/database/postgresql/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/models/database/postgresql/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/item/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/.dockeringore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/role/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/verify/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/models/verify/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/models/verify/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/services/healthcheck.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/services/healthcheck.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/services/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/services/scheduler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/services/server_statistics/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/services/server_statistics/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/sql/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/bot/scripts/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/utils/chat_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/utils/chat_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot/utils/command_mgmt.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot/utils/command_mgmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,12 +68,12 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/R/PycharmProjects/aiogram_template/bot/strings/commands.py&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/R/PycharmProjects/aiogram_template/bot/models/verify/model.py&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -102,14 +120,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
-      <deployment type="dockerfile">
-        <settings>
-          <option name="sourceFilePath" value="Dockerfile" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -118,10 +128,43 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="docker-compose.yml.bot: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="bot" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.docker-compose.yml.bot: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Python.app" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="Docker.docker-compose.yml.postgres: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.bot: Compose Deployment" />
         <item itemvalue="Python.app" />
       </list>
     </recent_temporary>
@@ -157,7 +200,19 @@
       <workItem from="1666220418466" duration="3406000" />
       <workItem from="1666262108889" duration="10544000" />
       <workItem from="1666283183068" duration="43000" />
-      <workItem from="1666345534694" duration="1092000" />
+      <workItem from="1666345534694" duration="5445000" />
+      <workItem from="1666353173153" duration="225000" />
+      <workItem from="1666353830812" duration="2352000" />
+      <workItem from="1666358787976" duration="26000" />
+      <workItem from="1666358995659" duration="2000" />
+      <workItem from="1666979083990" duration="220000" />
+      <workItem from="1666979705665" duration="389000" />
+      <workItem from="1666980238271" duration="1158000" />
+      <workItem from="1666990854046" duration="179000" />
+      <workItem from="1667158458172" duration="137000" />
+      <workItem from="1667158830885" duration="87000" />
+      <workItem from="1667158926470" duration="34000" />
+      <workItem from="1667158969745" duration="1054000" />
     </task>
     <task id="LOCAL-00001" summary="upd">
       <created>1665305112467</created>
@@ -292,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666210534669</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="upd">
+      <created>1666346682473</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1666346682473</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,7 +376,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="upd" />
     <MESSAGE value="readme" />
     <MESSAGE value="env" />
     <MESSAGE value="README.md" />
@@ -331,10 +392,11 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="healthcheck.py" />
     <MESSAGE value="get_logs.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="get_logs.py" />
+    <MESSAGE value="upd" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666280998882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/aiogram_template$app.coverage" NAME="app Coverage Results" MODIFIED="1666349124521" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/aiogram_template$translate.coverage" NAME="translate Coverage Results" MODIFIED="1666193428320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bot/strings" />
     <SUITE FILE_PATH="coverage/aiogram_template$servstatsbot.coverage" NAME="servstatsbot Coverage Results" MODIFIED="1665915621390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/services/server_stats_bot" />
   </component>
