@@ -1,8 +1,12 @@
 import asyncio
 import logging
+import socket
 
 import asyncpg
 from asyncpg import Connection
+from loguru import logger
+
+from bot.config import PG_DSN
 
 
 class AsyncPostgresModel:
@@ -13,7 +17,10 @@ class AsyncPostgresModel:
         :param DSN:
         """
         self.DSN: str = DSN
-        self.pool: asyncpg.Pool = asyncio.get_event_loop().run_until_complete(asyncpg.create_pool(self.DSN))
+        try:
+            self.pool: asyncpg.Pool = asyncio.get_event_loop().run_until_complete(asyncpg.create_pool(self.DSN))
+        except socket.gaierror as e:
+            logger.warning(f"asyncpg.create_pool(self.DSN): {e}")
 
     @staticmethod
     async def __transaction_wrapper(connection: Connection, func) -> asyncpg.Record:
@@ -57,3 +64,6 @@ class AsyncPostgresModel:
                 return await connection.fetch(query, *values) if values else await connection.fetch(query)
 
             return await AsyncPostgresModel.__transaction_wrapper(connection, __fetchmany)
+
+
+asyncPostgresModel = AsyncPostgresModel(PG_DSN)

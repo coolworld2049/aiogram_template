@@ -7,7 +7,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bot.config import ITEMS_PER_PAGE, MESSAGE_DELAY
 from core import dispatcher, bot
 from bot.filters.callbacks import pagination_cb, back_cb
-from bot.keyboards.user.common.common_inline_kb import main_menu_message_IK
+from bot.keyboards.user.common_inline_kb import main_menu_message_IK
 from bot.states.PagionationStates import PaginationStates
 from bot.utils.chat_mgmt import delete_message_handler, save_message, get_last_message
 

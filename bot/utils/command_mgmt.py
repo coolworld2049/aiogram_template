@@ -4,8 +4,8 @@ from aiogram.types import bot_command_scope, BotCommand
 from loguru import logger
 
 from bot.models.database.postgresql.api import fetchall_user_ids, fetchone_user
+from bot.commands.commands_config import common_commands
 from core import bot
-from strings.commands import common_commands
 
 
 class ItemAction(Enum):
