@@ -20,7 +20,7 @@ def reg_get_logs_handler():
 @dispatcher.message_handler(command_logs)
 async def get_logs(message: types.Message):
     verify_user = await verifyUserModel.verify(message.from_user.id)
-    if verify_user['role'] in [UserRole.ADMIN, UserRole.MANAGER]:
+    if verify_user['role'] == UserRole.ADMIN:
         await delete_previous_messages(tgtype=message)
         filename = f"{LOG_PATH.split('/')[0]}-{datetime.today().strftime('%d_%m_%Y')}"
         out_path = f"/tmp/{filename}"

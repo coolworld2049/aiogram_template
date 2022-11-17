@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   postgres:
-    container_name: postgres-prb
+    container_name: postgres
     image: postgres:latest
     restart: always
     env_file:
@@ -22,7 +22,7 @@ services:
       - ./bot/sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
   redis:
-    container_name: redis-prb
+    container_name: redis
     image: redis:latest
     restart: always
     env_file:

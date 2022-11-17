@@ -5,8 +5,8 @@ from loguru import logger
 from bot.filters.callbacks import common_cb, back_cb
 from bot.filters.callbacks import reg_user_cb
 from bot.filters.commands import command_start
-from bot.keyboards.user.common.common_inline_kb import account_menu_message_IK
-from bot.keyboards.user.common.common_inline_kb import base_navigation, main_menu_message_IK
+from bot.keyboards.user.common_inline_kb import account_menu_message_IK
+from bot.keyboards.user.common_inline_kb import base_navigation, main_menu_message_IK
 from bot.states.UserStates import UserStates
 from bot.strings.locale import user_registration_TEXT, user_state_finish_TEXT, user_state_incorrect_input_TEXT, \
     user_state_incorrect_input_TEXT_delimeter_error

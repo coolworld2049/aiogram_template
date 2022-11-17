@@ -58,6 +58,7 @@ async def stats(user_id):
             logger.info(f"Exception {e}")
     sortedprocs = sorted(procs.items(), key=operator.itemgetter(1), reverse=True)
     for proc in sortedprocs:
+        # noinspection PyStringFormat
         pidsreply += proc[0] + " " + ("%.2f" % proc[1]) + " %\n"
     reply = timedif + "\n" + memtotal + "\n" + memavail + "\n" + memuseperc + "\n" + diskused + "\n\n" + pidsreply
     IK = types.InlineKeyboardMarkup()

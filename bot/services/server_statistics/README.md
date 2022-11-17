@@ -37,7 +37,7 @@ Example graph sent by bot: [Gif](http://i.imgur.com/anX7rJR.gifv)
         * `curl -O https://bootstrap.pypa.io/get-pip.py`
         * `sudo python3 get-pip.py`
         * After that `pip install psutil`
-        * Also Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
+        * Also, Stackoverflow question about that [here](http://stackoverflow.com/questions/11268501/how-to-use-pip-with-python-3-x-alongside-python-2-x)
 * [matplotlib](http://matplotlib.org/)
     * `sudo apt-get install python3-matplotlib`
 * Bot key & `tokens.py`

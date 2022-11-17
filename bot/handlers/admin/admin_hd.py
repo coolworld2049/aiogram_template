@@ -3,7 +3,7 @@ from loguru import logger
 
 from bot.filters.callbacks import back_cb
 from bot.filters.commands import command_admin
-from bot.keyboards.employees.admin.admin_kb import pre_admin_panel_message_IK
+from bot.keyboards.admin.admin_kb import pre_admin_panel_message_IK
 from bot.models.role.role import UserRole
 from core import dispatcher
 

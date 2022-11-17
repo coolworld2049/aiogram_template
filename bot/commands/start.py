@@ -2,7 +2,7 @@ from aiogram import types
 from loguru import logger
 
 from bot.filters.commands import command_start
-from bot.keyboards.user.common.common_inline_kb import base_navigation
+from bot.keyboards.user.common_inline_kb import base_navigation
 from bot.utils.chat_mgmt import delete_previous_messages
 from core import dispatcher
 

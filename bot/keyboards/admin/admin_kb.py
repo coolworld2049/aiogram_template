@@ -1,19 +1,14 @@
-import asyncio
 
 from aiogram import types
-from aiogram.dispatcher import FSMContext
 
 from bot import config
 from bot.filters.callbacks import item_cb, server_stats_cb
 from bot.filters.commands import command_admin
-from bot.keyboards.employees.common.user_mgmt import post_user_mgmt_message_IK
-from bot.models.item.model import ItemManagerModel
 from bot.models.role.role import UserRole
 from bot.models.verify.model import verifyUserModel
 from bot.strings.locale import admin_panel_BTN_items_mgmt_TEXT, admin_panel_TEXT, \
     admin_panel_BTN_server_stats_TEXT
 from bot.utils.chat_mgmt import delete_previous_messages, save_message
-from bot.config import MESSAGE_DELAY
 from core import bot
 
 
@@ -35,24 +30,3 @@ async def pre_admin_panel_message_IK(user_id: int, role: UserRole):
         await delete_previous_messages(user_id)
         msg_error = await bot.send_message(user_id, 'No access')
         await save_message(user_id, msg_error.message_id)
-
-
-itemManagerModel_admin = ItemManagerModel(pre_admin_panel_message_IK, post_user_mgmt_message_IK)
-
-
-async def admin_panel_ADD_item_func(message: types.Message, state: FSMContext):
-    msg = await message.answer('changes saved')
-    await save_message(message.from_user.id, msg.message_id)
-    await asyncio.sleep(MESSAGE_DELAY)
-
-
-async def admin_panel_UPDATE_item_func(message: types.Message, state: FSMContext):
-    msg = await message.answer('changes saved')
-    await save_message(message.from_user.id, msg.message_id)
-    await asyncio.sleep(MESSAGE_DELAY)
-
-
-async def admin_panel_DELETE_item_func(message: types.Message, state: FSMContext):
-    msg = await message.answer('changes saved')
-    await save_message(message.from_user.id, msg.message_id)
-    await asyncio.sleep(MESSAGE_DELAY)
