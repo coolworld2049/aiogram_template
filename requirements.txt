@@ -1,5 +1,5 @@
 aiogram~=2.22
-redis~=4.3.4
+redis~=4.3.5
 aioredis~=2.0.1
 asyncpg~=0.26.0
 APScheduler~=3.9.1
