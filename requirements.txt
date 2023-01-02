@@ -1,4 +1,4 @@
-aiogram~=2.22
+aiogram~=2.24
 redis~=4.3.4
 aioredis~=2.0.1
 asyncpg~=0.26.0
